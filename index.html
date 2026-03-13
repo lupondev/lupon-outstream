@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lupon Outstream — Tag Generator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f13;color:#e0e0e0;min-height:100vh;padding:24px}
+h1{font-size:18px;font-weight:500;color:#fff;margin-bottom:4px}
+.subtitle{font-size:13px;color:#666;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#1a1a24;border:0.5px solid #2a2a3a;border-radius:12px;padding:20px}
+.card h3{font-size:11px;font-weight:500;color:#666;text-transform:uppercase;letter-spacing:.6px;margin-bottom:16px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;color:#888;margin-bottom:5px}
+.field input{width:100%;padding:8px 10px;border:0.5px solid #2a2a3a;border-radius:8px;font-size:13px;background:#12121a;color:#e0e0e0;outline:none;transition:border-color .15s}
+.field input:focus{border-color:#185FA5}
+.bidders{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.bidder-btn{display:flex;align-items:center;gap:8px;padding:8px 12px;border:0.5px solid #2a2a3a;border-radius:8px;background:#12121a;cursor:pointer;font-size:13px;color:#aaa;transition:all .15s;text-align:left}
+.bidder-btn:hover{border-color:#333}
+.bidder-btn.active{border-color:#185FA5;background:rgba(24,95,165,.12);color:#69b0f5}
+.dot{width:8px;height:8px;border-radius:50%;background:#2a2a3a;flex-shrink:0;transition:background .15s}
+.bidder-btn.active .dot{background:#185FA5}
+.tag-box{background:#0d1117;border-radius:8px;padding:16px;font-family:'SF Mono',Consolas,'Courier New',monospace;font-size:12px;line-height:1.75;overflow-x:auto;border:0.5px solid #2a2a3a}
+.comment{color:#484f58}.tag{color:#ff7b72}.attr{color:#79c0ff}.val{color:#a5d6ff}.key{color:#79c0ff}.str{color:#a5d6ff}.num{color:#f0883e}
+.actions{display:flex;gap:8px;margin-top:12px}
+.btn{padding:8px 16px;border:0.5px solid #2a2a3a;border-radius:8px;background:#1a1a24;cursor:pointer;font-size:13px;color:#ccc;display:flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover{background:#222230;border-color:#444}
+.btn.primary{background:#185FA5;color:#fff;border-color:#185FA5}
+.btn.primary:hover{background:#1470bf}
+.btn.copied{background:#0f3d1f;color:#56d364;border-color:#56d364}
+.full{grid-column:1/-1}
+table{width:100%;font-size:13px;border-collapse:collapse}
+th{text-align:left;color:#666;font-weight:400;padding:6px 8px;border-bottom:0.5px solid #2a2a3a}
+td{padding:8px 8px;border-bottom:0.5px solid #1a1a24;color:#ccc}
+.live{display:inline-flex;align-items:center;gap:6px;color:#56d364;font-size:12px}
+.live::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#56d364}
+.cdn-badge{display:inline-block;background:rgba(24,95,165,.15);color:#69b0f5;font-size:11px;padding:3px 8px;border-radius:4px;border:0.5px solid rgba(24,95,165,.3);margin-left:8px;font-family:monospace}
+</style>
+</head>
+<body>
+<h1>Lupon Outstream <span class="cdn-badge">cdn.luponmedia.com</span></h1>
+<p class="subtitle">Tag Generator — Teads model, Lupon kontroliše sve</p>
+
+<div class="grid">
+  <div class="card">
+    <h3>Placement config</h3>
+    <div class="field"><label>Publisher ID</label><input id="pubId" value="novi-ba-001" oninput="render()"></div>
+    <div class="field"><label>Placement ID</label><input id="placId" value="inread-article" oninput="render()"></div>
+    <div class="field"><label>Paragraph offset</label><input id="offset" type="number" value="3" min="1" max="10" oninput="render()"></div>
+    <div class="field"><label>CSS selektor</label><input id="sel" value="article p" oninput="render()"></div>
+    <div class="field"><label>Player height (px)</label><input id="ph" type="number" value="280" oninput="render()"></div>
+    <div class="field"><label>Test VAST URL <span style="color:#555">(opcionalno)</span></label><input id="vast" placeholder="https://..." oninput="render()"></div>
+  </div>
+
+  <div class="card">
+    <h3>Aktivni bidders</h3>
+    <div class="bidders" id="bidders"></div>
+  </div>
+
+  <div class="card full">
+    <h3>Generated tag</h3>
+    <div class="tag-box" id="tagBox"></div>
+    <div class="actions">
+      <button class="btn primary" id="copyBtn" onclick="copyTag()">Copy tag</button>
+      <button class="btn" onclick="window.open('https://github.com/lupondev/lupon-outstream','_blank')">GitHub ↗</button>
+    </div>
+  </div>
+
+  <div class="card full">
+    <h3>Placements</h3>
+    <table>
+      <thead><tr><th>Publisher</th><th>Placement</th><th>Bidders</th><th>CDN URL</th><th>Status</th></tr></thead>
+      <tbody id="placTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const BIDDERS=[
+  {id:'adagio',label:'Adagio'},
+  {id:'magnite',label:'Magnite'},
+  {id:'criteo',label:'Criteo'},
+  {id:'sovrn',label:'Sovrn'},
+  {id:'pubmatic',label:'PubMatic'},
+  {id:'rtbhouse',label:'RTBhouse'},
+  {id:'sparteo',label:'Sparteo'},
+  {id:'ix',label:'Index Exch.'},
+];
+const active=new Set(['adagio','magnite','criteo','sovrn','pubmatic']);
+const placements=[];
+
+function initBidders(){
+  document.getElementById('bidders').innerHTML=BIDDERS.map(b=>`
+    <button class="bidder-btn ${active.has(b.id)?'active':''}" onclick="toggle('${b.id}',this)">
+      <span class="dot"></span>${b.label}
+    </button>`).join('');
+}
+
+function toggle(id,btn){
+  if(active.has(id)){active.delete(id);btn.classList.remove('active');}
+  else{active.add(id);btn.classList.add('active');}
+  render();
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function render(){
+  const pub=document.getElementById('pubId').value||'PUBLISHER_ID';
+  const plac=document.getElementById('placId').value||'PLACEMENT_ID';
+  const off=document.getElementById('offset').value||3;
+  const sel=document.getElementById('sel').value||'p';
+  const ph=document.getElementById('ph').value||280;
+  const vast=document.getElementById('vast').value;
+  const bids=[...active];
+  const vastLine=vast?`\n    <span class="key">vastUrl</span>:           <span class="str">'${esc(vast)}'</span>,`:'';
+
+  document.getElementById('tagBox').innerHTML=`<span class="comment">&lt;!-- Lupon Outstream tag --&gt;</span>
+<span class="tag">&lt;script&gt;</span>
+  window.LuponOutstream = {
+    <span class="key">publisherId</span>:        <span class="str">'${esc(pub)}'</span>,
+    <span class="key">placementId</span>:        <span class="str">'${esc(plac)}'</span>,
+    <span class="key">paragraphOffset</span>:    <span class="num">${off}</span>,
+    <span class="key">paragraphSelector</span>:  <span class="str">'${esc(sel)}'</span>,
+    <span class="key">playerHeight</span>:       <span class="num">${ph}</span>,${vastLine}
+    <span class="key">bidders</span>:            [${bids.map(b=>`<span class="str">"${b}"</span>`).join(', ')}],
+  };
+<span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.luponmedia.com/outstream/v1/tag.js"</span> <span class="attr">async</span><span class="tag">&gt;&lt;/script&gt;</span>`;
+
+  const existing=placements.find(p=>p.pub===pub&&p.plac===plac);
+  if(!existing) placements.push({pub,plac,cnt:bids.length});
+  else existing.cnt=bids.length;
+
+  document.getElementById('placTable').innerHTML=placements.map(p=>`
+    <tr>
+      <td>${esc(p.pub)}</td>
+      <td>${esc(p.plac)}</td>
+      <td>${p.cnt}</td>
+      <td><code style="font-size:11px;color:#666">cdn.luponmedia.com/outstream/v1/tag.js</code></td>
+      <td><span class="live">aktivan</span></td>
+    </tr>`).join('');
+}
+
+function getPlainTag(){
+  const pub=document.getElementById('pubId').value||'PUBLISHER_ID';
+  const plac=document.getElementById('placId').value||'PLACEMENT_ID';
+  const off=document.getElementById('offset').value||3;
+  const sel=document.getElementById('sel').value||'p';
+  const ph=document.getElementById('ph').value||280;
+  const vast=document.getElementById('vast').value;
+  const bids=[...active];
+  const vastLine=vast?`\n    vastUrl:           '${vast}',`:'';
+  return `<!-- Lupon Outstream tag -->
+<script>
+  window.LuponOutstream = {
+    publisherId:        '${pub}',
+    placementId:        '${plac}',
+    paragraphOffset:    ${off},
+    paragraphSelector:  '${sel}',
+    playerHeight:       ${ph},${vastLine}
+    bidders:            [${bids.map(b=>`"${b}"`).join(', ')}],
+  };
+<\/script>
+<script src="https://cdn.luponmedia.com/outstream/v1/tag.js" async><\/script>`;
+}
+
+function copyTag(){
+  navigator.clipboard.writeText(getPlainTag()).then(()=>{
+    const btn=document.getElementById('copyBtn');
+    btn.textContent='Kopirano!';
+    btn.classList.add('copied');
+    btn.classList.remove('primary');
+    setTimeout(()=>{btn.textContent='Copy tag';btn.classList.remove('copied');btn.classList.add('primary');},2000);
+  });
+}
+
+initBidders();
+render();
+</script>
+</body>
+</html>
