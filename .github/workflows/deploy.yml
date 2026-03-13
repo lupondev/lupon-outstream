@@ -13,5 +13,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: lupon-outstream
           directory: .
-          wranglerVersion: "3"
-          branch: main
+          wranglerVersion: 3
