@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>novi.ba — Outstream Tags</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f13;color:#e0e0e0;padding:32px;max-width:900px;margin:0 auto}
+h1{font-size:20px;font-weight:500;color:#fff;margin-bottom:4px}
+.meta{font-size:13px;color:#555;margin-bottom:32px}
+.section{margin-bottom:32px}
+.section h2{font-size:12px;font-weight:500;color:#666;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500}
+.badge.magnite{background:rgba(87,53,230,.2);color:#a78bfa;border:0.5px solid rgba(87,53,230,.3)}
+.badge.adform{background:rgba(24,95,165,.2);color:#69b0f5;border:0.5px solid rgba(24,95,165,.3)}
+.badge.live{background:rgba(86,211,100,.1);color:#56d364;border:0.5px solid rgba(86,211,100,.3)}
+.code-box{background:#0d1117;border:0.5px solid #2a2a3a;border-radius:10px;padding:20px;font-family:'SF Mono',Consolas,monospace;font-size:12px;line-height:1.75;overflow-x:auto;position:relative}
+.copy-btn{position:absolute;top:12px;right:12px;padding:5px 12px;background:#1a1a24;border:0.5px solid #2a2a3a;border-radius:6px;color:#888;font-size:11px;cursor:pointer;transition:all .15s}
+.copy-btn:hover{border-color:#444;color:#ccc}
+.copy-btn.ok{background:#0f3d1f;color:#56d364;border-color:#56d364}
+.comment{color:#484f58}
+.tag{color:#ff7b72}
+.attr{color:#79c0ff}
+.str{color:#a5d6ff}
+.num{color:#f0883e}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.info-card{background:#1a1a24;border:0.5px solid #2a2a3a;border-radius:8px;padding:14px}
+.info-card .label{font-size:11px;color:#555;margin-bottom:4px}
+.info-card .value{font-size:14px;color:#e0e0e0;font-family:monospace}
+.divider{border:none;border-top:0.5px solid #2a2a3a;margin:32px 0}
+</style>
+</head>
+<body>
+
+<h1>novi.ba — Outstream</h1>
+<p class="meta">Lupon Ventures & Lupon Media &nbsp;·&nbsp; Zone: novi.ba - outstream &nbsp;·&nbsp; Format: Outstream in-article (Video)</p>
+
+<div class="section">
+  <h2><span class="badge magnite">Magnite</span> Apex Tag <span class="badge live">LIVE</span></h2>
+  <div class="info-grid">
+    <div class="info-card"><div class="label">Account ID</div><div class="value">12398</div></div>
+    <div class="info-card"><div class="label">Site ID</div><div class="value">529542</div></div>
+    <div class="info-card"><div class="label">Zone ID</div><div class="value">4059987</div></div>
+    <div class="info-card"><div class="label">Size</div><div class="value">640×360 (size_id: 203)</div></div>
+  </div>
+  <div class="code-box" id="magniteBox">
+    <button class="copy-btn" onclick="copy('magnite')">Copy</button>
+<span class="comment">&lt;!-- Account: Lupon Ventures & Lupon Media
+     Site: novi.ba new  Zone: novi.ba - outstream
+     Format: Outstream in-article (Video) --&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">defer src</span>=<span class="str">"https://video-outstream.rubiconproject.com/apex.js"</span><span class="tag">&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="str">"text/javascript"</span><span class="tag">&gt;</span>
+function __magnite_apex_render_ad() {
+  MagniteApex.renderAd({
+    magnite: {
+      account_id: <span class="num">12398</span>,
+      site_id:    <span class="num">529542</span>,
+      zone_id:    <span class="num">4059987</span>,
+      size_id:    <span class="num">203</span>
+    },
+    width: <span class="num">640</span>,
+    height: <span class="num">360</span>,
+    placement: {
+      attachTo: <span class="str">"top"</span>,
+      position: <span class="str">"after"</span>,
+      align:    <span class="str">"center"</span>
+    },
+    collapse: true,
+    closeButton: true
+  });
+}
+if (document.readyState === <span class="str">"complete"</span>) {
+  __magnite_apex_render_ad();
+} else {
+  document.addEventListener(<span class="str">"DOMContentLoaded"</span>, __magnite_apex_render_ad);
+}
+<span class="tag">&lt;/script&gt;</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <h2><span class="badge adform">Adform</span> Outstream Tag <span class="badge live">LIVE</span></h2>
+  <div class="info-grid">
+    <div class="info-card"><div class="label">Publisher</div><div class="value">Novi.ba</div></div>
+    <div class="info-card"><div class="label">Publisher ID</div><div class="value">83364</div></div>
+    <div class="info-card"><div class="label">Placement</div><div class="value">novi.ba - outstream</div></div>
+    <div class="info-card"><div class="label">Placement ID</div><div class="value">2236422</div></div>
+  </div>
+  <div class="code-box" id="adformBox">
+    <button class="copy-btn" onclick="copy('adform')">Copy</button>
+<span class="comment">&lt;!-- Adform publisher tag --&gt;
+&lt;!-- Tag for placement "novi.ba - outstream",
+     placement ID 2236422, publisher "Novi.ba", publisher ID 83364 --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">id</span>=<span class="str">"adform-outstream"</span> <span class="attr">style</span>=<span class="str">"height:0;overflow:hidden;"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;script</span> <span class="attr">language</span>=<span class="str">"javascript"</span>
+         <span class="attr">src</span>=<span class="str">"//s1.adform.net/banners/scripts/video/outstream/inview.js"</span>
+         <span class="attr">data-pmp-id</span>=<span class="str">"2236422"</span><span class="tag">&gt;
+  &lt;/script&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+  </div>
+</div>
+
+<script>
+const tags = {
+  magnite: `<!-- Account: Lupon Ventures & Lupon Media\n     Site: novi.ba new  Zone: novi.ba - outstream\n     Format: Outstream in-article (Video) -->\n<script defer src="https://video-outstream.rubiconproject.com/apex.js"><\/script>\n<script type="text/javascript">\nfunction __magnite_apex_render_ad() {\n  MagniteApex.renderAd({\n    magnite: {\n      account_id: 12398,\n      site_id: 529542,\n      zone_id: 4059987,\n      size_id: 203\n    },\n    width: 640,\n    height: 360,\n    placement: {\n      attachTo: "top",\n      position: "after",\n      align: "center"\n    },\n    collapse: true,\n    closeButton: true\n  });\n}\nif (document.readyState === "complete") {\n  __magnite_apex_render_ad();\n} else {\n  document.addEventListener("DOMContentLoaded", __magnite_apex_render_ad);\n}\n<\/script>`,
+  adform: `<!-- Adform publisher tag -->\n<!-- Tag for placement "novi.ba - outstream", placement ID 2236422, publisher "Novi.ba", publisher ID 83364 -->\n<div id="adform-outstream" style="height:0;overflow:hidden;">\n  <script language="javascript"\n          src="//s1.adform.net/banners/scripts/video/outstream/inview.js"\n          data-pmp-id="2236422">\n  <\/script>\n<\/div>`
+};
+
+function copy(type) {
+  navigator.clipboard.writeText(tags[type]).then(() => {
+    const btn = document.querySelector(`#${type==='magnite'?'magnite':'adform'}Box .copy-btn`);
+    btn.textContent = 'Kopirano!';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

@@ -24,12 +24,14 @@ h1{font-size:18px;font-weight:500;color:#fff;margin-bottom:4px}
 .bidder-btn.active .dot{background:#185FA5}
 .tag-box{background:#0d1117;border-radius:8px;padding:16px;font-family:'SF Mono',Consolas,'Courier New',monospace;font-size:12px;line-height:1.75;overflow-x:auto;border:0.5px solid #2a2a3a}
 .comment{color:#484f58}.tag{color:#ff7b72}.attr{color:#79c0ff}.val{color:#a5d6ff}.key{color:#79c0ff}.str{color:#a5d6ff}.num{color:#f0883e}
-.actions{display:flex;gap:8px;margin-top:12px}
-.btn{padding:8px 16px;border:0.5px solid #2a2a3a;border-radius:8px;background:#1a1a24;cursor:pointer;font-size:13px;color:#ccc;display:flex;align-items:center;gap:6px;transition:all .15s}
+.actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{padding:8px 16px;border:0.5px solid #2a2a3a;border-radius:8px;background:#1a1a24;cursor:pointer;font-size:13px;color:#ccc;display:flex;align-items:center;gap:6px;transition:all .15s;text-decoration:none}
 .btn:hover{background:#222230;border-color:#444}
 .btn.primary{background:#185FA5;color:#fff;border-color:#185FA5}
 .btn.primary:hover{background:#1470bf}
 .btn.copied{background:#0f3d1f;color:#56d364;border-color:#56d364}
+.btn.magnite{background:rgba(87,53,230,.15);color:#a78bfa;border-color:rgba(87,53,230,.3)}
+.btn.adform{background:rgba(24,95,165,.15);color:#69b0f5;border-color:rgba(24,95,165,.3)}
 .full{grid-column:1/-1}
 table{width:100%;font-size:13px;border-collapse:collapse}
 th{text-align:left;color:#666;font-weight:400;padding:6px 8px;border-bottom:0.5px solid #2a2a3a}
@@ -37,11 +39,18 @@ td{padding:8px 8px;border-bottom:0.5px solid #1a1a24;color:#ccc}
 .live{display:inline-flex;align-items:center;gap:6px;color:#56d364;font-size:12px}
 .live::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:#56d364}
 .cdn-badge{display:inline-block;background:rgba(24,95,165,.15);color:#69b0f5;font-size:11px;padding:3px 8px;border-radius:4px;border:0.5px solid rgba(24,95,165,.3);margin-left:8px;font-family:monospace}
+.pub-link{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#1a1a24;border:0.5px solid #2a2a3a;border-radius:8px;color:#888;font-size:12px;text-decoration:none;transition:all .15s}
+.pub-link:hover{border-color:#444;color:#ccc}
+.publishers{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 </style>
 </head>
 <body>
 <h1>Lupon Outstream <span class="cdn-badge">cdn.luponmedia.com</span></h1>
 <p class="subtitle">Tag Generator — Teads model, Lupon kontroliše sve</p>
+
+<div class="publishers">
+  <a class="pub-link" href="/publishers/novi-ba/tag.html">novi.ba &nbsp;<span style="color:#56d364;font-size:10px">● LIVE</span></a>
+</div>
 
 <div class="grid">
   <div class="card">
@@ -64,15 +73,24 @@ td{padding:8px 8px;border-bottom:0.5px solid #1a1a24;color:#ccc}
     <div class="tag-box" id="tagBox"></div>
     <div class="actions">
       <button class="btn primary" id="copyBtn" onclick="copyTag()">Copy tag</button>
+      <a class="btn magnite" href="/publishers/novi-ba/tag.html">novi.ba Magnite + Adform ↗</a>
       <button class="btn" onclick="window.open('https://github.com/lupondev/lupon-outstream','_blank')">GitHub ↗</button>
     </div>
   </div>
 
   <div class="card full">
-    <h3>Placements</h3>
+    <h3>Publishers</h3>
     <table>
-      <thead><tr><th>Publisher</th><th>Placement</th><th>Bidders</th><th>CDN URL</th><th>Status</th></tr></thead>
-      <tbody id="placTable"></tbody>
+      <thead><tr><th>Publisher</th><th>Demand</th><th>Placement ID</th><th>Tag URL</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>novi.ba</td>
+          <td>Magnite Apex · Adform</td>
+          <td><code style="font-size:11px;color:#666">2236422 / 4059987</code></td>
+          <td><code style="font-size:11px;color:#666">/publishers/novi-ba/tag.html</code></td>
+          <td><span class="live">aktivan</span></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
@@ -89,7 +107,6 @@ const BIDDERS=[
   {id:'ix',label:'Index Exch.'},
 ];
 const active=new Set(['adagio','magnite','criteo','sovrn','pubmatic']);
-const placements=[];
 
 function initBidders(){
   document.getElementById('bidders').innerHTML=BIDDERS.map(b=>`
@@ -128,19 +145,6 @@ function render(){
   };
 <span class="tag">&lt;/script&gt;</span>
 <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.luponmedia.com/outstream/v1/tag.js"</span> <span class="attr">async</span><span class="tag">&gt;&lt;/script&gt;</span>`;
-
-  const existing=placements.find(p=>p.pub===pub&&p.plac===plac);
-  if(!existing) placements.push({pub,plac,cnt:bids.length});
-  else existing.cnt=bids.length;
-
-  document.getElementById('placTable').innerHTML=placements.map(p=>`
-    <tr>
-      <td>${esc(p.pub)}</td>
-      <td>${esc(p.plac)}</td>
-      <td>${p.cnt}</td>
-      <td><code style="font-size:11px;color:#666">cdn.luponmedia.com/outstream/v1/tag.js</code></td>
-      <td><span class="live">aktivan</span></td>
-    </tr>`).join('');
 }
 
 function getPlainTag(){
@@ -151,19 +155,8 @@ function getPlainTag(){
   const ph=document.getElementById('ph').value||280;
   const vast=document.getElementById('vast').value;
   const bids=[...active];
-  const vastLine=vast?`\n    vastUrl:           '${vast}',`:'';
-  return `<!-- Lupon Outstream tag -->
-<script>
-  window.LuponOutstream = {
-    publisherId:        '${pub}',
-    placementId:        '${plac}',
-    paragraphOffset:    ${off},
-    paragraphSelector:  '${sel}',
-    playerHeight:       ${ph},${vastLine}
-    bidders:            [${bids.map(b=>`"${b}"`).join(', ')}],
-  };
-<\/script>
-<script src="https://cdn.luponmedia.com/outstream/v1/tag.js" async><\/script>`;
+  const vastLine=vast?`\n    vastUrl: '${vast}',`:'';
+  return `<!-- Lupon Outstream tag -->\n<script>\n  window.LuponOutstream = {\n    publisherId: '${pub}',\n    placementId: '${plac}',\n    paragraphOffset: ${off},\n    paragraphSelector: '${sel}',\n    playerHeight: ${ph},${vastLine}\n    bidders: [${bids.map(b=>`"${b}"`).join(', ')}],\n  };\n<\/script>\n<script src="https://cdn.luponmedia.com/outstream/v1/tag.js" async><\/script>`;
 }
 
 function copyTag(){
