@@ -47,8 +47,8 @@
     return paras[idx] || null;
   }
 
-  // ─── BUILD PLAYER ─────────────────────────────────────────────────────────
-  function buildPlayer(vastUrl, anchor) {
+  // ─── BUILD PLAYER (samo kad imamo potvrđen MP4 URL) ───────────────────────
+  function buildPlayer(mp4Url, anchor) {
     var wrap = d.createElement('div');
     wrap.className = 'lpo-wrap';
 
@@ -85,7 +85,7 @@
     var skipBtn = d.createElement('button');
     skipBtn.className = 'lpo-skip';
     skipBtn.disabled = true;
-    skipBtn.textContent = 'Preskoči za ' + cfg.skipDelay + 's';
+    skipBtn.textContent = 'Presko\u010di za ' + cfg.skipDelay + 's';
     wrap.appendChild(skipBtn);
 
     // progress bar
@@ -94,7 +94,7 @@
     progressBar.style.width = '0%';
     wrap.appendChild(progressBar);
 
-    // insert into DOM
+    // Ubaci u DOM tek ovdje — MP4 je potvrđen
     anchor.parentNode.insertBefore(wrap, anchor.nextSibling);
 
     // ── EVENT HANDLERS ──
@@ -134,36 +134,43 @@
       setTimeout(function () { wrap.remove(); }, 400);
     });
 
-    // ── LOAD VAST & PLAY ──
-    loadVast(vastUrl, video, function () {
+    // Postavi MP4 i play
+    video.src = mp4Url;
+    video.load();
+    video.addEventListener('canplay', function () {
       video.play().catch(function () {});
-
       skipInterval = setInterval(function () {
         skipTimer--;
         if (skipTimer <= 0) {
           clearInterval(skipInterval);
           skipBtn.disabled = false;
-          skipBtn.textContent = 'Preskoči \u203a';
+          skipBtn.textContent = 'Presko\u010di \u203a';
         } else {
-          skipBtn.textContent = 'Preskoči za ' + skipTimer + 's';
+          skipBtn.textContent = 'Presko\u010di za ' + skipTimer + 's';
         }
       }, 1000);
-    });
+    }, { once: true });
   }
 
-  // ─── VAST PARSER (VAST XML → MP4 URL) ────────────────────────────────────
-  function loadVast(vastUrl, videoEl, onReady) {
+  // ─── VAST PARSER — NO-FILL GUARD ─────────────────────────────────────────
+  // FIX: player se NE ubacuje u DOM dok nema potvrđen MP4 URL iz VAST-a.
+  // Ako VAST vrati prazan response, nema MediaFile, ili nema MP4 —
+  // korisnik ne vidi ništa (nema bliceva).
+  function loadVast(vastUrl, anchor) {
     if (!vastUrl) return;
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', vastUrl, true);
     xhr.onload = function () {
-      if (xhr.status !== 200) return;
+      if (xhr.status !== 200) return; // HTTP greška — ništa
+
       try {
         var parser = new DOMParser();
         var xml = parser.parseFromString(xhr.responseText, 'text/xml');
-
         var mediaFiles = xml.querySelectorAll('MediaFile');
+
+        if (!mediaFiles.length) return; // prazan VAST — ništa
+
         var mp4Url = '';
         for (var i = 0; i < mediaFiles.length; i++) {
           var mf = mediaFiles[i];
@@ -177,12 +184,17 @@
           mp4Url = (mediaFiles[0].textContent || '').trim();
         }
 
-        if (mp4Url) {
-          videoEl.src = mp4Url;
-          videoEl.load();
-          videoEl.addEventListener('canplay', onReady, { once: true });
-        }
-      } catch (e) {}
+        if (!mp4Url) return; // nema MP4 — ništa
+
+        // Tek sada — gradimo player
+        buildPlayer(mp4Url, anchor);
+
+      } catch (e) {
+        // parse greška — ništa
+      }
+    };
+    xhr.onerror = function () {
+      // network greška — ništa
     };
     xhr.send();
   }
@@ -253,7 +265,7 @@
     var pbjs = w.pbjs;
 
     if (!pbjs || typeof pbjs.requestBids !== 'function') {
-      if (cfg.vastUrl) buildPlayer(cfg.vastUrl, anchor);
+      if (cfg.vastUrl) loadVast(cfg.vastUrl, anchor);
       return;
     }
 
@@ -266,7 +278,7 @@
         bidsBackHandler: function (bids) {
           var unitBids = bids['lupon-outstream-slot'];
           if (!unitBids || !unitBids.bids || !unitBids.bids.length) {
-            if (cfg.vastUrl) buildPlayer(cfg.vastUrl, anchor);
+            if (cfg.vastUrl) loadVast(cfg.vastUrl, anchor);
             return;
           }
           var winner = unitBids.bids.reduce(function (best, b) {
@@ -274,7 +286,8 @@
           }, unitBids.bids[0]);
 
           var vastUrl = winner.vastUrl || winner.vastXml || cfg.vastUrl;
-          if (vastUrl) buildPlayer(vastUrl, anchor);
+          if (vastUrl) loadVast(vastUrl, anchor);
+          // Nema vastUrl — ništa se ne prikazuje
         }
       });
     });
