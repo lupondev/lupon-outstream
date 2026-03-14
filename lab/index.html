@@ -14,8 +14,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav{display:flex;gap:4px}
 .nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
 .nav a:hover,.nav a.active{background:#1a1a2e;color:#fff}
-.nav a.highlight{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
-.nav a.highlight:hover{background:rgba(245,158,11,.2);color:#fbbf24}
+.nav a.yellow{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.nav a.yellow:hover{background:rgba(245,158,11,.2)}
+.nav a.purple{background:rgba(124,58,237,.1);color:#a78bfa;border:1px solid rgba(124,58,237,.2)}
+.nav a.purple:hover{background:rgba(124,58,237,.2)}
 .hero{padding:56px 32px 40px;max-width:1100px;margin:0 auto}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-bottom:40px}
 .hero-text h1{font-size:32px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:8px}
@@ -42,6 +44,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .card-icon.rewarded{background:rgba(245,158,11,.15)}
 .card-icon.ctv{background:rgba(239,68,68,.15)}
 .card-icon.prebid{background:rgba(245,158,11,.15)}
+.card-icon.admin{background:rgba(124,58,237,.15)}
 .chip{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:.2px}
 .chip.live{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
 .chip.dev{background:rgba(227,179,65,.1);color:#e3b341;border:1px solid rgba(227,179,65,.2)}
@@ -52,16 +55,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .card p{font-size:12px;color:#555;line-height:1.5;margin-bottom:12px}
 .tags{display:flex;flex-wrap:wrap;gap:5px}
 .tag{font-size:10px;padding:2px 7px;border-radius:4px;background:#111;border:1px solid #1e1e2e;color:#555}
-.tag.m{color:#a78bfa}
-.tag.a{color:#69b0f5}
-.tag.g{color:#56d364}
-.tag.t{color:#fb923c}
-.tag.c{color:#f59e0b}
-.tag.s{color:#34d399}
-.tag.p{color:#60a5fa}
-.tag.ix{color:#e879f9}
-.tag.ok{color:#56d364}
-.tag.err{color:#f85149}
+.tag.m{color:#a78bfa}.tag.a{color:#69b0f5}.tag.g{color:#56d364}.tag.t{color:#fb923c}
+.tag.c{color:#f59e0b}.tag.s{color:#34d399}.tag.p{color:#60a5fa}.tag.ix{color:#e879f9}
+.tag.ok{color:#56d364}.tag.err{color:#f85149}
 .footer{border-top:1px solid #111;padding:24px 32px;text-align:center;font-size:11px;color:#333}
 </style>
 </head>
@@ -78,7 +74,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <a href="/lab/formats">Formats</a>
     <a href="/lab/bidders">Bidders</a>
     <a href="/lab/publishers">Publishers</a>
-    <a href="/lab/prebid" class="highlight">⚡ Prebid Tester</a>
+    <a href="/lab/prebid" class="yellow">⚡ Prebid</a>
+    <a href="/lab/admin" class="purple">⚙️ Admin</a>
   </nav>
 </div>
 
@@ -125,21 +122,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <a class="card" href="/lab/formats/rewarded">
       <div class="card-top"><div class="card-icon rewarded">🎁</div><span class="chip dev">DEV</span></div>
       <h3>Rewarded Video</h3>
-      <p>AdBlock recovery. Watch 30s → get 10min free reading. Detect → overlay → VAST → reward.</p>
+      <p>AdBlock recovery. Watch 30s → get 10min free reading.</p>
       <div class="tags"><span class="tag g">Google IMA</span><span class="tag m">Magnite</span></div>
     </a>
     <a class="card" href="/lab/prebid">
       <div class="card-top"><div class="card-icon prebid">⚡</div><span class="chip live">LIVE</span></div>
       <h3>Prebid Auction Tester</h3>
-      <p>Simulate header bidding auction with all 12 bidders. Display, video, native. Live CPM comparison.</p>
-      <div class="tags"><span class="tag m">Magnite</span><span class="tag c">Criteo</span><span class="tag p">PubMatic</span><span class="tag ix">+9 more</span></div>
+      <p>Header bidding auction with all 12 bidders. Display, video, native. Live CPM comparison.</p>
+      <div class="tags"><span class="tag m">Magnite</span><span class="tag c">Criteo</span><span class="tag p">PubMatic</span><span class="tag ix">+9</span></div>
     </a>
-    <div class="card disabled">
-      <div class="card-top"><div class="card-icon ctv">📺</div><span class="chip planned">PLANNED</span></div>
-      <h3>CTV / OTT</h3>
-      <p>Connected TV VAST tags. Pre-roll for streaming environments.</p>
-      <div class="tags"><span class="tag">Coming soon</span></div>
-    </div>
+    <a class="card" href="/lab/admin">
+      <div class="card-top"><div class="card-icon admin">⚙️</div><span class="chip live">LIVE</span></div>
+      <h3>Bidder Admin</h3>
+      <p>Add, edit, configure any bidder. Set params, test live, copy Prebid config. One click.</p>
+      <div class="tags"><span class="tag m">12 bidders</span><span class="tag g">Config editor</span><span class="tag p">Live test</span></div>
+    </a>
   </div>
 </div>
 
@@ -150,34 +147,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <a href="/lab/bidders" style="font-size:12px;color:#555;text-decoration:none">View all →</a>
   </div>
   <div class="grid">
-    <a class="card" href="/lab/bidders/magnite">
+    <a class="card" href="/lab/admin">
       <div class="card-top"><div class="card-icon video">🟣</div><span class="chip fail">No fill</span></div>
       <h3>Magnite / Rubicon</h3>
       <p>account_id: 12398 · zone_id: 4059987. VAST error 10303. Pending demand activation.</p>
       <div class="tags"><span class="tag err">adError 10303</span><span class="tag m">Video</span><span class="tag m">Display</span></div>
     </a>
-    <a class="card" href="/lab/bidders/adform">
+    <a class="card" href="/lab/admin">
       <div class="card-top"><div class="card-icon display">🔵</div><span class="chip fail">No fill</span></div>
       <h3>Adform</h3>
-      <p>publisher_id: 83364 · placement_id: 2236422. inview.js loads · 204 No Content from OpenRTB.</p>
+      <p>publisher_id: 83364 · placement_id: 2236422. 204 No Content from OpenRTB.</p>
       <div class="tags"><span class="tag err">204 No Content</span><span class="tag a">Video</span><span class="tag a">Display</span></div>
     </a>
-    <a class="card" href="/lab/bidders/google-ima">
+    <a class="card" href="/lab/formats/outstream">
       <div class="card-top"><div class="card-icon native">🟢</div><span class="chip ok">Working</span></div>
       <h3>Google IMA Test</h3>
-      <p>Standard Google IMA VAST test creative. Always returns video. Use to verify player pipeline.</p>
+      <p>Standard VAST test creative. Always returns video. Confirms player pipeline works.</p>
       <div class="tags"><span class="tag ok">VAST 2.0 ✅</span><span class="tag g">Player OK</span></div>
     </a>
-    <a class="card" href="/lab/bidders/teads">
+    <a class="card" href="/lab/formats/outstream">
       <div class="card-top"><div class="card-icon video">🟠</div><span class="chip ok">Working</span></div>
       <h3>Teads</h3>
-      <p>Native outstream leader. Already serving on novi.ba. High fill for Balkans news.</p>
+      <p>Already serving on novi.ba. High fill for Balkans news publishers.</p>
       <div class="tags"><span class="tag ok">Serving ✅</span><span class="tag t">Outstream</span><span class="tag t">Native</span></div>
     </a>
-    <a class="card" href="/lab/bidders">
-      <div class="card-top"><div class="card-icon display">🔷</div><span class="chip planned">PLANNED</span></div>
-      <h3>+ 8 more bidders</h3>
-      <p>Criteo, PubMatic, Index Exchange, Xandr, Sovrn, OneTag, Seedtag, 33Across.</p>
+    <a class="card" href="/lab/admin">
+      <div class="card-top"><div class="card-icon display">⚙️</div><span class="chip planned">PLANNED</span></div>
+      <h3>+ 8 more → Configure in Admin</h3>
+      <p>Criteo, PubMatic, IX, Xandr, Sovrn, OneTag, Seedtag, 33Across. Add params in Admin.</p>
       <div class="tags"><span class="tag c">Criteo</span><span class="tag p">PubMatic</span><span class="tag ix">IX</span><span class="tag">+5</span></div>
     </a>
   </div>
@@ -193,19 +190,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <a class="card" href="/publishers/novi-ba/test">
       <div class="card-top"><div class="card-icon display">📰</div><span class="chip live">LIVE</span></div>
       <h3>novi.ba</h3>
-      <p>News — Bosnia & Herzegovina. Outstream test with live demand sources + Google IMA validation.</p>
+      <p>News — Bosnia & Herzegovina. Outstream + Google IMA test validated.</p>
       <div class="tags"><span class="tag m">Magnite</span><span class="tag a">Adform</span><span class="tag g">Google IMA ✅</span></div>
     </a>
     <div class="card disabled">
       <div class="card-top"><div class="card-icon display">⚽</div><span class="chip planned">PLANNED</span></div>
       <h3>sport.ba</h3>
-      <p>Sports publisher — Balkans. Outstream + display test.</p>
+      <p>Sports publisher — Balkans.</p>
       <div class="tags"><span class="tag">Coming soon</span></div>
     </div>
     <div class="card disabled">
       <div class="card-top"><div class="card-icon display">🗞️</div><span class="chip planned">PLANNED</span></div>
       <h3>faktor.ba</h3>
-      <p>News publisher — Bosnia. Full format test suite.</p>
+      <p>News publisher — Bosnia.</p>
       <div class="tags"><span class="tag">Coming soon</span></div>
     </div>
   </div>
