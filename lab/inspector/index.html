@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URL Inspector — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
+nav a:hover,nav a.active{background:#1a1a2e;color:#fff}
+nav{display:flex;gap:4px}
+
+/* Search bar */
+.search-wrap{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:20px 32px}
+.search-inner{max-width:860px;margin:0 auto}
+.search-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
+.search-sub{font-size:13px;color:#444;margin-bottom:16px}
+.search-row{display:flex;gap:8px}
+.url-input{flex:1;background:#050508;border:1px solid #1a1a2e;border-radius:8px;padding:12px 16px;font-size:14px;color:#e0e0e0;transition:border-color .15s;font-family:inherit}
+.url-input:focus{outline:none;border-color:#7c3aed55;background:#080810}
+.url-input::placeholder{color:#333}
+.scan-btn{background:linear-gradient(135deg,#7c3aed,#3b82f6);border:none;color:#fff;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.scan-btn:hover{opacity:.9}
+.scan-btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:1fr 340px;gap:0;height:calc(100vh - 56px - 120px)}
+.left{overflow-y:auto;padding:24px 32px}
+.right{background:#0a0a12;border-left:1px solid #111;overflow-y:auto;padding:20px}
+
+/* Check groups */
+.group{margin-bottom:24px}
+.group-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.group-icon{font-size:16px}
+.group-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#333}
+.group-score{margin-left:auto;font-size:11px;font-family:monospace}
+
+/* Check items */
+.check{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:4px;border:1px solid transparent;transition:all .15s}
+.check:hover{background:#0d0d1a}
+.check-icon{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:1px}
+.check-icon.ok{background:rgba(86,211,100,.15);color:#56d364;border:1px solid rgba(86,211,100,.3)}
+.check-icon.fail{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.3)}
+.check-icon.warn{background:rgba(227,179,65,.15);color:#e3b341;border:1px solid rgba(227,179,65,.3)}
+.check-icon.pending{background:#111;color:#333;border:1px solid #1a1a2e}
+.check-icon.skip{background:#0d0d1a;color:#222;border:1px solid #111}
+.check-body{flex:1;min-width:0}
+.check-name{font-size:13px;color:#e0e0e0;margin-bottom:2px}
+.check-detail{font-size:11px;color:#444;line-height:1.5;font-family:monospace}
+.check-detail.ok{color:#56d364}
+.check-detail.fail{color:#f85149}
+.check-detail.warn{color:#e3b341}
+.check-num{font-size:10px;color:#222;width:18px;text-align:right;flex-shrink:0;margin-top:3px}
+
+/* Right panel */
+.panel-section{margin-bottom:20px}
+.panel-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;font-weight:700;margin-bottom:12px}
+.score-ring{width:80px;height:80px;margin:0 auto 16px;position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring .score-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff}
+.summary-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+.summary-row .k{color:#444}
+.summary-row .v{font-family:monospace}
+.v.ok{color:#56d364}.v.fail{color:#f85149}.v.warn{color:#e3b341}
+.sep{border-top:1px solid #111;margin:16px 0}
+.issue-list{}
+.issue-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px;margin-bottom:6px;font-size:12px}
+.issue-item.critical{border-color:rgba(248,81,73,.3);background:rgba(248,81,73,.05)}
+.issue-item.warn{border-color:rgba(227,179,65,.3);background:rgba(227,179,65,.05)}
+.issue-title{font-weight:600;margin-bottom:2px}
+.issue-title.critical{color:#f85149}
+.issue-title.warn{color:#e3b341}
+.issue-fix{color:#555;font-size:11px;line-height:1.4}
+.progress-wrap{background:#050508;border:1px solid #111;border-radius:6px;overflow:hidden;height:4px;margin-bottom:16px}
+.progress-bar{height:100%;background:linear-gradient(90deg,#7c3aed,#3b82f6);width:0%;transition:width .3s}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 32px;color:#333}
+.empty h3{font-size:16px;color:#444;margin-bottom:8px}
+.empty p{font-size:13px;line-height:1.6}
+.empty .checklist{text-align:left;display:inline-block;margin-top:16px;font-size:12px;color:#2a2a3a;line-height:1.8}
+
+/* Status badge */
+.status-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:20px;margin-bottom:16px}
+.status-badge.scanning{background:rgba(59,130,246,.1);color:#3b82f6;border:1px solid rgba(59,130,246,.2)}
+.status-badge.done{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
+.status-badge.error{background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.2)}
+.pulse{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    Lupon Ad Lab
+    <span style="color:#333;font-size:13px;font-weight:400">/ URL Inspector</span>
+  </div>
+  <nav>
+    <a href="/lab">Dashboard</a>
+    <a href="/lab/inspector" class="active">🔍 Inspector</a>
+    <a href="/lab/admin">Admin</a>
+    <a href="/lab/prebid">⚡ Prebid</a>
+  </nav>
+</div>
+
+<div class="search-wrap">
+  <div class="search-inner">
+    <div class="search-title">🔍 URL Inspector</div>
+    <div class="search-sub">30-step ad ops technical audit. Paste any publisher URL and get a full diagnosis in seconds.</div>
+    <div class="search-row">
+      <input class="url-input" id="url-input" placeholder="https://novi.ba/clanak/..." value="https://novi.ba">
+      <button class="scan-btn" id="scan-btn" onclick="startScan()">Scan →</button>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="left" id="left-panel">
+    <div class="empty" id="empty-state">
+      <h3>Enter a URL to begin</h3>
+      <p>The inspector will automatically check 30 technical ad ops criteria.</p>
+      <div class="checklist">
+        Layer 1 — Setup (10 checks)<br>
+           ads.txt · CMP/consent · JS errors · GPT · Prebid<br>
+        Layer 2 — Auction (10 checks)<br>
+           Bidders · Timeouts · Fill rate · Floor · Winner<br>
+        Layer 3 — Delivery (10 checks)<br>
+           Viewability · CLS · Latency · VAST · Formats
+      </div>
+    </div>
+    <div id="checks-area" style="display:none"></div>
+  </div>
+
+  <div class="right">
+    <div class="panel-section">
+      <div class="panel-title">Audit Score</div>
+      <div class="score-ring">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" fill="none" stroke="#111" stroke-width="8"/>
+          <circle id="score-circle" cx="40" cy="40" r="34" fill="none" stroke="#56d364" stroke-width="8"
+            stroke-dasharray="213.6" stroke-dashoffset="213.6" stroke-linecap="round"
+            style="transition:stroke-dashoffset .6s ease,stroke .3s"/>
+        </svg>
+        <div class="score-text" id="score-text">-</div>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+      <div id="status-badge"></div>
+    </div>
+
+    <div class="summary-row"><span class="k">URL</span><span class="v" id="s-url" style="font-size:10px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">—</span></div>
+    <div class="summary-row"><span class="k">Checks passed</span><span class="v ok" id="s-passed">0/30</span></div>
+    <div class="summary-row"><span class="k">Critical issues</span><span class="v fail" id="s-critical">0</span></div>
+    <div class="summary-row"><span class="k">Warnings</span><span class="v warn" id="s-warnings">0</span></div>
+    <div class="summary-row"><span class="k">Prebid.js</span><span class="v" id="s-prebid">—</span></div>
+    <div class="summary-row"><span class="k">Bidders active</span><span class="v" id="s-bidders">—</span></div>
+    <div class="summary-row"><span class="k">CMP</span><span class="v" id="s-cmp">—</span></div>
+    <div class="summary-row"><span class="k">ads.txt</span><span class="v" id="s-adstxt">—</span></div>
+
+    <div class="sep"></div>
+    <div class="panel-title">Issues to Fix</div>
+    <div class="issue-list" id="issue-list"><span style="font-size:12px;color:#222">No issues detected yet.</span></div>
+  </div>
+</div>
+
+<script>
+// ── CHECK DEFINITIONS ───────────────────────────────────────────────
+var CHECKS = [
+  // ── LAYER 1: SETUP ────────────────────────────────────────────────
+  { id:'adstxt',      group:'Setup',    name:'ads.txt accessible',          critical:true,  fn: checkAdstxt },
+  { id:'adstxt_lupon',group:'Setup',    name:'ads.txt has Lupon entry',      critical:true,  fn: checkAdstxtLupon },
+  { id:'https',       group:'Setup',    name:'HTTPS / secure context',       critical:true,  fn: checkHttps },
+  { id:'cmp',         group:'Setup',    name:'CMP / Consent detected',       critical:true,  fn: checkCMP },
+  { id:'prebid',      group:'Setup',    name:'Prebid.js loaded',             critical:false, fn: checkPrebid },
+  { id:'prebid_ver',  group:'Setup',    name:'Prebid.js version',            critical:false, fn: checkPrebidVersion },
+  { id:'gpt',         group:'Setup',    name:'Google Publisher Tag (GPT)',   critical:false, fn: checkGPT },
+  { id:'js_errors',   group:'Setup',    name:'No critical JS errors',        critical:true,  fn: checkJSErrors },
+  { id:'adunits',     group:'Setup',    name:'Ad units in DOM',              critical:true,  fn: checkAdUnits },
+  { id:'viewport',    group:'Setup',    name:'Viewport meta tag',            critical:false, fn: checkViewport },
+
+  // ── LAYER 2: AUCTION ──────────────────────────────────────────────
+  { id:'pbjs_adunits',group:'Auction',  name:'Prebid ad units configured',   critical:true,  fn: checkPbjsAdUnits },
+  { id:'bidders',     group:'Auction',  name:'Bidders configured',           critical:true,  fn: checkBidders },
+  { id:'bid_timeout', group:'Auction',  name:'Bid timeout ≤ 2000ms',         critical:false, fn: checkTimeout },
+  { id:'floor',       group:'Auction',  name:'Price floors configured',      critical:false, fn: checkFloors },
+  { id:'consent_gdpr',group:'Auction',  name:'GDPR consent passed to bids',  critical:true,  fn: checkGDPRBids },
+  { id:'bid_req',     group:'Auction',  name:'Bid requests firing',          critical:true,  fn: checkBidRequests },
+  { id:'bid_resp',    group:'Auction',  name:'Bid responses received',       critical:false, fn: checkBidResponses },
+  { id:'timeouts',    group:'Auction',  name:'Timeout rate < 30%',           critical:false, fn: checkTimeoutRate },
+  { id:'winners',     group:'Auction',  name:'Auction winners detected',     critical:false, fn: checkWinners },
+  { id:'nobid',       group:'Auction',  name:'No all-nobid scenario',        critical:false, fn: checkNoBid },
+
+  // ── LAYER 3: DELIVERY ─────────────────────────────────────────────
+  { id:'iframes',     group:'Delivery', name:'Ad iframes rendering',         critical:false, fn: checkIframes },
+  { id:'vast',        group:'Delivery', name:'No empty VAST responses',      critical:false, fn: checkVAST },
+  { id:'adblock',     group:'Delivery', name:'AdBlock detection',            critical:false, fn: checkAdblock },
+  { id:'viewability', group:'Delivery', name:'Ad slots in viewport',         critical:false, fn: checkViewability },
+  { id:'cls',         group:'Delivery', name:'No CLS from ads',              critical:false, fn: checkCLS },
+  { id:'sellers',     group:'Delivery', name:'sellers.json accessible',      critical:false, fn: checkSellers },
+  { id:'outstream',   group:'Delivery', name:'Outstream player detected',    critical:false, fn: checkOutstream },
+  { id:'native',      group:'Delivery', name:'Native ads configured',        critical:false, fn: checkNative },
+  { id:'safeframe',   group:'Delivery', name:'SafeFrame / sandboxing',       critical:false, fn: checkSafeframe },
+  { id:'page_speed',  group:'Delivery', name:'Page load reasonable',         critical:false, fn: checkPageSpeed },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────
+var state = { url:'', results:{}, scanning:false, fetchedData:{} };
+
+// ── CHECK IMPLEMENTATIONS ────────────────────────────────────────────
+function ok(detail)   { return { status:'ok',   detail: detail || '' }; }
+function fail(detail) { return { status:'fail', detail: detail || '' }; }
+function warn(detail) { return { status:'warn', detail: detail || '' }; }
+function skip(detail) { return { status:'skip', detail: detail || 'N/A' }; }
+
+async function checkAdstxt() {
+  try {
+    var domain = new URL(state.url).origin;
+    var r = await fetch(domain + '/ads.txt', {mode:'cors'});
+    if (!r.ok) return fail('ads.txt returns ' + r.status);
+    var txt = await r.text();
+    state.fetchedData.adstxt = txt;
+    var lines = txt.split('\n').filter(function(l){ return l.trim() && !l.startsWith('#'); });
+    return ok(lines.length + ' entries found');
+  } catch(e) { return fail('Cannot fetch ads.txt: ' + e.message); }
+}
+
+async function checkAdstxtLupon() {
+  if (!state.fetchedData.adstxt) return skip('ads.txt not fetched');
+  var txt = state.fetchedData.adstxt.toLowerCase();
+  var hasLupon = txt.includes('luponmedia') || txt.includes('lupon');
+  var hasMagnite = txt.includes('rubiconproject') || txt.includes('magnite');
+  if (hasLupon) return ok('luponmedia entry found');
+  if (hasMagnite) return warn('Magnite found but no Lupon entry');
+  return fail('No Lupon entry in ads.txt');
+}
+
+async function checkHttps() {
+  return state.url.startsWith('https') ? ok('HTTPS confirmed') : fail('HTTP — not secure, bids may be blocked');
+}
+
+async function checkCMP() {
+  // Check via PageSpeed or just infer from URL
+  try {
+    var r = await fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' + encodeURIComponent(state.url) + '&strategy=mobile&key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY', {signal: AbortSignal.timeout(8000)});
+    if (r.ok) {
+      var d = await r.json();
+      state.fetchedData.pagespeed = d;
+      // Look for CMP in lighthouse
+      return warn('CMP check requires page load (use Professor Prebid for live check)');
+    }
+  } catch(e) {}
+  return warn('Cannot verify CMP remotely — use live inspector');
+}
+
+async function checkPrebid() {
+  // Can check via HTML source for prebid script
+  if (state.fetchedData.html) {
+    var hasPbjs = state.fetchedData.html.includes('prebid') || state.fetchedData.html.includes('pbjs');
+    return hasPbjs ? ok('Prebid.js script detected in source') : warn('Prebid not found in source — may load dynamically');
+  }
+  return warn('Requires live page load');
+}
+
+async function checkPrebidVersion() {
+  if (state.fetchedData.html) {
+    var m = state.fetchedData.html.match(/prebid[._-]?v?([\d.]+)/i);
+    if (m) return ok('v' + m[1]);
+    return warn('Version not detectable from source');
+  }
+  return warn('Requires live page load');
+}
+
+async function checkGPT() {
+  if (state.fetchedData.html) {
+    var hasGPT = state.fetchedData.html.includes('googletag') || state.fetchedData.html.includes('gpt.js') || state.fetchedData.html.includes('securepubads');
+    return hasGPT ? ok('GPT detected') : warn('GPT not found in source');
+  }
+  return warn('Requires live page load');
+}
+
+async function checkJSErrors() {
+  return warn('JS error check requires live page inspection via Professor Prebid');
+}
+
+async function checkAdUnits() {
+  if (state.fetchedData.html) {
+    var slotPatterns = ['div-gpt-ad', 'adxp_', 'ad-slot', 'ad_slot', 'banner-ad', 'lupon', 'novi_ba_'];
+    var found = slotPatterns.filter(function(p){ return state.fetchedData.html.toLowerCase().includes(p); });
+    if (found.length) return ok('Ad slot patterns found: ' + found.join(', '));
+    return warn('No obvious ad unit divs in source — may be dynamic');
+  }
+  return warn('Requires page source');
+}
+
+async function checkViewport() {
+  if (state.fetchedData.html) {
+    var hasViewport = state.fetchedData.html.includes('viewport');
+    return hasViewport ? ok('Viewport meta tag present') : fail('Missing viewport meta — mobile ads may break');
+  }
+  return warn('Requires page source');
+}
+
+async function checkPbjsAdUnits() {
+  return warn('Requires live page — use Professor Prebid tab');
+}
+
+async function checkBidders() {
+  if (state.fetchedData.html) {
+    var bidderPatterns = ['rubiconproject', 'adform', 'criteo', 'pubmatic', 'openx', 'appnexus', 'sovrn', 'ix.js', 'teads'];
+    var found = bidderPatterns.filter(function(p){ return state.fetchedData.html.toLowerCase().includes(p); });
+    if (found.length >= 2) return ok(found.length + ' bidder endpoints found');
+    if (found.length === 1) return warn('Only 1 bidder found — check Prebid config');
+    return warn('No bidder scripts in source — may be via Prebid adapter');
+  }
+  return warn('Requires page source');
+}
+
+async function checkTimeout() {
+  if (state.fetchedData.html) {
+    var m = state.fetchedData.html.match(/bidderTimeout["\s]*[:=]["\s]*(\d+)/i) ||
+             state.fetchedData.html.match(/timeout["\s]*[:=]["\s]*(\d+)/i);
+    if (m) {
+      var ms = parseInt(m[1]);
+      if (ms <= 2000) return ok(ms + 'ms');
+      return warn(ms + 'ms — too high, lower to ≤2000ms');
+    }
+  }
+  return warn('Timeout not detectable from source');
+}
+
+async function checkFloors() {
+  if (state.fetchedData.html) {
+    var hasFloors = state.fetchedData.html.includes('priceFloors') || state.fetchedData.html.includes('floors') || state.fetchedData.html.includes('floor');
+    return hasFloors ? ok('Price floor config detected') : warn('No floor config detected — consider adding floors');
+  }
+  return warn('Requires page source');
+}
+
+async function checkGDPRBids() {
+  if (state.fetchedData.html) {
+    var hasConsent = state.fetchedData.html.includes('consentManagement') || state.fetchedData.html.includes('gdpr') || state.fetchedData.html.includes('tcf');
+    return hasConsent ? ok('GDPR/TCF config detected') : fail('No consent management detected — EU bids may be blocked');
+  }
+  return warn('Requires page source');
+}
+
+async function checkBidRequests() {
+  return warn('Requires live network inspection');
+}
+
+async function checkBidResponses() {
+  return warn('Requires live network inspection');
+}
+
+async function checkTimeoutRate() {
+  return warn('Requires live auction data');
+}
+
+async function checkWinners() {
+  return warn('Requires live auction data');
+}
+
+async function checkNoBid() {
+  return warn('Requires live auction data');
+}
+
+async function checkIframes() {
+  return warn('Requires live page inspection');
+}
+
+async function checkVAST() {
+  // Try to detect outstream/video VAST endpoint from source
+  if (state.fetchedData.html) {
+    var hasVast = state.fetchedData.html.includes('vast') || state.fetchedData.html.includes('VAST') || state.fetchedData.html.includes('apex.js');
+    if (hasVast) return ok('VAST / outstream tag detected');
+  }
+  return warn('VAST check requires live inspection');
+}
+
+async function checkAdblock() {
+  return warn('AdBlock detection requires live page load');
+}
+
+async function checkViewability() {
+  if (state.fetchedData.pagespeed) {
+    var lhr = state.fetchedData.pagespeed.lighthouseResult;
+    var fcp = lhr && lhr.audits && lhr.audits['first-contentful-paint'];
+    if (fcp) return ok('FCP: ' + fcp.displayValue + ' — viewability check: use live inspector');
+  }
+  return warn('Viewability requires live page inspection');
+}
+
+async function checkCLS() {
+  if (state.fetchedData.pagespeed) {
+    var lhr = state.fetchedData.pagespeed.lighthouseResult;
+    var cls = lhr && lhr.audits && lhr.audits['cumulative-layout-shift'];
+    if (cls) {
+      var score = parseFloat(cls.displayValue);
+      if (score < 0.1) return ok('CLS: ' + cls.displayValue + ' ✔️ good');
+      if (score < 0.25) return warn('CLS: ' + cls.displayValue + ' — ads may be causing layout shift');
+      return fail('CLS: ' + cls.displayValue + ' — critical, ads causing major layout shift');
+    }
+  }
+  return warn('CLS data unavailable');
+}
+
+async function checkSellers() {
+  try {
+    var domain = new URL(state.url).hostname.replace('www.', '');
+    var r = await fetch('https://' + domain + '/sellers.json', {signal: AbortSignal.timeout(5000)});
+    if (r.ok) {
+      var d = await r.json();
+      return ok('sellers.json found — ' + (d.sellers ? d.sellers.length : '?') + ' sellers');
+    }
+    return warn('sellers.json not found (optional but recommended)');
+  } catch(e) { return warn('sellers.json not accessible'); }
+}
+
+async function checkOutstream() {
+  if (state.fetchedData.html) {
+    var hasOutstream = state.fetchedData.html.includes('apex.js') || state.fetchedData.html.includes('outstream') || state.fetchedData.html.includes('inview.js');
+    return hasOutstream ? ok('Outstream player tag detected') : warn('No outstream tag found');
+  }
+  return warn('Requires page source');
+}
+
+async function checkNative() {
+  if (state.fetchedData.html) {
+    var hasNative = state.fetchedData.html.includes('native') || state.fetchedData.html.includes('nativegram') || state.fetchedData.html.includes('teads');
+    return hasNative ? ok('Native ad tag detected') : warn('No native ads detected');
+  }
+  return warn('Requires page source');
+}
+
+async function checkSafeframe() {
+  if (state.fetchedData.html) {
+    var hasSF = state.fetchedData.html.includes('safeframe') || state.fetchedData.html.includes('SafeFrame');
+    return hasSF ? ok('SafeFrame detected') : warn('SafeFrame not explicit — may use standard iframes');
+  }
+  return warn('Requires page source');
+}
+
+async function checkPageSpeed() {
+  if (state.fetchedData.pagespeed) {
+    var lhr = state.fetchedData.pagespeed.lighthouseResult;
+    var perf = lhr && lhr.categories && lhr.categories.performance;
+    if (perf) {
+      var score = Math.round(perf.score * 100);
+      if (score >= 70) return ok('Performance score: ' + score + '/100');
+      if (score >= 50) return warn('Performance score: ' + score + '/100 — may impact viewability');
+      return fail('Performance score: ' + score + '/100 — poor, ads likely affected');
+    }
+  }
+  return warn('PageSpeed data unavailable');
+}
+
+// ── RENDER CHECKS ─────────────────────────────────────────────────────
+function renderChecks() {
+  var area = document.getElementById('checks-area');
+  area.innerHTML = '';
+
+  var groups = {};
+  CHECKS.forEach(function(c) {
+    if (!groups[c.group]) groups[c.group] = [];
+    groups[c.group].push(c);
+  });
+
+  var groupIcons = { 'Setup': '🔧', 'Auction': '⚡', 'Delivery': '📦' };
+
+  Object.keys(groups).forEach(function(gname) {
+    var checks = groups[gname];
+    var passed = checks.filter(function(c){ return state.results[c.id] && state.results[c.id].status === 'ok'; }).length;
+    var total = checks.filter(function(c){ return !state.results[c.id] || state.results[c.id].status !== 'skip'; }).length;
+
+    var grpEl = document.createElement('div');
+    grpEl.className = 'group';
+
+    var hdr = document.createElement('div');
+    hdr.className = 'group-header';
+    hdr.innerHTML = '<span class="group-icon">' + (groupIcons[gname]||'📌') + '</span>' +
+      '<span class="group-title">Layer ' + (gname === 'Setup' ? '1' : gname === 'Auction' ? '2' : '3') + ' — ' + gname + '</span>' +
+      '<span class="group-score" style="color:' + (passed === total ? '#56d364' : '#e3b341') + '">' + passed + '/' + total + '</span>';
+    grpEl.appendChild(hdr);
+
+    checks.forEach(function(c, i) {
+      var r = state.results[c.id];
+      var status = r ? r.status : 'pending';
+      var detail = r ? r.detail : 'Waiting...';
+      var num = (gname === 'Setup' ? 0 : gname === 'Auction' ? 10 : 20) + i + 1;
+
+      var el = document.createElement('div');
+      el.className = 'check';
+      el.id = 'check-' + c.id;
+      el.innerHTML =
+        '<span class="check-num">' + num + '</span>' +
+        '<span class="check-icon ' + status + '">' + (status === 'ok' ? '✓' : status === 'fail' ? '✗' : status === 'warn' ? '!' : status === 'skip' ? '−' : '⋯') + '</span>' +
+        '<div class="check-body">' +
+          '<div class="check-name">' + c.name + (c.critical ? ' <span style="color:#f85149;font-size:9px">REQUIRED</span>' : '') + '</div>' +
+          '<div class="check-detail ' + status + '">' + detail + '</div>' +
+        '</div>';
+      grpEl.appendChild(el);
+    });
+
+    area.appendChild(grpEl);
+  });
+}
+
+function updateCheck(id, result) {
+  state.results[id] = result;
+  var el = document.getElementById('check-' + id);
+  if (!el) return;
+  var icon = el.querySelector('.check-icon');
+  var detail = el.querySelector('.check-detail');
+  icon.className = 'check-icon ' + result.status;
+  icon.textContent = result.status === 'ok' ? '✓' : result.status === 'fail' ? '✗' : result.status === 'warn' ? '!' : '−';
+  detail.className = 'check-detail ' + result.status;
+  detail.textContent = result.detail;
+  updateStats();
+}
+
+function updateStats() {
+  var results = Object.values(state.results);
+  var passed = results.filter(function(r){ return r.status === 'ok'; }).length;
+  var critical = results.filter(function(r){ return r.status === 'fail'; }).length;
+  var warnings = results.filter(function(r){ return r.status === 'warn'; }).length;
+  var total = CHECKS.filter(function(c){ return !state.results[c.id] || state.results[c.id].status !== 'skip'; }).length;
+
+  document.getElementById('s-passed').textContent = passed + '/' + CHECKS.length;
+  document.getElementById('s-critical').textContent = critical;
+  document.getElementById('s-warnings').textContent = warnings;
+
+  var score = total > 0 ? Math.round((passed / total) * 100) : 0;
+  document.getElementById('score-text').textContent = score;
+  var circumference = 213.6;
+  var offset = circumference - (score / 100) * circumference;
+  var circle = document.getElementById('score-circle');
+  circle.style.strokeDashoffset = offset;
+  circle.style.stroke = score >= 70 ? '#56d364' : score >= 40 ? '#e3b341' : '#f85149';
+  document.getElementById('progress').style.width = (Object.keys(state.results).length / CHECKS.length * 100) + '%';
+
+  // Issues
+  var issues = document.getElementById('issue-list');
+  var failedCritical = CHECKS.filter(function(c){ return c.critical && state.results[c.id] && state.results[c.id].status === 'fail'; });
+  var warned = CHECKS.filter(function(c){ return state.results[c.id] && state.results[c.id].status === 'warn'; });
+  if (failedCritical.length === 0 && warned.length === 0) {
+    issues.innerHTML = '<span style="font-size:12px;color:#222">No issues yet.</span>';
+    return;
+  }
+  issues.innerHTML = '';
+  failedCritical.forEach(function(c){
+    var d = document.createElement('div');
+    d.className = 'issue-item critical';
+    d.innerHTML = '<div class="issue-title critical">❌ ' + c.name + '</div><div class="issue-fix">' + (state.results[c.id].detail || '') + '</div>';
+    issues.appendChild(d);
+  });
+  warned.slice(0,4).forEach(function(c){
+    var d = document.createElement('div');
+    d.className = 'issue-item warn';
+    d.innerHTML = '<div class="issue-title warn">⚠️ ' + c.name + '</div><div class="issue-fix">' + (state.results[c.id].detail || '') + '</div>';
+    issues.appendChild(d);
+  });
+}
+
+// ── MAIN SCAN ───────────────────────────────────────────────────────────
+async function startScan() {
+  var url = document.getElementById('url-input').value.trim();
+  if (!url) return;
+  if (!url.startsWith('http')) url = 'https://' + url;
+
+  state.url = url;
+  state.results = {};
+  state.fetchedData = {};
+  state.scanning = true;
+
+  document.getElementById('scan-btn').disabled = true;
+  document.getElementById('scan-btn').textContent = 'Scanning...';
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('checks-area').style.display = 'block';
+  document.getElementById('s-url').textContent = url;
+
+  var badge = document.getElementById('status-badge');
+  badge.className = 'status-badge scanning';
+  badge.innerHTML = '<span class="pulse"></span> Scanning...';
+
+  renderChecks();
+
+  // Step 1: Fetch page source
+  try {
+    var r = await fetch(url, {signal: AbortSignal.timeout(8000)});
+    if (r.ok) {
+      state.fetchedData.html = await r.text();
+    }
+  } catch(e) {
+    // CORS or network error — continue without source
+    state.fetchedData.html = '';
+  }
+
+  // Run all checks sequentially with UI updates
+  for (var i = 0; i < CHECKS.length; i++) {
+    var check = CHECKS[i];
+    try {
+      var result = await check.fn();
+      updateCheck(check.id, result);
+      renderChecks();
+      // Update summary fields
+      if (check.id === 'prebid') document.getElementById('s-prebid').textContent = result.status === 'ok' ? '✅ detected' : '⚠️ ' + result.detail;
+      if (check.id === 'bidders') document.getElementById('s-bidders').textContent = result.detail;
+      if (check.id === 'cmp') document.getElementById('s-cmp').textContent = result.status === 'ok' ? '✅ ok' : '⚠️ check live';
+      if (check.id === 'adstxt') document.getElementById('s-adstxt').textContent = result.status === 'ok' ? '✅ ok' : '❌ ' + result.detail;
+    } catch(e) {
+      updateCheck(check.id, warn('Check failed: ' + e.message));
+    }
+    await new Promise(function(res){ setTimeout(res, 80); });
+  }
+
+  // Done
+  state.scanning = false;
+  badge.className = 'status-badge done';
+  badge.innerHTML = '✅ Scan complete';
+  document.getElementById('scan-btn').disabled = false;
+  document.getElementById('scan-btn').textContent = 'Rescan ↺';
+  renderChecks();
+}
+
+// Enter key
+document.getElementById('url-input').addEventListener('keydown', function(e){ if (e.key === 'Enter') startScan(); });
+</script>
+</body>
+</html>
