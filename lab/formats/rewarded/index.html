@@ -3,158 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rewarded Video Test — Lupon Ad Lab</title>
+<title>Rewarded Video — Lupon Ad Lab</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0;overflow:hidden}
-.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
-.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
-.logo{font-size:14px;font-weight:700;color:#fff}
-.badge{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#f59e0b;font-size:10px;padding:2px 7px;border-radius:4px}
-.sim{position:relative;height:calc(100vh - 56px);overflow:hidden}
-/* Article sim */
-.article-sim{padding:32px;max-width:680px;margin:0 auto;filter:blur(0);transition:filter .3s}
-.article-sim.blurred{filter:blur(4px);pointer-events:none;user-select:none}
-.article-sim h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:12px}
-.article-sim p{font-size:14px;line-height:1.7;color:#666;margin-bottom:12px}
-.paywall{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent, #08080f 60%);pointer-events:none}
-/* AdBlock banner */
-.adblock-banner{position:absolute;bottom:0;left:0;right:0;background:#0d0d1a;border-top:1px solid #1a1a2e;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;transform:translateY(100%);transition:transform .4s ease}
-.adblock-banner.show{transform:translateY(0)}
-.banner-text h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
-.banner-text p{font-size:13px;color:#555;line-height:1.4}
-.banner-btn{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
-.banner-btn:hover{opacity:.9}
-/* Overlay */
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100}
-.overlay.show{display:flex}
-.overlay-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:16px;padding:32px;max-width:500px;width:90%;text-align:center}
-.overlay-card h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
-.overlay-card p{font-size:14px;color:#555;margin-bottom:24px;line-height:1.5}
-#video-container{background:#000;border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
-#video-container video{width:100%;display:block;max-height:250px}
-.countdown{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;font-size:12px;padding:4px 10px;border-radius:4px}
-.skip-btn{background:#7c3aed22;border:1px solid #7c3aed44;color:#a78bfa;border-radius:6px;padding:8px 20px;font-size:13px;cursor:pointer;margin-top:8px;transition:all .15s}
-.skip-btn:hover:not(:disabled){background:#7c3aed44}
-.skip-btn:disabled{opacity:.3;cursor:not-allowed}
-/* Reward */
-.reward{display:none;background:rgba(86,211,100,.05);border:1px solid rgba(86,211,100,.2);border-radius:10px;padding:20px;margin-top:16px;text-align:center}
-.reward.show{display:block}
-.reward h4{color:#56d364;font-size:16px;margin-bottom:6px}
-.reward p{color:#555;font-size:13px}
-/* Steps */
-.steps{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
-.step{background:#111;border:1px solid #1a1a2e;border-radius:6px;padding:8px 12px;font-size:11px;color:#333;display:flex;align-items:center;gap:6px}
-.step.active{border-color:#7c3aed44;color:#a78bfa}
-.step.done{border-color:rgba(86,211,100,.3);color:#56d364}
-.step-n{width:16px;height:16px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
-.step.active .step-n{background:#7c3aed}
-.step.done .step-n{background:#56d364;color:#000}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.logo{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.logo-icon{width:22px;height:22px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px}
+nav a{color:#666;font-size:12px;padding:5px 10px;border-radius:6px;text-decoration:none;transition:all .15s;margin-left:2px;white-space:nowrap}
+nav a:hover{background:#1a1a2e;color:#fff}
+.page{max-width:960px;margin:0 auto;padding:28px 20px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;margin-bottom:40px}
+.breadcrumb{font-size:11px;color:#333;margin-bottom:10px}
+.breadcrumb a{color:#444;text-decoration:none}
+.hero-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero-sub{font-size:13px;color:#555;line-height:1.7;margin-bottom:16px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px;text-align:center}
+.stat-val{font-size:18px;font-weight:800;font-family:monospace}
+.stat-val.amber{color:#f59e0b}
+.stat-val.green{color:#56d364}
+.stat-val.blue{color:#60a5fa}
+.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.stat-note{font-size:9px;color:#222;margin-top:2px}
+.hero-badges{display:flex;gap:6px;flex-wrap:wrap}
+.hbadge{font-size:11px;padding:3px 9px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
+.hbadge.amber{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:#f59e0b}
+
+/* Demo wrap */
+.demo-wrap{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;overflow:hidden}
+.demo-header{padding:9px 14px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
+.demo-dots{display:flex;gap:5px}
+.demo-dot{width:9px;height:9px;border-radius:50%}
+.demo-title{font-size:11px;color:#333;margin-left:4px;font-family:monospace}
+
+/* Simulated article */
+.demo-article{padding:16px;position:relative}
+.article-head{font-size:13px;font-weight:700;color:#666;margin-bottom:8px}
+.article-line{height:5px;border-radius:2px;margin-bottom:4px}
+.article-line.full{background:#111;width:100%}
+.article-line.med{background:#0d0d0d;width:82%}
+.article-line.short{background:#111;width:65%}
+
+/* Blur overlay on article when adblock detected */
+.article-blur{filter:blur(3px);pointer-events:none;transition:filter .3s}
+
+/* Paywall overlay */
+.paywall-overlay{position:absolute;inset:0;background:rgba(8,8,15,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;border-radius:0;z-index:10;backdrop-filter:blur(4px)}
+.paywall-overlay.hidden{display:none}
+.lock-icon{width:52px;height:52px;border-radius:50%;background:#111;border:2px solid #1a1a2e;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:22px}
+.paywall-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:6px;text-align:center}
+.paywall-sub{font-size:12px;color:#555;text-align:center;line-height:1.6;margin-bottom:16px}
+.paywall-btn{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#000;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s;display:flex;align-items:center;gap:8px}
+.paywall-btn:hover{opacity:.9}
+.paywall-btn:disabled{opacity:.5;cursor:not-allowed}
+.paywall-skip{font-size:11px;color:#333;margin-top:10px;cursor:pointer;text-decoration:underline}
+.paywall-skip:hover{color:#555}
+
+/* Video player in overlay */
+.reward-player{display:none;width:100%;max-width:320px;background:#000;border-radius:8px;overflow:hidden;margin-bottom:12px}
+.reward-player.active{display:block}
+.reward-video-inner{aspect-ratio:16/9;background:linear-gradient(135deg,#0a0f1e,#0d1526);display:flex;align-items:center;justify-content:center;position:relative}
+.reward-timer{position:absolute;top:8px;right:10px;font-size:11px;color:#f59e0b;font-family:monospace;font-weight:700}
+.reward-skip-hint{position:absolute;bottom:8px;right:10px;font-size:10px;color:#555}
+.reward-progress{height:3px;background:#111;width:100%}
+.reward-progress-bar{height:100%;background:#f59e0b;width:0%;transition:width .1s linear}
+
+/* Adblock status badge */
+.adb-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.adb-status.detected{background:rgba(248,81,73,.08);border:1px solid rgba(248,81,73,.25);color:#f85149}
+.adb-status.clean{background:rgba(86,211,100,.08);border:1px solid rgba(86,211,100,.25);color:#56d364}
+.adb-status.checking{background:#111;border:1px solid #1a1a2e;color:#555}
+.adb-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* Sections */
+.section{margin-bottom:36px}
+.section-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:#1a1a2e}
+
+/* How it works flow */
+.flow{display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;gap:16px;align-items:flex-start;position:relative}
+.flow-step:not(:last-child)::after{content:'';position:absolute;left:12px;top:28px;width:1px;bottom:-12px;background:#1a1a2e}
+.flow-num{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px;z-index:1}
+.flow-num.detect{background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.3);color:#f85149}
+.flow-num.show{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:#f59e0b}
+.flow-num.play{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);color:#60a5fa}
+.flow-num.unlock{background:rgba(86,211,100,.1);border:1px solid rgba(86,211,100,.3);color:#56d364}
+.flow-body{padding-bottom:16px}
+.flow-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:3px}
+.flow-desc{font-size:12px;color:#555;line-height:1.6}
+.flow-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.flow-badge.bypass{background:rgba(86,211,100,.1);border:1px solid rgba(86,211,100,.25);color:#56d364}
+
+/* Code blocks */
+.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden;margin-bottom:14px}
+.code-header{padding:7px 12px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
+.code-label{font-size:11px;color:#444;font-family:monospace}
+.copy-btn{font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.copy-btn:hover{border-color:#f59e0b;color:#f59e0b}
+.copy-btn.copied{border-color:#56d364;color:#56d364}
+code{display:block;padding:14px;font-family:monospace;font-size:11px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
+code .c{color:#444}code .k{color:#60a5fa}code .s{color:#56d364}code .n{color:#f59e0b}code .p{color:#f85149}
+
+/* Detection methods table */
+.methods-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.method-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px}
+.method-name{font-size:12px;font-weight:700;color:#e0e0e0;margin-bottom:4px}
+.method-desc{font-size:11px;color:#555;line-height:1.5;margin-bottom:6px}
+.method-acc{font-size:10px}
+.method-acc.high{color:#56d364}
+.method-acc.med{color:#f59e0b}
+.method-acc.low{color:#f85149}
+
+/* Callout */
+.callout{padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.6;margin-bottom:16px}
+.callout.amber{background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);color:#888}
+.callout.green{background:rgba(86,211,100,.06);border:1px solid rgba(86,211,100,.2);color:#888}
+.callout strong{color:#e0e0e0}
+
+/* Bottom nav */
+.bottom-nav{display:flex;gap:10px;margin-top:36px;padding-top:20px;border-top:1px solid #111}
+.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;text-decoration:none;transition:border-color .15s;min-width:0}
+.nav-card:hover{border-color:#2a2a3e}
+.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.nav-card-title{font-size:12px;font-weight:600;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media(max-width:640px){
+  .header{padding:0 14px;height:48px}
+  nav a{font-size:11px;padding:4px 7px}
+  .page{padding:18px 14px}
+  .hero{grid-template-columns:1fr;gap:20px}
+  .hero-title{font-size:20px}
+  .methods-grid{grid-template-columns:1fr}
+  .bottom-nav{flex-direction:column;gap:8px}
+  .section-title{font-size:14px}
+  code{font-size:10px;padding:12px}
+}
 </style>
 </head>
 <body>
+
 <div class="header">
-  <a class="back" href="/lab">← Lab</a>
-  <span style="color:#1a1a2e">|</span>
-  <div class="logo">Rewarded Video</div>
-  <div class="badge">ADBLOCK RECOVERY</div>
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    Lupon Ad Lab
+  </div>
+  <nav>
+    <a href="/lab">Dashboard</a>
+    <a href="/lab/inspector">🔍 Inspector</a>
+    <a href="/lab/formats">📐 Formats</a>
+  </nav>
 </div>
 
-<div class="sim">
-  <div class="article-sim" id="article">
-    <h2>Zelenski: Kijev spreman za novu rundu pregovora</h2>
-    <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
-    <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
-    <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
-    <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak trilateralnih pregovora o rješenju krize u Ukrajini, prenosi Srna.</p>
-    <p style="color:#1a1a2e">█████████████████████████ ███████████████ ██████████████████████████████████████ ████████████████████████ █████████████████████ ████████████████████████████████████████████████████████████████████</p>
-  </div>
-  <div class="paywall"></div>
+<div class="page">
 
-  <!-- AdBlock detected banner -->
-  <div class="adblock-banner" id="banner">
-    <div class="banner-text">
-      <h3>👋 Koristite AdBlock?</h3>
-      <p>Pogledajte kratku reklamu (30s) i nastavite čitati besplatno.</p>
-    </div>
-    <button class="banner-btn" onclick="showOverlay()">Gledaj reklamu →</button>
-  </div>
-
-  <!-- Video overlay -->
-  <div class="overlay" id="overlay">
-    <div class="overlay-card">
-      <div class="steps">
-        <div class="step active" id="step1"><span class="step-n">1</span>Gledaj video</div>
-        <div class="step" id="step2"><span class="step-n">2</span>Dobij pristup</div>
-        <div class="step" id="step3"><span class="step-n">3</span>Čitaj slobodno</div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="breadcrumb"><a href="/lab/formats">Format Gallery</a> / Rewarded Video</div>
+      <div class="hero-title">Rewarded Video</div>
+      <div class="hero-sub">AdBlock recovery format. Detektuje ad blocker → pokazuje overlay → korisnik bira: watch 30s video → čita slobodno. User-initiated VAST zaobilazi ad blockere jer ne postoji auto-load.</div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-val amber">$5.00</div>
+          <div class="stat-lbl">Est. CPM</div>
+          <div class="stat-note">estimate*</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val green">100%</div>
+          <div class="stat-lbl">Fill</div>
+          <div class="stat-note">user opt-in</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val blue">~25%</div>
+          <div class="stat-lbl">AdBlock users</div>
+          <div class="stat-note">Balkans avg</div>
+        </div>
       </div>
-      <h3>Kratka reklama (30s)</h3>
-      <p>Pogledajte reklamu i dobijte 10 minuta besplatnog čitanja.</p>
-      <div id="video-container">
-        <video id="reward-video" muted playsinline>
-          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-        </video>
-        <div class="countdown" id="countdown">30s</div>
-      </div>
-      <button class="skip-btn" id="skip-btn" disabled onclick="rewardUser()">Preskoči za <span id="skip-timer">30</span>s</button>
-      <div class="reward" id="reward">
-        <h4>✅ Hvala! Pristup aktiviran.</h4>
-        <p>Imate 10 minuta besplatnog čitanja. AdBlock možete ostaviti uključenim.</p>
+      <div class="hero-badges">
+        <span class="hbadge amber">PLANNED Q2 2026</span>
+        <span class="hbadge">User-initiated</span>
+        <span class="hbadge">VAST 3.0</span>
+        <span class="hbadge">AdBlock bypass</span>
+        <span class="hbadge">GDPR safe</span>
       </div>
     </div>
+
+    <!-- LIVE DEMO -->
+    <div class="demo-wrap">
+      <div class="demo-header">
+        <div class="demo-dots">
+          <div class="demo-dot" style="background:#f85149"></div>
+          <div class="demo-dot" style="background:#f59e0b"></div>
+          <div class="demo-dot" style="background:#56d364"></div>
+        </div>
+        <div class="demo-title">live demo — AdBlock detection</div>
+      </div>
+      <div style="padding:16px">
+        <!-- Status -->
+        <div id="adb-status" class="adb-status checking">
+          <span class="adb-dot"></span>
+          <span id="adb-status-text">Checking for ad blocker...</span>
+        </div>
+
+        <!-- Simulated article -->
+        <div style="position:relative">
+          <div id="article-content" class="demo-article" style="min-height:200px">
+            <div class="article-head">Ekonomija Balkana: Digitalna transformacija 2025</div>
+            <div class="article-line full"></div>
+            <div class="article-line med"></div>
+            <div class="article-line full" style="margin-bottom:8px"></div>
+            <div style="font-size:11px;color:#333;line-height:1.7;margin-bottom:8px">
+              Balkanski region suo­čava se s nizom izazova u procesu digitalne transformacije.
+              Stru­čnjaci upozoravaju da bez strukturnih reformi zemlja rizikuje zaostajanje...
+            </div>
+            <div class="article-line full"></div>
+            <div class="article-line short"></div>
+            <div class="article-line full" style="margin-bottom:8px"></div>
+            <div style="font-size:11px;color:#333;line-height:1.7">
+              EU fondovi ostaju nedovoljno iskorišćeni zbog administrativnih prepreka.
+              Digitalizacija javnih usluga napreduje sporije od planiranog tempa...
+            </div>
+          </div>
+
+          <!-- Paywall overlay — shown when adblock detected -->
+          <div class="paywall-overlay hidden" id="paywall">
+            <!-- Default state: lock + watch CTA -->
+            <div id="paywall-default">
+              <div class="lock-icon">🔒</div>
+              <div class="paywall-title">Ad blocker detektovan</div>
+              <div class="paywall-sub">Tvoj ad blocker blokira reklame koje finansiraju ovaj sadržaj.<br>Pogledaj kratki video da nastaviš čitanje besplatno.</div>
+              <button class="paywall-btn" id="watch-btn">
+                <span>▶</span> Watch 30s → Read free
+              </button>
+              <div class="paywall-skip" id="skip-btn">Zatvori bez gledanja</div>
+            </div>
+
+            <!-- Video player state -->
+            <div id="paywall-video" style="display:none;width:100%;text-align:center">
+              <div class="reward-player active">
+                <div class="reward-video-inner">
+                  <div style="text-align:center">
+                    <div style="font-size:10px;color:#f59e0b;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">ADVERTISEMENT</div>
+                    <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px">Lupon Rewarded</div>
+                    <div style="font-size:11px;color:#555">Demo VAST · 640×360</div>
+                  </div>
+                  <div class="reward-timer" id="reward-timer">0:30</div>
+                  <div class="reward-skip-hint" id="skip-hint" style="display:none">You can skip in <span id="skip-count">5</span>s</div>
+                </div>
+                <div class="reward-progress"><div class="reward-progress-bar" id="reward-bar"></div></div>
+              </div>
+              <div style="font-size:11px;color:#555;margin-top:8px" id="video-status">Video se reproducira...</div>
+            </div>
+
+            <!-- Unlocked state -->
+            <div id="paywall-unlocked" style="display:none;text-align:center">
+              <div style="font-size:32px;margin-bottom:8px">✅</div>
+              <div style="font-size:14px;font-weight:700;color:#56d364;margin-bottom:4px">Sadržaj otključan!</div>
+              <div style="font-size:12px;color:#555">Slobodan pristup za 10 minuta</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;font-size:11px;color:#333">
+          Demo koristi bait element detekciju. Klikni "Reset demo" za ponavljanje.
+          <button onclick="resetDemo()" style="font-size:10px;padding:3px 8px;background:#111;border:1px solid #1a1a2e;color:#555;border-radius:4px;cursor:pointer;margin-left:8px">Reset demo</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section">
+    <div class="section-title">⚙️ Kako radi</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num detect">1</div>
+        <div class="flow-body">
+          <div class="flow-title">AdBlock detekcija — bait element metoda</div>
+          <div class="flow-desc">Na page load ubaci se nevidljivi div sa klasom <code style="background:#111;padding:1px 5px;border-radius:3px;font-size:10px">adsbox</code>. Ad blockeri automatski sakriju sve elemente sa takvim klasama. JS provjeri da li je element sakriven — ako jest, korisnik ima ad blocker.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num show">2</div>
+        <div class="flow-body">
+          <div class="flow-title">Prikaži paywall overlay</div>
+          <div class="flow-desc">Content se blur-a, pojavljuje se overlay sa porukom i CTA dugmetom. Korisnik može birati: gledati video ili zatvoriti. Nema agresivnog blokiranja — uvijek postoji "skip" opcija (ali bez unlocking).</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num play">3</div>
+        <div class="flow-body">
+          <div class="flow-title">User klikne Play → VAST video <span class="flow-badge bypass">Bypass ✓</span></div>
+          <div class="flow-desc">Jer je video user-initiated (korisnik je kliknuo), ad blockeri ga ne blokiraju — browser policy dozvoljava autoplay samo za user-initiated media. VAST tag se fetchuje direktno bez da blocker intervenira.</div>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num unlock">4</div>
+        <div class="flow-body">
+          <div class="flow-title">Video završi → Cookie unlock → Sadržaj slobodan</div>
+          <div class="flow-desc">Nakon completion event-a, overlay se uklanja, content se deblur-a, postavlja se cookie <code style="background:#111;padding:1px 5px;border-radius:3px;font-size:10px">lupon_rewarded_unlock=1</code> koji traje 10 minuta. Impression i completion pixeli se šalju prema VAST.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADBLOCK DETECTION METHODS -->
+  <div class="section">
+    <div class="section-title">🎯 Metode detekcije</div>
+    <div class="methods-grid">
+      <div class="method-card">
+        <div class="method-name">Bait element</div>
+        <div class="method-desc">Nevidljivi div sa <code style="background:#0a0a0a;padding:1px 4px;border-radius:2px;font-size:10px">.adsbox</code> klasom. Provjeri offsetHeight — ako je 0, blocker je aktivan.</div>
+        <div class="method-acc high">✓ Visoka preciznost (~95%)</div>
+      </div>
+      <div class="method-card">
+        <div class="method-name">Fake ad request</div>
+        <div class="method-desc">Fetch prema <code style="background:#0a0a0a;padding:1px 4px;border-radius:2px;font-size:10px">/ads.js</code> ili sličnoj URL-u koji blockeri filtriraju. Prati da li request uspijeva.</div>
+        <div class="method-acc med">~ Srednja preciznost (~85%)</div>
+      </div>
+      <div class="method-card">
+        <div class="method-name">AdSense bait</div>
+        <div class="method-desc">Učitaj Google AdSense iframe — ako je blokiran, detektuj. Manje pouzdano jer ovisi o Google domenama.</div>
+        <div class="method-acc low">✗ Niska preciznost (~70%)</div>
+      </div>
+    </div>
+    <div class="callout amber">
+      <strong>Važno:</strong> Nijedna metoda nije 100% pouzdana. Moderni blockeri (uBlock Origin v3+) aktivno blokiraju i bait elemente. Preporučujemo kombinaciju bait elementa + fake request za bolju detekciju.
+    </div>
+  </div>
+
+  <!-- INSTALL CODE -->
+  <div class="section" id="install">
+    <div class="section-title">📋 Install kod</div>
+
+    <div class="callout amber" style="margin-bottom:16px">
+      <strong>Status: Planned Q2 2026.</strong> Kod ispod je referentna implementacija — production verzija sa Lupon VAST endpointom dolazi uz release.
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-label">HTML — adblock detection + paywall overlay</span>
+        <button class="copy-btn" onclick="copyCode('detect-code',this)">Copy</button>
+      </div>
+      <code id="detect-code"><span class="c"><!-- Lupon Rewarded Video — AdBlock Recovery --></span>
+<span class="c"><!-- 1. Bait element (u &lt;head&gt; ili odmah u &lt;body&gt;) --></span>
+&lt;<span class="k">div</span> <span class="n">class</span>=<span class="s">"adsbox"</span> <span class="n">style</span>=<span class="s">"height:1px;width:1px;position:absolute;opacity:0"</span>&gt;&lt;/<span class="k">div</span>&gt;
+
+&lt;<span class="k">script</span>&gt;
+(<span class="k">function</span>(){
+  <span class="c">// Detect after DOM ready (blockeri trebaju ~100ms)</span>
+  setTimeout(<span class="k">function</span>(){
+    <span class="k">var</span> bait = document.querySelector(<span class="s">'.adsbox'</span>);
+    <span class="k">var</span> hasBlocker = !bait || bait.offsetHeight === <span class="n">0</span>;
+
+    <span class="k">if</span>(hasBlocker){
+      <span class="c">// Prikaži paywall na glavnom content elementu</span>
+      LuponRewarded.show({
+        contentSelector: <span class="s">'#article-content'</span>,
+        vastTag: <span class="s">'https://vast.luponmedia.com/v1?pub=YOUR_PUB_ID&pos=rewarded'</span>,
+        duration: <span class="n">30</span>,
+        unlockMinutes: <span class="n">10</span>,
+        cookieName: <span class="s">'lupon_rewarded_unlock'</span>
+      });
+    }
+  }, <span class="n">150</span>);
+})();
+&lt;/<span class="k">script</span>&gt;
+
+<span class="c"><!-- 2. Lupon Rewarded SDK (dolazi uz Q2 release) --></span>
+&lt;<span class="k">script</span> <span class="n">src</span>=<span class="s">"https://cdn.luponmedia.com/rewarded/v1/rewarded.js"</span> <span class="n">async</span>&gt;&lt;/<span class="k">script</span>&gt;</code>
+    </div>
+
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-label">JavaScript — core implementacija (vanilla, bez SDK)</span>
+        <button class="copy-btn" onclick="copyCode('vanilla-code',this)">Copy</button>
+      </div>
+      <code id="vanilla-code"><span class="c">// Lupon Rewarded — vanilla JS referentna implementacija</span>
+<span class="k">var</span> LuponRewarded = {
+  show: <span class="k">function</span>(opts) {
+    <span class="k">var</span> content = document.querySelector(opts.contentSelector);
+    <span class="k">if</span>(!content) <span class="k">return</span>;
+
+    <span class="c">// Blur content</span>
+    content.style.filter = <span class="s">'blur(4px)'</span>;
+    content.style.pointerEvents = <span class="s">'none'</span>;
+    content.style.userSelect = <span class="s">'none'</span>;
+
+    <span class="c">// Kreiraj overlay</span>
+    <span class="k">var</span> overlay = document.createElement(<span class="s">'div'</span>);
+    overlay.className = <span class="s">'lupon-paywall'</span>;
+    overlay.innerHTML = <span class="s">`
+      &lt;div class="lupon-lock"&gt;🔒&lt;/div&gt;
+      &lt;h3&gt;Ad blocker detektovan&lt;/h3&gt;
+      &lt;p&gt;Pogledaj kratki video i čitaj besplatno.&lt;/p&gt;
+      &lt;button id="lupon-watch"&gt;▶ Watch &dollar;{opts.duration}s → Read free&lt;/button&gt;
+    `</span>;
+    content.parentElement.appendChild(overlay);
+
+    <span class="c">// Watch button handler</span>
+    document.getElementById(<span class="s">'lupon-watch'</span>)
+      .addEventListener(<span class="s">'click'</span>, <span class="k">function</span>(){
+        <span class="c">// User-initiated: ad blockers ne blokiraju ovo!</span>
+        <span class="k">var</span> video = document.createElement(<span class="s">'video'</span>);
+        video.src = opts.vastTag; <span class="c">// VAST URL</span>
+        video.controls = <span class="n">true</span>;
+        video.autoplay = <span class="n">true</span>;
+        <span class="c">// ... Fluid Player ili custom player ovdje</span>
+        video.addEventListener(<span class="s">'ended'</span>, <span class="k">function</span>(){
+          <span class="c">// Unlock: ukloni overlay, deblur, postavi cookie</span>
+          overlay.remove();
+          content.style.filter = <span class="s">''</span>;
+          content.style.pointerEvents = <span class="s">''</span>;
+          document.cookie = opts.cookieName + <span class="s">'=1;max-age='</span>
+            + (opts.unlockMinutes * <span class="n">60</span>);
+        });
+      });
+  }
+};</code>
+    </div>
+  </div>
+
+  <!-- NOTE -->
+  <div style="padding:12px 16px;background:#0a0a14;border:1px solid #111;border-radius:8px;font-size:11px;color:#444;line-height:1.7;margin-bottom:28px">
+    <strong style="color:#555">* Napomene</strong> — $5.00 CPM i 100% fill su procjene. Fill je uvijek 100% jer korisnik bira da gleda (nema auctiona koji može failati). Stvarni RPM ovisi o % korisnika sa ad blockerom i stopi klikanja na Watch dugme (tipično 15-35% korisnika koji vide overlay). Balkans AdBlock stopa: ~20-30% desktop, ~5-10% mobile.
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <a href="/lab/formats" class="nav-card">
+      <div class="nav-card-label">← Nazad</div>
+      <div class="nav-card-title">Format Gallery</div>
+    </a>
+    <a href="/lab/formats/inread" class="nav-card">
+      <div class="nav-card-label">Viši CPM format</div>
+      <div class="nav-card-title">▶ InRead video ($3.40)</div>
+    </a>
+    <a href="/lab/inspector" class="nav-card">
+      <div class="nav-card-label">Test na sajtu</div>
+      <div class="nav-card-title">🔍 URL Inspector</div>
+    </a>
+  </div>
+
 </div>
 
 <script>
-// Simulate AdBlock detection after 2s
-setTimeout(function() {
-  document.getElementById('article').classList.add('blurred');
-  document.getElementById('banner').classList.add('show');
-}, 2000);
+// ── ADBLOCK DETECTION DEMO ────────────────────────────────────────
+var demo = {
+  hasBlocker: false,
+  videoPlaying: false,
+  interval: null,
+  elapsed: 0,
+  DURATION: 30
+};
 
-var rewardTimer, skipTimer;
+function detectAdBlock(){
+  var status = document.getElementById('adb-status');
+  var statusText = document.getElementById('adb-status-text');
 
-function showOverlay() {
-  document.getElementById('overlay').classList.add('show');
-  var video = document.getElementById('reward-video');
-  var countdown = document.getElementById('countdown');
-  var skipBtn = document.getElementById('skip-btn');
-  var skipTimerEl = document.getElementById('skip-timer');
-  var secs = 30;
+  // Method 1: bait element
+  var bait = document.querySelector('.lupon-bait-el');
+  if(!bait){
+    bait = document.createElement('div');
+    bait.className = 'lupon-bait-el adsbox ad-banner pub_300x250';
+    bait.style.cssText = 'height:1px;width:1px;position:fixed;top:-9999px;opacity:0';
+    document.body.appendChild(bait);
+  }
 
-  video.play().catch(function() {});
+  setTimeout(function(){
+    var blocked = !bait || bait.offsetHeight === 0 || bait.offsetWidth === 0 ||
+                  getComputedStyle(bait).display === 'none' ||
+                  getComputedStyle(bait).visibility === 'hidden';
 
-  rewardTimer = setInterval(function() {
-    secs--;
-    countdown.textContent = secs + 's';
-    skipTimerEl.textContent = secs;
-    if (secs <= 5) {
-      skipBtn.disabled = false;
-      skipBtn.textContent = 'Preskoči → Dobij pristup';
+    demo.hasBlocker = blocked;
+
+    if(blocked){
+      status.className = 'adb-status detected';
+      statusText.textContent = '🛡 Ad blocker detektovan — prikazujem paywall';
+      setTimeout(showPaywall, 600);
+    } else {
+      status.className = 'adb-status clean';
+      statusText.textContent = '✓ Bez ad blockera — normalni adsovi se prikazuju';
     }
-    if (secs <= 0) {
-      clearInterval(rewardTimer);
-      rewardUser();
-    }
-  }, 1000);
+  }, 200);
 }
 
-function rewardUser() {
-  clearInterval(rewardTimer);
-  var video = document.getElementById('reward-video');
-  video.pause();
-  document.getElementById('step1').className = 'step done';
-  document.getElementById('step2').className = 'step done';
-  document.getElementById('step3').className = 'step done';
-  document.getElementById('reward').classList.add('show');
-  document.getElementById('skip-btn').style.display = 'none';
-  document.getElementById('countdown').style.display = 'none';
-  setTimeout(function() {
-    document.getElementById('overlay').classList.remove('show');
-    document.getElementById('article').classList.remove('blurred');
-    document.getElementById('banner').classList.remove('show');
+function showPaywall(){
+  var content = document.getElementById('article-content');
+  var paywall = document.getElementById('paywall');
+  content.classList.add('article-blur');
+  paywall.classList.remove('hidden');
+}
+
+function hidePaywall(){
+  var content = document.getElementById('article-content');
+  var paywall = document.getElementById('paywall');
+  content.classList.remove('article-blur');
+  paywall.classList.add('hidden');
+}
+
+// Watch button
+document.getElementById('watch-btn').addEventListener('click', function(){
+  document.getElementById('paywall-default').style.display = 'none';
+  document.getElementById('paywall-video').style.display = 'block';
+  startRewardedVideo();
+});
+
+// Skip button
+document.getElementById('skip-btn').addEventListener('click', function(){
+  hidePaywall();
+  document.getElementById('adb-status').className = 'adb-status checking';
+  document.getElementById('adb-status-text').textContent = 'Sadržaj dostupan bez gledanja (bez unlocking)';
+});
+
+function startRewardedVideo(){
+  demo.elapsed = 0;
+  demo.videoPlaying = true;
+  var bar = document.getElementById('reward-bar');
+  var timer = document.getElementById('reward-timer');
+  var statusEl = document.getElementById('video-status');
+  var skipHint = document.getElementById('skip-hint');
+  var skipCount = document.getElementById('skip-count');
+
+  // Show skip after 5s
+  setTimeout(function(){
+    skipHint.style.display = 'block';
+    var c = 5;
+    var ci = setInterval(function(){
+      c--;
+      if(skipCount) skipCount.textContent = c;
+      if(c <= 0){
+        clearInterval(ci);
+        skipHint.innerHTML = '<span style="cursor:pointer;color:#f59e0b" onclick="skipVideo()">Skip ad ›</span>';
+      }
+    }, 1000);
+  }, 5000);
+
+  demo.interval = setInterval(function(){
+    demo.elapsed += 0.1;
+    var pct = Math.min((demo.elapsed / demo.DURATION) * 100, 100);
+    bar.style.width = pct + '%';
+    var remaining = Math.max(0, Math.ceil(demo.DURATION - demo.elapsed));
+    timer.textContent = '0:' + (remaining < 10 ? '0' : '') + remaining;
+
+    if(demo.elapsed >= demo.DURATION){
+      clearInterval(demo.interval);
+      videoComplete();
+    }
+  }, 100);
+}
+
+function skipVideo(){
+  clearInterval(demo.interval);
+  // Partial view — unlock anyway for demo
+  videoComplete();
+}
+
+function videoComplete(){
+  demo.videoPlaying = false;
+  document.getElementById('paywall-video').style.display = 'none';
+  document.getElementById('paywall-unlocked').style.display = 'block';
+
+  // Deblur content
+  document.getElementById('article-content').classList.remove('article-blur');
+
+  // Auto-close overlay after 2s
+  setTimeout(function(){
+    hidePaywall();
+    document.getElementById('adb-status').className = 'adb-status clean';
+    document.getElementById('adb-status-text').textContent = '✅ Sadržaj otključan — 10 min slobodnog čitanja';
+    // Reset paywall state for next time
+    document.getElementById('paywall-default').style.display = '';
+    document.getElementById('paywall-video').style.display = 'none';
+    document.getElementById('paywall-unlocked').style.display = 'none';
+    document.getElementById('reward-bar').style.width = '0';
   }, 2500);
 }
+
+function resetDemo(){
+  clearInterval(demo.interval);
+  demo.elapsed = 0;
+  demo.videoPlaying = false;
+  // Reset UI
+  document.getElementById('article-content').classList.remove('article-blur');
+  document.getElementById('paywall').classList.add('hidden');
+  document.getElementById('paywall-default').style.display = '';
+  document.getElementById('paywall-video').style.display = 'none';
+  document.getElementById('paywall-unlocked').style.display = 'none';
+  document.getElementById('reward-bar').style.width = '0';
+  document.getElementById('reward-timer').textContent = '0:30';
+  document.getElementById('adb-status').className = 'adb-status checking';
+  document.getElementById('adb-status-text').textContent = 'Checking for ad blocker...';
+  // Re-detect
+  setTimeout(detectAdBlock, 300);
+}
+
+function copyCode(id, btn){
+  var el = document.getElementById(id);
+  navigator.clipboard.writeText(el.innerText).then(function(){
+    btn.textContent = 'Copied ✓';
+    btn.className = 'copy-btn copied';
+    setTimeout(function(){ btn.textContent = 'Copy'; btn.className = 'copy-btn'; }, 2000);
+  });
+}
+
+// Run detection on load
+detectAdBlock();
 </script>
 </body>
 </html>
