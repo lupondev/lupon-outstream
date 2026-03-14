@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Format Gallery — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:10}
+.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+nav{display:flex;gap:4px}
+nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
+nav a:hover,nav a.active{background:#1a1a2e;color:#fff}
+nav a.active{color:#e0e0e0}
+.page{max-width:1100px;margin:0 auto;padding:40px 32px}
+.page-header{margin-bottom:32px}
+.page-title{font-size:26px;font-weight:700;color:#fff;margin-bottom:6px}
+.page-sub{font-size:14px;color:#555;line-height:1.5}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.filter-btn{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:#444;color:#e0e0e0}
+.filter-btn.active{background:#e0e0e0;color:#08080f;border-color:#e0e0e0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+/* Format card */
+.card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;overflow:hidden;transition:border-color .15s;display:flex;flex-direction:column}
+.card:hover{border-color:#2a2a3e}
+.card.featured{border-color:#3b82f6;border-width:2px}
+.card.live{border-color:#1a3a1a}
+.card.dim{opacity:0.55}
+/* Preview area */
+.preview{height:160px;background:#060610;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+/* Status badge */
+.badge{position:absolute;top:10px;right:10px;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.5px}
+.badge.live{background:rgba(86,211,100,.15);color:#56d364;border:1px solid rgba(86,211,100,.3)}
+.badge.beta{background:rgba(59,130,246,.15);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.badge.soon{background:rgba(255,255,255,.06);color:#555;border:1px solid #1a1a2e}
+.badge.planned{background:rgba(255,255,255,.04);color:#444;border:1px solid #111}
+/* Tag */
+.tag{position:absolute;bottom:10px;left:10px;font-size:9px;color:#333;font-family:monospace;letter-spacing:.3px}
+/* Card body */
+.body{padding:16px;flex:1;display:flex;flex-direction:column}
+.card-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.type-tag{font-size:10px;padding:2px 8px;border-radius:4px;background:#111;border:1px solid #1a1a2e;color:#444;font-weight:500}
+.card-desc{font-size:12px;color:#555;line-height:1.6;margin-bottom:14px;flex:1}
+/* Metrics row */
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.metric{background:#080810;border-radius:6px;padding:8px;text-align:center}
+.metric-val{font-size:15px;font-weight:700;font-family:monospace;line-height:1}
+.metric-lbl{font-size:9px;color:#333;text-transform:uppercase;letter-spacing:.6px;margin-top:4px;line-height:1.3}
+.metric-val.green{color:#56d364}
+.metric-val.blue{color:#60a5fa}
+.metric-val.amber{color:#f59e0b}
+.metric-val.muted{color:#2a2a3a}
+.metric-note{font-size:8px;color:#222;margin-top:2px}
+/* Actions */
+.actions{display:flex;gap:8px}
+.btn{flex:1;font-size:11px;font-weight:600;padding:7px 0;border-radius:6px;border:1px solid #1a1a2e;background:transparent;color:#666;cursor:pointer;transition:all .15s;text-decoration:none;text-align:center;display:block}
+.btn:hover{border-color:#444;color:#e0e0e0}
+.btn.primary{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:#60a5fa}
+.btn.primary:hover{background:rgba(59,130,246,.2)}
+.btn.disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+/* Recommended banner */
+.rec-banner{background:rgba(59,130,246,.07);border-bottom:1px solid rgba(59,130,246,.15);padding:7px 16px;font-size:11px;color:#60a5fa;display:flex;align-items:center;gap:6px}
+/* Benchmark note */
+.bench-note{margin-top:28px;padding:14px 18px;background:#0a0a14;border:1px solid #111;border-radius:8px;font-size:11px;color:#444;line-height:1.7}
+.bench-note strong{color:#555}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    Lupon Ad Lab
+  </div>
+  <nav>
+    <a href="/lab">Dashboard</a>
+    <a href="/lab/inspector">🔍 Inspector</a>
+    <a href="/lab/formats" class="active">📐 Formats</a>
+  </nav>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-title">📐 Format Gallery</div>
+    <div class="page-sub">Ad format toolkit for Balkan &amp; MENA publishers · CPM benchmarks from Lupon network data where available</div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All formats</button>
+    <button class="filter-btn" data-filter="video">Video</button>
+    <button class="filter-btn" data-filter="native">Native</button>
+    <button class="filter-btn" data-filter="display">Display</button>
+    <button class="filter-btn" data-filter="mobile">Mobile</button>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <!-- ── OUTSTREAM VIDEO ─────────────────────────── -->
+    <div class="card live" data-type="video">
+      <div class="preview">
+        <div style="width:140px;height:79px;border:1.5px solid #1a2a1a;border-radius:6px;background:#0a120a;display:flex;align-items:center;justify-content:center">
+          <div style="width:0;height:0;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:22px solid #56d364;margin-left:4px"></div>
+        </div>
+        <div class="badge live">LIVE</div>
+        <div class="tag">640×360 · VAST · Magnite Apex</div>
+      </div>
+      <div class="body">
+        <div class="card-title">Outstream video <span class="type-tag">Video</span></div>
+        <div class="card-desc">Auto-play video in content feed. No pre-roll required. Loads only when in viewport. Powered by Magnite Apex — tested on novi.ba, sport.ba and 9 other Lupon publishers.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val green">$1.20</div><div class="metric-lbl">Lupon avg CPM</div></div>
+          <div class="metric"><div class="metric-val green">62%</div><div class="metric-lbl">fill rate</div></div>
+          <div class="metric"><div class="metric-val blue">11</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/lab/inspector/?url=https://novi.ba">Inspect live ↗</a>
+          <a class="btn" href="/publishers/novi-ba/tag">Copy tag</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── INREAD VIDEO ───────────────────────────── -->
+    <div class="card featured" data-type="video">
+      <div class="rec-banner">⭐ Highest CPM on Lupon network — recommended for all article publishers</div>
+      <div class="preview">
+        <!-- Simulated article with embedded video -->
+        <div style="width:85%;padding:10px">
+          <div style="height:5px;background:#111;border-radius:2px;margin-bottom:4px"></div>
+          <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-bottom:8px;width:75%"></div>
+          <div style="height:64px;background:#0a0f1a;border-radius:6px;border:1.5px solid #1a2a3a;display:flex;align-items:center;justify-content:center;margin-bottom:8px">
+            <div style="width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid #3b82f6;margin-left:3px"></div>
+          </div>
+          <div style="height:5px;background:#111;border-radius:2px;margin-bottom:4px"></div>
+          <div style="height:5px;background:#0d0d0d;border-radius:2px;width:55%"></div>
+        </div>
+        <div class="badge beta">BETA</div>
+        <div class="tag">300×250 · inread · autoplay on scroll</div>
+      </div>
+      <div class="body">
+        <div class="card-title">InRead video <span class="type-tag">Video</span></div>
+        <div class="card-desc">Video embedded within article body text. Triggers on scroll, pauses on scroll-out. Highest eCPM format in Balkans market. Works with existing Prebid setup.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val blue">$3.40</div><div class="metric-lbl">est. CPM<div class="metric-note">Balkans avg*</div></div></div>
+          <div class="metric"><div class="metric-val amber">~45%</div><div class="metric-lbl">est. fill<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val muted">—</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <a class="btn primary" href="/lab/formats/inread">View format ↗</a>
+          <span class="btn disabled">Tag coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NATIVE ─────────────────────────────────── -->
+    <div class="card dim" data-type="native">
+      <div class="preview">
+        <div style="width:85%;background:#0d0d0d;border-radius:8px;padding:12px;border:1px solid #111">
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="width:48px;height:48px;background:#111;border-radius:6px;flex-shrink:0"></div>
+            <div style="flex:1">
+              <div style="height:6px;background:#161616;border-radius:2px;margin-bottom:5px"></div>
+              <div style="height:5px;background:#111;border-radius:2px;margin-bottom:5px;width:80%"></div>
+              <div style="height:5px;background:#111;border-radius:2px;width:60%"></div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:9px;color:#222;text-transform:uppercase;letter-spacing:1px">Sponsored</div>
+        </div>
+        <div class="badge soon">SOON</div>
+        <div class="tag">native · in-feed · Teads / Outbrain</div>
+      </div>
+      <div class="body">
+        <div class="card-title">Native <span class="type-tag">Native</span></div>
+        <div class="card-desc">In-feed native ads that match publisher content style. Higher CTR than banner, lower ad fatigue. Teads and Outbrain wrapper integration planned.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val amber">$0.80</div><div class="metric-lbl">est. CPM<div class="metric-note">Balkans avg*</div></div></div>
+          <div class="metric"><div class="metric-val amber">~75%</div><div class="metric-lbl">est. fill<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val muted">—</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <span class="btn disabled">Coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STICKY ANCHOR ─────────────────────────── -->
+    <div class="card dim" data-type="mobile display">
+      <div class="preview">
+        <div style="position:relative;width:70px;height:120px;border:1.5px solid #1a1a2e;border-radius:12px;background:#0a0a0a;overflow:hidden">
+          <div style="padding:6px 5px">
+            <div style="height:5px;background:#111;border-radius:2px;margin-bottom:3px"></div>
+            <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-bottom:3px;width:80%"></div>
+            <div style="height:5px;background:#111;border-radius:2px;margin-bottom:3px"></div>
+            <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-bottom:3px;width:90%"></div>
+            <div style="height:5px;background:#111;border-radius:2px"></div>
+          </div>
+          <div style="position:absolute;bottom:0;left:0;right:0;height:24px;background:#1a1a2e;display:flex;align-items:center;justify-content:center">
+            <div style="font-size:7px;color:#444;font-weight:600;letter-spacing:1px">AD</div>
+          </div>
+        </div>
+        <div class="badge soon">SOON</div>
+        <div class="tag">320×50 · sticky bottom · mobile</div>
+      </div>
+      <div class="body">
+        <div class="card-title">Sticky anchor <span class="type-tag">Mobile</span></div>
+        <div class="card-desc">Fixed bottom banner on mobile. Always visible = top viewability scores. Simple to implement, instant revenue uplift on mobile traffic. 320×50 standard.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val amber">$0.35</div><div class="metric-lbl">est. CPM<div class="metric-note">Balkans avg*</div></div></div>
+          <div class="metric"><div class="metric-val amber">~90%</div><div class="metric-lbl">est. fill<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val muted">—</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <span class="btn disabled">Coming soon</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── REWARDED ───────────────────────────────── -->
+    <div class="card dim" data-type="video">
+      <div class="preview">
+        <div style="text-align:center">
+          <div style="width:56px;height:56px;border-radius:50%;background:#0a0a0a;border:1.5px solid #1a1a2e;display:flex;align-items:center;justify-content:center;margin:0 auto 10px">
+            <div style="font-size:22px">🔒</div>
+          </div>
+          <div style="font-size:10px;color:#333;margin-bottom:4px">Watch 30s · Read free</div>
+          <div style="width:80px;height:3px;background:#1a1a2e;border-radius:2px;margin:0 auto">
+            <div style="width:40%;height:100%;background:#555;border-radius:2px"></div>
+          </div>
+        </div>
+        <div class="badge planned">PLANNED</div>
+        <div class="tag">rewarded VAST · adblock recovery</div>
+      </div>
+      <div class="body">
+        <div class="card-title">Rewarded <span class="type-tag">AdBlock recovery</span></div>
+        <div class="card-desc">User-initiated VAST. Detects ad blocker → overlay: watch 30s video → unlock 10min reading. Bypasses blockers because user-initiated. 100% fill by definition.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val amber">$5.00</div><div class="metric-lbl">est. CPM<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val amber">100%</div><div class="metric-lbl">fill<div class="metric-note">user opt-in</div></div></div>
+          <div class="metric"><div class="metric-val muted">—</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <span class="btn disabled">Planned — Q2 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── INTERSTITIAL ───────────────────────────── -->
+    <div class="card dim" data-type="display">
+      <div class="preview">
+        <div style="width:75px;height:100px;border:1.5px solid #1a1a2e;border-radius:4px;background:#0a0a14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+          <div style="width:50px;height:50px;background:#0d0d1a;border-radius:4px;border:1px solid #111"></div>
+          <div style="width:40px;height:6px;background:#111;border-radius:2px"></div>
+          <div style="width:28px;height:14px;background:#1a1a2e;border-radius:3px"></div>
+        </div>
+        <div class="badge planned">PLANNED</div>
+        <div class="tag">320×480 · page transition</div>
+      </div>
+      <div class="body">
+        <div class="card-title">Interstitial <span class="type-tag">Display</span></div>
+        <div class="card-desc">Full-screen ad between page transitions. High CPM but requires user-friendly frequency capping. Best for content-heavy sites with high page depth.</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-val amber">$2.50</div><div class="metric-lbl">est. CPM<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val amber">~70%</div><div class="metric-lbl">est. fill<div class="metric-note">estimate*</div></div></div>
+          <div class="metric"><div class="metric-val muted">—</div><div class="metric-lbl">publishers</div></div>
+        </div>
+        <div class="actions">
+          <span class="btn disabled">Planned — Q3 2026</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bench-note">
+    <strong>* CPM estimates</strong> — Metrics marked with * are Balkans market averages based on industry benchmarks and Lupon network research, not Lupon live data. Outstream CPM and fill rate are real Lupon network data (last 30 days). All estimates vary significantly by publisher, audience, vertical, and season.
+    <br><br>
+    <strong>CPM data sources:</strong> Outstream = Lupon ClickHouse (real) · InRead, Native, Sticky, Rewarded, Interstitial = Balkans industry benchmarks (estimated)
+  </div>
+</div>
+
+<script>
+var btns=document.querySelectorAll('.filter-btn');
+btns.forEach(function(btn){
+  btn.addEventListener('click',function(){
+    btns.forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var filter=btn.dataset.filter;
+    document.querySelectorAll('.card').forEach(function(card){
+      if(filter==='all'){card.style.display='';}
+      else{
+        var types=(card.dataset.type||'').split(' ');
+        card.style.display=types.indexOf(filter)>-1?'':'none';
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
