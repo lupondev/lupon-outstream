@@ -14,6 +14,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav{display:flex;gap:4px}
 .nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
 .nav a:hover,.nav a.active{background:#1a1a2e;color:#fff}
+.nav a.highlight{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.nav a.highlight:hover{background:rgba(245,158,11,.2);color:#fbbf24}
 .hero{padding:56px 32px 40px;max-width:1100px;margin:0 auto}
 .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;margin-bottom:40px}
 .hero-text h1{font-size:32px;font-weight:700;color:#fff;letter-spacing:-.5px;margin-bottom:8px}
@@ -39,6 +41,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .card-icon.native{background:rgba(16,185,129,.15)}
 .card-icon.rewarded{background:rgba(245,158,11,.15)}
 .card-icon.ctv{background:rgba(239,68,68,.15)}
+.card-icon.prebid{background:rgba(245,158,11,.15)}
 .chip{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;letter-spacing:.2px}
 .chip.live{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
 .chip.dev{background:rgba(227,179,65,.1);color:#e3b341;border:1px solid rgba(227,179,65,.2)}
@@ -75,6 +78,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <a href="/lab/formats">Formats</a>
     <a href="/lab/bidders">Bidders</a>
     <a href="/lab/publishers">Publishers</a>
+    <a href="/lab/prebid" class="highlight">⚡ Prebid Tester</a>
   </nav>
 </div>
 
@@ -124,16 +128,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <p>AdBlock recovery. Watch 30s → get 10min free reading. Detect → overlay → VAST → reward.</p>
       <div class="tags"><span class="tag g">Google IMA</span><span class="tag m">Magnite</span></div>
     </a>
+    <a class="card" href="/lab/prebid">
+      <div class="card-top"><div class="card-icon prebid">⚡</div><span class="chip live">LIVE</span></div>
+      <h3>Prebid Auction Tester</h3>
+      <p>Simulate header bidding auction with all 12 bidders. Display, video, native. Live CPM comparison.</p>
+      <div class="tags"><span class="tag m">Magnite</span><span class="tag c">Criteo</span><span class="tag p">PubMatic</span><span class="tag ix">+9 more</span></div>
+    </a>
     <div class="card disabled">
       <div class="card-top"><div class="card-icon ctv">📺</div><span class="chip planned">PLANNED</span></div>
       <h3>CTV / OTT</h3>
       <p>Connected TV VAST tags. Pre-roll for streaming environments.</p>
-      <div class="tags"><span class="tag">Coming soon</span></div>
-    </div>
-    <div class="card disabled">
-      <div class="card-top"><div class="card-icon video">📌</div><span class="chip planned">PLANNED</span></div>
-      <h3>Sticky Video</h3>
-      <p>Corner-pinned video player follows user as they scroll. Dismissible.</p>
       <div class="tags"><span class="tag">Coming soon</span></div>
     </div>
   </div>
@@ -164,59 +168,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <p>Standard Google IMA VAST test creative. Always returns video. Use to verify player pipeline.</p>
       <div class="tags"><span class="tag ok">VAST 2.0 ✅</span><span class="tag g">Player OK</span></div>
     </a>
-    <a class="card" href="/lab/bidders/criteo">
-      <div class="card-top"><div class="card-icon display">🟡</div><span class="chip planned">PLANNED</span></div>
-      <h3>Criteo</h3>
-      <p>Retargeting powerhouse. High CPM for commerce audiences. Display + video.</p>
-      <div class="tags"><span class="tag c">Display</span><span class="tag c">Video</span><span class="tag c">Native</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/pubmatic">
-      <div class="card-top"><div class="card-icon display">🔷</div><span class="chip planned">PLANNED</span></div>
-      <h3>PubMatic</h3>
-      <p>Premium SSP with strong video demand. OpenWrap header bidding.</p>
-      <div class="tags"><span class="tag p">Display</span><span class="tag p">Video</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/ix">
-      <div class="card-top"><div class="card-icon video">🔮</div><span class="chip planned">PLANNED</span></div>
-      <h3>Index Exchange</h3>
-      <p>Premium inventory focus. Strong for news/media publishers. Display + video.</p>
-      <div class="tags"><span class="tag ix">Display</span><span class="tag ix">Video</span></div>
-    </a>
     <a class="card" href="/lab/bidders/teads">
       <div class="card-top"><div class="card-icon video">🟠</div><span class="chip ok">Working</span></div>
       <h3>Teads</h3>
       <p>Native outstream leader. Already serving on novi.ba. High fill for Balkans news.</p>
       <div class="tags"><span class="tag ok">Serving ✅</span><span class="tag t">Outstream</span><span class="tag t">Native</span></div>
     </a>
-    <a class="card" href="/lab/bidders/seedtag">
-      <div class="card-top"><div class="card-icon native">🌱</div><span class="chip planned">PLANNED</span></div>
-      <h3>Seedtag</h3>
-      <p>Contextual AI targeting. Strong for article-level context matching.</p>
-      <div class="tags"><span class="tag s">Contextual</span><span class="tag s">Native</span><span class="tag s">Video</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/appnexus">
-      <div class="card-top"><div class="card-icon display">⬛</div><span class="chip planned">PLANNED</span></div>
-      <h3>Xandr / AppNexus</h3>
-      <p>Microsoft Advertising. Massive demand pool. Display, video, native, CTV.</p>
-      <div class="tags"><span class="tag">Display</span><span class="tag">Video</span><span class="tag">CTV</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/sovrn">
-      <div class="card-top"><div class="card-icon display">🔶</div><span class="chip planned">PLANNED</span></div>
-      <h3>Sovrn</h3>
-      <p>Performance-focused SSP. Strong for content publishers. Already a Lupon partner.</p>
-      <div class="tags"><span class="tag">Display</span><span class="tag">Video</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/onetag">
-      <div class="card-top"><div class="card-icon native">🏷️</div><span class="chip planned">PLANNED</span></div>
-      <h3>OneTag</h3>
-      <p>Privacy-first SSP. GDPR compliant. Good for EU traffic monetization.</p>
-      <div class="tags"><span class="tag">Display</span><span class="tag">Video</span></div>
-    </a>
-    <a class="card" href="/lab/bidders/33across">
-      <div class="card-top"><div class="card-icon video">3️⃣</div><span class="chip planned">PLANNED</span></div>
-      <h3>33Across</h3>
-      <p>Scroll-based video specialist. High viewability scores. Outstream focus.</p>
-      <div class="tags"><span class="tag">Video</span><span class="tag">Outstream</span></div>
+    <a class="card" href="/lab/bidders">
+      <div class="card-top"><div class="card-icon display">🔷</div><span class="chip planned">PLANNED</span></div>
+      <h3>+ 8 more bidders</h3>
+      <p>Criteo, PubMatic, Index Exchange, Xandr, Sovrn, OneTag, Seedtag, 33Across.</p>
+      <div class="tags"><span class="tag c">Criteo</span><span class="tag p">PubMatic</span><span class="tag ix">IX</span><span class="tag">+5</span></div>
     </a>
   </div>
 </div>
@@ -225,6 +187,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="section">
   <div class="section-header">
     <div class="section-title">Publisher Test Pages</div>
+    <a href="/lab/publishers" style="font-size:12px;color:#555;text-decoration:none">View all →</a>
   </div>
   <div class="grid">
     <a class="card" href="/publishers/novi-ba/test">
