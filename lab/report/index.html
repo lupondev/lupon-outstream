@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Health Report — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:10}
+.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.header-actions{display:flex;gap:8px}
+.btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.btn-print{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.25)}
+.btn-print:hover{background:rgba(86,211,100,.2)}
+.btn-back{background:#1a1a2e;color:#888}
+.btn-back:hover{color:#fff}
+.page{max-width:960px;margin:0 auto;padding:40px}
+/* Report header */
+.report-header{margin-bottom:32px}
+.report-title{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px}
+.report-meta{font-size:13px;color:#444;display:flex;gap:16px;flex-wrap:wrap}
+.report-meta span{display:flex;align-items:center;gap:5px}
+/* Score hero */
+.score-hero{display:grid;grid-template-columns:auto 1fr;gap:24px;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;padding:24px;margin-bottom:24px;align-items:center}
+.score-big{text-align:center}
+.score-num{font-size:64px;font-weight:800;line-height:1}
+.score-label{font-size:11px;color:#444;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.score-grade{font-size:14px;font-weight:600;margin-top:6px;padding:3px 10px;border-radius:20px;display:inline-block}
+.grade-poor{background:rgba(248,81,73,.15);color:#f85149;border:1px solid rgba(248,81,73,.3)}
+.grade-ok{background:rgba(227,179,65,.15);color:#e3b341;border:1px solid rgba(227,179,65,.3)}
+.grade-good{background:rgba(86,211,100,.15);color:#56d364;border:1px solid rgba(86,211,100,.3)}
+.score-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-box{background:#080810;border:1px solid #111;border-radius:8px;padding:14px;text-align:center}
+.stat-val{font-size:22px;font-weight:700;font-family:monospace}
+.stat-val.red{color:#f85149}.stat-val.yellow{color:#e3b341}.stat-val.green{color:#56d364}.stat-val.blue{color:#3b82f6}
+.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-top:4px}
+/* Benchmark table */
+.section{margin-bottom:28px}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:#111}
+.bench-table{width:100%;border-collapse:collapse}
+.bench-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#333;padding:8px 12px;border-bottom:1px solid #111;font-weight:700}
+.bench-table th.pub{color:#a78bfa}
+.bench-table th.bench{color:#3b82f6}
+.bench-table td{padding:10px 12px;border-bottom:1px solid #0a0a12;font-size:12px;vertical-align:middle}
+.bench-table tr:hover td{background:#0d0d1a}
+.bench-table .metric{color:#888;font-size:11px}
+.bench-table .val{font-family:monospace;font-weight:600}
+.bench-table .val.good{color:#56d364}
+.bench-table .val.warn{color:#e3b341}
+.bench-table .val.bad{color:#f85149}
+.bench-table .val.neutral{color:#e0e0e0}
+.bench-pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:12px}
+.bench-pill.above{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
+.bench-pill.below{background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.2)}
+.bench-pill.at{background:rgba(227,179,65,.1);color:#e3b341;border:1px solid rgba(227,179,65,.2)}
+/* Issues */
+.issue-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:8px;margin-bottom:6px}
+.issue-row.critical{background:rgba(248,81,73,.05);border:1px solid rgba(248,81,73,.2)}
+.issue-row.warning{background:rgba(227,179,65,.05);border:1px solid rgba(227,179,65,.15)}
+.issue-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.issue-name{font-size:12px;font-weight:600;color:#e0e0e0}
+.issue-detail{font-size:11px;color:#555;margin-top:2px;font-family:monospace}
+/* Bidder grid */
+.bidder-grid{display:flex;flex-wrap:wrap;gap:8px}
+.bidder-chip{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:6px 12px;font-size:12px;color:#e0e0e0;display:flex;align-items:center;gap:6px}
+.bidder-chip .dot{width:6px;height:6px;border-radius:50%;background:#56d364}
+/* Print */
+@media print{
+  body{background:#fff;color:#000}
+  .header{position:static;background:#fff;border-bottom:2px solid #000}
+  .logo-icon{background:#7c3aed!important;-webkit-print-color-adjust:exact}
+  .btn-print,.btn-back{display:none}
+  .score-hero,.stat-box,.issue-row,.bench-table td{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">📊</div>
+    Lupon Ad Lab · Ad Health Report
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-back" onclick="window.close()">← Back to Inspector</button>
+    <button class="btn btn-print" onclick="window.print()">🖨 Print / PDF</button>
+  </div>
+</div>
+
+<div class="page" id="report-page">
+  <div style="text-align:center;padding:60px;color:#333" id="loading">Loading report...</div>
+</div>
+
+<script>
+var BENCHMARKS = {
+  balkans: {
+    bidders: { good: 8, avg: 5, label: 'Balkans avg: 5–8' },
+    timeout: { good: 2000, avg: 2500, label: 'Recommended: ≤2000ms' },
+    adUnits: { good: 12, avg: 8, label: 'Typical: 6–15' },
+    timeoutRate: { good: 10, avg: 25, label: 'Target: <15%' },
+    score: { good: 70, avg: 50, label: 'Good: 70+ / Avg: 50+' },
+    cpm: { good: 0.25, avg: 0.12, label: 'Balkans avg CPM: $0.10–0.30' }
+  }
+};
+
+function getBenchStatus(val, metric) {
+  var b = BENCHMARKS.balkans[metric];
+  if (!b) return 'at';
+  if (metric === 'timeout' || metric === 'timeoutRate') {
+    if (val <= b.good) return 'above';
+    if (val <= b.avg) return 'at';
+    return 'below';
+  }
+  if (val >= b.good) return 'above';
+  if (val >= b.avg) return 'at';
+  return 'below';
+}
+
+function benchLabel(status) {
+  if (status === 'above') return '<span class="bench-pill above">✓ Above avg</span>';
+  if (status === 'at') return '<span class="bench-pill at">~ At avg</span>';
+  return '<span class="bench-pill below">↓ Below avg</span>';
+}
+
+function renderReport(d) {
+  var score = d.score || 0;
+  var gradeClass = score >= 70 ? 'grade-good' : score >= 40 ? 'grade-ok' : 'grade-poor';
+  var gradeText = score >= 70 ? 'Good' : score >= 40 ? 'Average' : 'Needs Work';
+  var scoreColor = score >= 70 ? '#56d364' : score >= 40 ? '#e3b341' : '#f85149';
+  var bidderCount = (d.bidders||[]).length;
+  var timeout = d.timeout || null;
+  var toRate = d.timeoutRate || 0;
+  var cpm = d.winCpm ? parseFloat(d.winCpm) : null;
+  var domain = '';
+  try { domain = new URL(d.url).hostname.replace('www.',''); } catch(e) {}
+
+  var html = '';
+
+  // Header
+  html += '<div class="report-header">';
+  html += '<div class="report-title">' + domain + ' — Ad Health Report</div>';
+  html += '<div class="report-meta">';
+  html += '<span>🌐 ' + (d.url||'') + '</span>';
+  html += '<span>📅 ' + new Date(d.ts).toLocaleString() + '</span>';
+  if (d.prebidVersion) html += '<span>⚡ Prebid v' + d.prebidVersion + '</span>';
+  if (d.namespace && d.namespace !== 'pbjs') html += '<span>🔧 Wrapper: ' + d.namespace + '</span>';
+  html += '</div></div>';
+
+  // Score hero
+  html += '<div class="score-hero">';
+  html += '<div class="score-big">';
+  html += '<div class="score-num" style="color:' + scoreColor + '">' + score + '</div>';
+  html += '<div class="score-label">/ 100</div>';
+  html += '<div class="score-grade ' + gradeClass + '">' + gradeText + '</div>';
+  html += '</div>';
+  html += '<div class="score-stats">';
+  html += '<div class="stat-box"><div class="stat-val green">' + d.passed + '</div><div class="stat-lbl">Passed</div></div>';
+  html += '<div class="stat-box"><div class="stat-val red">' + d.critical + '</div><div class="stat-lbl">Critical</div></div>';
+  html += '<div class="stat-box"><div class="stat-val yellow">' + d.warnings + '</div><div class="stat-lbl">Warnings</div></div>';
+  html += '<div class="stat-box"><div class="stat-val blue">' + (d.adUnits||0) + '</div><div class="stat-lbl">Ad Units</div></div>';
+  html += '</div></div>';
+
+  // Benchmark table
+  html += '<div class="section">';
+  html += '<div class="section-title">📊 Publisher vs Industry Benchmark</div>';
+  html += '<table class="bench-table">';
+  html += '<thead><tr><th>Metric</th><th class="pub">novi.ba (Publisher)</th><th class="bench">Balkans Benchmark</th><th>Status</th></tr></thead><tbody>';
+
+  var rows = [
+    {
+      name: 'Ad Health Score', pub: score + '/100',
+      bench: BENCHMARKS.balkans.score.label,
+      status: getBenchStatus(score, 'score'),
+      pubClass: score>=70?'good':score>=40?'warn':'bad'
+    },
+    {
+      name: 'Active Bidders', pub: bidderCount,
+      bench: BENCHMARKS.balkans.bidders.label,
+      status: getBenchStatus(bidderCount, 'bidders'),
+      pubClass: bidderCount>=8?'good':bidderCount>=5?'warn':'bad'
+    },
+    {
+      name: 'Bid Timeout', pub: timeout ? timeout + 'ms' : 'N/A',
+      bench: BENCHMARKS.balkans.timeout.label,
+      status: timeout ? getBenchStatus(timeout, 'timeout') : 'at',
+      pubClass: !timeout?'neutral':timeout<=2000?'good':timeout<=2500?'warn':'bad'
+    },
+    {
+      name: 'Ad Units', pub: d.adUnits||0,
+      bench: BENCHMARKS.balkans.adUnits.label,
+      status: getBenchStatus(d.adUnits||0, 'adUnits'),
+      pubClass: (d.adUnits||0)>=8?'good':'warn'
+    },
+    {
+      name: 'Timeout Rate', pub: toRate + '%',
+      bench: BENCHMARKS.balkans.timeoutRate.label,
+      status: getBenchStatus(toRate, 'timeoutRate'),
+      pubClass: toRate<=10?'good':toRate<=25?'warn':'bad'
+    },
+    {
+      name: 'Win CPM', pub: cpm ? '$' + cpm : 'N/A',
+      bench: BENCHMARKS.balkans.cpm.label,
+      status: cpm ? getBenchStatus(cpm, 'cpm') : 'at',
+      pubClass: !cpm?'neutral':cpm>=0.25?'good':cpm>=0.12?'warn':'bad'
+    }
+  ];
+
+  rows.forEach(function(row) {
+    html += '<tr><td class="metric">' + row.name + '</td>';
+    html += '<td><span class="val ' + row.pubClass + '">' + row.pub + '</span></td>';
+    html += '<td style="color:#333;font-size:11px">' + row.bench + '</td>';
+    html += '<td>' + benchLabel(row.status) + '</td></tr>';
+  });
+  html += '</tbody></table></div>';
+
+  // Bidders
+  if (d.bidders && d.bidders.length) {
+    html += '<div class="section">';
+    html += '<div class="section-title">🤝 Active Bidders (' + d.bidders.length + ')</div>';
+    html += '<div class="bidder-grid">';
+    d.bidders.forEach(function(b) {
+      html += '<div class="bidder-chip"><span class="dot"></span>' + b + '</div>';
+    });
+    html += '</div></div>';
+  }
+
+  // Critical issues
+  if (d.issues && d.issues.length) {
+    html += '<div class="section">';
+    html += '<div class="section-title">❌ Critical Issues (' + d.issues.length + ')</div>';
+    d.issues.forEach(function(issue) {
+      html += '<div class="issue-row critical"><span class="issue-icon">❌</span><div><div class="issue-name">' + issue.name + '</div><div class="issue-detail">' + (issue.detail||'') + '</div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  // Warnings
+  if (d.warnings_list && d.warnings_list.length) {
+    html += '<div class="section">';
+    html += '<div class="section-title">⚠️ Warnings (' + d.warnings_list.length + ')</div>';
+    d.warnings_list.slice(0, 10).forEach(function(w) {
+      html += '<div class="issue-row warning"><span class="issue-icon">⚠️</span><div><div class="issue-name">' + w.name + '</div><div class="issue-detail">' + (w.detail||'') + '</div></div></div>';
+    });
+    html += '</div>';
+  }
+
+  // Footer
+  html += '<div style="margin-top:40px;padding-top:20px;border-top:1px solid #111;font-size:11px;color:#333;display:flex;justify-content:space-between">';
+  html += '<span>Generated by Lupon Ad Lab · cdn.luponmedia.com/lab/inspector</span>';
+  html += '<span>' + new Date(d.ts).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'}) + '</span>';
+  html += '</div>';
+
+  document.getElementById('report-page').innerHTML = html;
+  document.title = domain + ' — Ad Health Report';
+}
+
+// Parse data from URL
+try {
+  var param = new URLSearchParams(location.search).get('data');
+  if (param) {
+    var data = JSON.parse(decodeURIComponent(param));
+    renderReport(data);
+  } else {
+    document.getElementById('report-page').innerHTML = '<div style="text-align:center;padding:60px;color:#555">No report data found.<br><a href="/lab/inspector/" style="color:#a78bfa">← Back to Inspector</a></div>';
+  }
+} catch(e) {
+  document.getElementById('report-page').innerHTML = '<div style="text-align:center;padding:60px;color:#f85149">Error loading report: ' + e.message + '</div>';
+}
+</script>
+</body>
+</html>
