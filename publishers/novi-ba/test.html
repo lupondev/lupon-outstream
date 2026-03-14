@@ -14,6 +14,23 @@ h1 { font-size: 22px; margin-bottom: 6px; }
 p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
 .slot-label { background: #e8f4ff; border: 1px dashed #4a90e2; border-radius: 4px; padding: 6px 12px; font-size: 12px; color: #4a90e2; margin: 16px 0 8px; display: inline-block; }
 .slot-label.test { background: #fff3e0; border-color: #f0883e; color: #f0883e; }
+
+/* Outstream player wrapper — collapsira se kad nema oglasa */
+.lpo-outstream-wrap {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  max-height: 400px;
+  opacity: 1;
+}
+.lpo-outstream-wrap.collapsed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .status { position: fixed; bottom: 16px; right: 16px; background: #1a1a2e; color: #fff; border-radius: 8px; padding: 12px 16px; font-size: 12px; font-family: monospace; min-width: 280px; z-index: 9999; }
 .status .row { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
 .status .row:last-child { margin-bottom: 0; }
@@ -26,7 +43,7 @@ p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
 <body>
 
 <h1>🧪 Outstream Test — novi.ba</h1>
-<p class="meta">Izolirana test stranica — bez Adxbid, bez novi.ba koda. Magnite + Adform + Google test kreativa.</p>
+<p class="meta">Izolirana test stranica. Pravi outstream behaviour: pojavi se → oglas → zatvori se automatski.</p>
 
 <div class="article">
   <h2>Zelenski: Kijev spreman za novu rundu pregovora</h2>
@@ -37,68 +54,103 @@ p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
 
   <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
 
-  <!-- TEST: Google IMA VAST koji uvijek ima kreativu -->
-  <div class="slot-label test">🧪 TEST slot — Google IMA test kreativa (uvijek radi)</div>
-  <div id="test-outstream-slot"></div>
+  <!-- TEST slot: Google IMA — pravi outstream behaviour -->
+  <div class="slot-label test">🧪 TEST — Google IMA (scroll do ovdje da se pojavi)</div>
+  <div class="lpo-outstream-wrap collapsed" id="test-wrap">
+    <div id="test-outstream-slot"></div>
+  </div>
+
   <script src="https://video-outstream.rubiconproject.com/apex.js"></script>
   <script>
   (function() {
-    window._testStatus = 'loading';
+    window._testStatus = 'waiting for scroll';
     window._magniteStatus = 'loading';
 
-    // Google IMA test VAST — uvijek vraća video kreativu
     var TEST_VAST = 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=' + Date.now();
 
-    function runTestPlayer() {
-      // Buildaj mini JWPlayer instancu sa test VAST-om
-      window._testStatus = 'building';
-      var container = document.getElementById('test-outstream-slot');
-      container.style.width = '100%';
-      container.style.maxWidth = '640px';
-      container.style.margin = '0 auto';
+    var wrap = document.getElementById('test-wrap');
+    var fired = false;
 
-      try {
-        var jw = window.jwplayer('test-outstream-slot').setup({
-          width: '100%',
-          height: 360,
-          mute: true,
-          autostart: true,
-          advertising: {
-            client: 'vast',
-            tag: TEST_VAST,
-            outstream: true
+    function collapsePlayer() {
+      wrap.classList.add('collapsed');
+      window._testStatus = 'collapsed ✅';
+    }
+
+    function buildTestPlayer() {
+      if (fired) return;
+      fired = true;
+      window._testStatus = 'building player';
+
+      // Otvori wrapper s animacijom
+      wrap.classList.remove('collapsed');
+
+      function waitForJW() {
+        if (typeof window.jwplayer !== 'function') { setTimeout(waitForJW, 200); return; }
+
+        try {
+          var jw = window.jwplayer('test-outstream-slot').setup({
+            width: '100%',
+            height: 360,
+            mute: true,
+            autostart: true,
+            advertising: {
+              client: 'vast',
+              tag: TEST_VAST,
+              outstream: true
+            }
+          });
+
+          jw.on('adStarted', function() {
+            window._testStatus = 'playing ✅';
+            document.getElementById('s-test-err').textContent = '✅ AD RADI!';
+            document.getElementById('s-test-err').className = 'ok';
+          });
+
+          jw.on('adComplete', function() {
+            // Oglas završio — kolapsira player
+            window._testStatus = 'complete, collapsing...';
+            setTimeout(collapsePlayer, 500);
+          });
+
+          jw.on('adSkipped', function() {
+            window._testStatus = 'skipped, collapsing...';
+            setTimeout(collapsePlayer, 300);
+          });
+
+          jw.on('adError', function(e) {
+            // Nema oglasa — kolapsira odmah, korisnik ne vidi ništa
+            window._testStatus = 'no ad, collapsing';
+            document.getElementById('s-test-err').textContent = '❌ ' + (e.message || 'error') + ' (' + e.adErrorCode + ')';
+            document.getElementById('s-test-err').className = 'err';
+            collapsePlayer();
+          });
+
+          window._testStatus = 'setup ok';
+        } catch(e) {
+          window._testStatus = 'setup error: ' + e.message;
+          collapsePlayer();
+        }
+      }
+      waitForJW();
+    }
+
+    // IntersectionObserver — pokreni kad korisnik scrolla do slota
+    if (window.IntersectionObserver) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            obs.disconnect();
+            buildTestPlayer();
           }
         });
-        jw.on('adStarted', function() {
-          window._testStatus = 'ad started ✅';
-          document.getElementById('s-test-err').textContent = '✅ AD RADI!';
-          document.getElementById('s-test-err').className = 'ok';
-        });
-        jw.on('adImpression', function() {
-          window._testStatus = 'impression ✅';
-        });
-        jw.on('adError', function(e) {
-          window._testStatus = 'adError: ' + e.message + ' (' + e.adErrorCode + ')';
-          document.getElementById('s-test-err').textContent = '❌ ' + e.message + ' (' + e.adErrorCode + ')';
-          document.getElementById('s-test-err').className = 'err';
-        });
-        window._testStatus = 'setup ok';
-      } catch(e) {
-        window._testStatus = 'setup error: ' + e.message;
-      }
+      }, { threshold: 0.5 });
+      obs.observe(wrap);
+    } else {
+      // Fallback — pokreni odmah
+      buildTestPlayer();
     }
 
-    // Pokreni test player kad JWPlayer bude spreman
-    function waitForJW() {
-      if (typeof window.jwplayer === 'function') {
-        runTestPlayer();
-      } else {
-        setTimeout(waitForJW, 200);
-      }
-    }
-    setTimeout(waitForJW, 500);
-
-    // Magnite renderAd na stvarne IDs
+    // Magnite renderAd
     function renderMagnite() {
       try {
         MagniteApex.renderAd({
@@ -126,9 +178,7 @@ p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
   </script>
 
   <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak pregovora.</p>
-
   <p>Međunarodna zajednica pažljivo prati razvoj situacije, s posebnim naglaskom na humanitarne koridore.</p>
-
   <p>Europska unija najavila je dodatnu financijsku pomoć Ukrajini u iznosu od pet milijardi eura.</p>
 
   <!-- ADFORM -->
@@ -147,14 +197,13 @@ p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
 
   <p>Zelenski je pozvao sve strane da se uzdrže od eskalacije sukoba.</p>
   <p>Pregovori se očekuju uz prisustvo međunarodnih posmatrača i garantnih sila.</p>
-
 </div>
 
 <!-- Status panel -->
 <div class="status">
   <div class="row"><span style="color:#e3b341;font-weight:bold">🧪 TEST (Google IMA)</span></div>
-  <div class="row"><span>JW setup</span><span id="s-test-setup" class="pending">čekam...</span></div>
-  <div class="row"><span>Ad result</span><span id="s-test-err" class="pending">čekam...</span></div>
+  <div class="row"><span>Status</span><span id="s-test-setup" class="pending">čekam scroll...</span></div>
+  <div class="row"><span>Ad result</span><span id="s-test-err" class="pending">—</span></div>
   <div class="sep"></div>
   <div class="row"><span style="color:#a78bfa;font-weight:bold">📺 MAGNITE</span></div>
   <div class="row"><span>apex.js</span><span id="s-apex" class="pending">čekam...</span></div>
@@ -167,42 +216,31 @@ p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
 
 <script>
 function updateStatus() {
-  // Test JW setup
   var ts = window._testStatus || '—';
   var setupEl = document.getElementById('s-test-setup');
   setupEl.textContent = ts;
-  setupEl.className = ts.includes('ok') || ts.includes('started') || ts.includes('impression') ? 'ok' : ts.includes('error') ? 'err' : 'pending';
+  setupEl.className = ts.includes('playing') || ts.includes('complete') || ts.includes('collapsed') ? 'ok' : ts.includes('error') ? 'err' : 'pending';
 
-  // Magnite apex.js
   var apexEl = document.getElementById('s-apex');
-  if (typeof MagniteApex !== 'undefined') {
-    apexEl.textContent = '✅ loaded'; apexEl.className = 'ok';
-  } else {
-    apexEl.textContent = '⏳ loading...'; apexEl.className = 'pending';
-  }
+  if (typeof MagniteApex !== 'undefined') { apexEl.textContent = '✅ loaded'; apexEl.className = 'ok'; }
+  else { apexEl.textContent = '⏳ loading...'; apexEl.className = 'pending'; }
 
-  // Magnite renderAd
   var renderEl = document.getElementById('s-render');
   var ms = window._magniteStatus || '—';
   renderEl.textContent = ms === 'rendered' ? '✅ rendered' : ms.includes('error') ? '❌ ' + ms : '⏳ ' + ms;
   renderEl.className = ms === 'rendered' ? 'ok' : ms.includes('error') ? 'err' : 'pending';
 
-  // Magnite adError — prati Magnite JW player
   var errEl = document.getElementById('s-err');
   var player = document.querySelector('[id^="MagniteApexPlayer"]');
   if (player && window.jwplayer && !window._magniteTracked) {
     var jw = window.jwplayer(player.id);
     if (jw && jw.getState) {
       window._magniteTracked = true;
-      jw.on('adError', function(e) {
-        errEl.textContent = '❌ ' + (e.message || 'error') + ' (' + e.adErrorCode + ')';
-        errEl.className = 'err';
-      });
+      jw.on('adError', function(e) { errEl.textContent = '❌ ' + (e.message||'error') + ' (' + e.adErrorCode + ')'; errEl.className = 'err'; });
       jw.on('adStarted', function() { errEl.textContent = '✅ playing!'; errEl.className = 'ok'; });
     }
   }
 
-  // Adform
   var adfEl = document.getElementById('s-adform');
   var as = window._adformStatus || '—';
   adfEl.textContent = as === 'loaded' ? '✅ loaded' : as === 'load failed' ? '❌ failed' : '⏳ ' + as;
