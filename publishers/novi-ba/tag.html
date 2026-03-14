@@ -13,18 +13,13 @@ h1{font-size:20px;font-weight:500;color:#fff;margin-bottom:6px}
 .step-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
 .step-num.magnite{background:rgba(87,53,230,.25);color:#a78bfa;border:0.5px solid rgba(87,53,230,.4)}
-.step-num.adform{background:rgba(24,95,165,.25);color:#69b0f5;border:0.5px solid rgba(24,95,165,.4)}
 .step-num.note{background:rgba(240,136,62,.15);color:#f0883e;border:0.5px solid rgba(240,136,62,.3)}
 .step h2{font-size:15px;font-weight:500;color:#fff}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;margin-left:8px}
 .badge.magnite{background:rgba(87,53,230,.2);color:#a78bfa}
-.badge.adform{background:rgba(24,95,165,.2);color:#69b0f5}
 .badge.live{background:rgba(86,211,100,.1);color:#56d364;border:0.5px solid rgba(86,211,100,.25)}
-.badge.fix{background:rgba(248,81,73,.1);color:#f85149;border:0.5px solid rgba(248,81,73,.25)}
 .instruction{font-size:13px;color:#888;margin-bottom:12px;line-height:1.6}
 .instruction strong{color:#ccc;font-weight:500}
-.fix-box{background:rgba(248,81,73,.06);border:0.5px solid rgba(248,81,73,.2);border-radius:8px;padding:12px 14px;font-size:12px;color:#c87070;margin-bottom:14px;line-height:1.6}
-.fix-box strong{color:#f85149}
 .code-wrap{position:relative}
 .code-box{background:#0d1117;border:0.5px solid #2a2a3a;border-radius:10px;padding:20px;font-family:'SF Mono',Consolas,monospace;font-size:12px;line-height:1.8;overflow-x:auto;white-space:pre}
 .copy-btn{position:absolute;top:10px;right:10px;padding:5px 14px;background:#1a1a24;border:0.5px solid #333;border-radius:6px;color:#888;font-size:11px;cursor:pointer;transition:all .15s;font-family:inherit}
@@ -35,20 +30,19 @@ h1{font-size:20px;font-weight:500;color:#fff;margin-bottom:6px}
 .info-pill{background:#1a1a24;border:0.5px solid #2a2a3a;border-radius:6px;padding:6px 12px;font-size:12px}
 .info-pill .lbl{color:#555;margin-right:6px}
 .info-pill .val{color:#ccc;font-family:monospace}
-.note-box{background:rgba(240,136,62,.07);border:0.5px solid rgba(240,136,62,.2);border-radius:8px;padding:14px 16px;font-size:13px;color:#c8935a;line-height:1.6}
-.note-box strong{color:#f0883e}
+.note-box{background:rgba(86,211,100,.05);border:0.5px solid rgba(86,211,100,.2);border-radius:8px;padding:14px 16px;font-size:13px;color:#56d364;line-height:1.6}
+.note-box strong{color:#6ee37a}
 </style>
 </head>
 <body>
 
 <h1>novi.ba <span class='badge live'>LIVE</span></h1>
-<p class='meta'>Lupon Ventures &amp; Lupon Media &nbsp;·&nbsp; Outstream in-article video &nbsp;·&nbsp; 2 demand sourcea</p>
+<p class='meta'>Lupon Ventures &amp; Lupon Media &nbsp;·&nbsp; Outstream in-article video &nbsp;·&nbsp; Magnite Apex</p>
 
-<!-- MAGNITE -->
 <div class='step'>
   <div class='step-header'>
     <div class='step-num magnite'>1</div>
-    <h2>Magnite Apex <span class='badge magnite'>Rubicon</span> <span class='badge fix'>3 fixa</span></h2>
+    <h2>Magnite Apex <span class='badge magnite'>Rubicon</span></h2>
   </div>
   <div class='info-row'>
     <div class='info-pill'><span class='lbl'>account_id</span><span class='val'>12398</span></div>
@@ -56,32 +50,13 @@ h1{font-size:20px;font-weight:500;color:#fff;margin-bottom:6px}
     <div class='info-pill'><span class='lbl'>zone_id</span><span class='val'>4059987</span></div>
     <div class='info-pill'><span class='lbl'>size_id</span><span class='val'>203</span></div>
   </div>
-  <div class='fix-box'>
-    <strong>Fix 1 — attachTo:</strong> mora biti DOM element, NE prazan {}. Koristi <code>document.getElementById('novi_ba_outstream_video')</code><br>
-    <strong>Fix 2 — apex.js:</strong> ukloni <code>defer</code> atribut — uzrokuje race condition gdje MagniteApex nije spreman kad renderAd() se poziva<br>
-    <strong>Fix 3 — AbortError:</strong> dodaj <code>signal</code> timeout guard u Prebid fetch requestovima — HB aukcija se prekida prerano
-  </div>
-  <p class='instruction'>Lijepi <strong>unutar article template-a</strong>, nakon 3. paragrafa. Anchor div <code>id="novi_ba_outstream_video"</code> mora postojati u DOM-u PRIJE ovog scriptu.</p>
+  <p class='instruction'>Lijepi <strong>direktno u article template</strong> — Magnite Apex radi sve sam, ne miješati se.</p>
   <div class='code-wrap'>
-    <button class='copy-btn' onclick="copyCode('magnite', this)">Copy</button>
-    <div class='code-box' id='magnite-display'>&lt;!-- KORAK 1: Anchor div (ide nakon 3. paragrafa u članku) --&gt;
-&lt;div id="novi_ba_outstream_video"&gt;&lt;/div&gt;
-
-&lt;!-- KORAK 2: Magnite Apex tag — BEZ defer! --&gt;
-&lt;script src="https://video-outstream.rubiconproject.com/apex.js"&gt;&lt;/script&gt;
-&lt;script&gt;
-(function() {
-  var anchor = document.getElementById('novi_ba_outstream_video');
-  if (!anchor) {
-    console.warn('[Magnite] anchor div #novi_ba_outstream_video nije pronađen!');
-    return;
-  }
-
-  function renderAd() {
-    if (typeof MagniteApex === 'undefined') {
-      console.warn('[Magnite] MagniteApex nije učitan — provjeri apex.js');
-      return;
-    }
+    <button class='copy-btn' id='copy-magnite'>Copy</button>
+    <div class='code-box'>(function(){
+  var s = document.createElement('script');
+  s.src = 'https://video-outstream.rubiconproject.com/apex.js';
+  s.onload = function(){
     MagniteApex.renderAd({
       magnite: {
         account_id: 12398,
@@ -89,183 +64,46 @@ h1{font-size:20px;font-weight:500;color:#fff;margin-bottom:6px}
         zone_id:    4059987,
         size_id:    203
       },
-      width:  640,
-      height: 360,
+      width:       640,
+      height:      360,
       placement: {
-        attachTo: anchor,   // FIX: DOM element, ne {} prazan objekt
+        attachTo: 'top',
         position: 'after',
         align:    'center'
       },
       collapse:    true,
       closeButton: true
     });
-  }
-
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    renderAd();
-  } else {
-    document.addEventListener('DOMContentLoaded', renderAd);
-  }
-})();
-&lt;/script&gt;</div>
+  };
+  document.head.appendChild(s);
+})();</div>
   </div>
 </div>
 
 <hr class='divider'>
 
-<!-- ADFORM -->
-<div class='step'>
-  <div class='step-header'>
-    <div class='step-num adform'>2</div>
-    <h2>Adform Outstream <span class='badge adform'>inview</span> <span class='badge fix'>1 fix</span></h2>
-  </div>
-  <div class='info-row'>
-    <div class='info-pill'><span class='lbl'>publisher</span><span class='val'>Novi.ba</span></div>
-    <div class='info-pill'><span class='lbl'>publisher_id</span><span class='val'>83364</span></div>
-    <div class='info-pill'><span class='lbl'>placement_id</span><span class='val'>2236422</span></div>
-  </div>
-  <div class='fix-box'>
-    <strong>Fix — height:0 / overflow:hidden:</strong> wrapper div ima CSS koji skriva Adform player. Mora biti <code>min-height:1px</code> i bez overflow:hidden. Adform inview.js kreira player dinamički unutar wrappera i treba vidljiv prostor da bi InScreen observer triggerao.
-  </div>
-  <p class='instruction'>Lijepi <strong>unutar article template-a</strong>, nakon 6. paragrafa (drugi placement).</p>
-  <div class='code-wrap'>
-    <button class='copy-btn' onclick="copyCode('adform', this)">Copy</button>
-    <div class='code-box' id='adform-display'>&lt;!-- Adform Outstream — novi.ba, placement ID 2236422 --&gt;
-&lt;!-- FIX: min-height:1px obavezno, BEZ overflow:hidden --&gt;
-&lt;div id="adform-outstream" style="min-height:1px;width:100%;"&gt;
-  &lt;script src="https://s1.adform.net/banners/scripts/video/outstream/inview.js"
-          data-pmp-id="2236422"&gt;
-  &lt;/script&gt;
-&lt;/div&gt;</div>
-  </div>
-</div>
-
-<hr class='divider'>
-
-<!-- PREBID ABORT FIX -->
-<div class='step'>
-  <div class='step-header'>
-    <div class='step-num note'>3</div>
-    <h2>AbortError Fix — Prebid HB skripte</h2>
-  </div>
-  <div class='fix-box'>
-    <strong>Problem:</strong> adxbid.info HB skripte (novi_ba_inArticle.js, midArticle.js, underArticle.js) abortuju fetch requestove 10+ puta. Uzrok je ili Prebid timeout pre-empts requests ili AbortController koji se triggera prerano.<br><br>
-    <strong>Rješenje:</strong> povećaj Prebid bidder timeout na 2000ms i dodaj AbortController cleanup.
-  </div>
-  <p class='instruction'>Dodaj ovo u Prebid config <strong>prije</strong> pbjs.requestBids poziva:</p>
-  <div class='code-wrap'>
-    <button class='copy-btn' onclick="copyCode('prebid', this)">Copy</button>
-    <div class='code-box' id='prebid-display'>&lt;script&gt;
-// Prebid config fix — povećaj timeout, spriječi AbortError
-var pbjs = pbjs || {};
-pbjs.que = pbjs.que || [];
-pbjs.que.push(function() {
-  pbjs.setConfig({
-    bidderTimeout: 2000,      // Povećaj sa default 1000ms
-    enableSendAllBids: false,
-    // Spriječi race condition između HB i outstream playera
-    cache: {
-      url: 'https://prebid.adnxs.com/pbc/v1/cache'
-    }
-  });
-});
-&lt;/script&gt;</div>
-  </div>
-</div>
-
-<hr class='divider'>
-
-<!-- NOTE -->
 <div class='step'>
   <div class='step-header'>
     <div class='step-num note'>!</div>
-    <h2>Dijagnoza i redosljed deploymenta</h2>
+    <h2>Napomena</h2>
   </div>
   <div class='note-box'>
-    <strong>Root cause chain:</strong><br>
-    1. <code>attachTo: {}</code> → IntersectionObserver se ne registrira → VAST request nikad ne ide → player zauvijek u pending stanju<br>
-    2. <code>defer</code> na apex.js → race condition → MagniteApex nije spreman kad renderAd() se poziva<br>
-    3. Adform <code>height:0; overflow:hidden</code> → inview.js ne može kreirati player<br>
-    4. AbortError u HB skriptama → Prebid aukcija ne završava → bidi se ne sakupljaju<br><br>
-    <strong>Deploy redosljed:</strong> Fix 1 (attachTo) → Fix 2 (defer) → Fix 3 (adform CSS) → Fix 4 (Prebid timeout)<br><br>
-    <strong>Test:</strong> Nakon deploymenta, otvori novi.ba članak i provjeri Network tab → trebao bi vidjeti GET request prema <code>optimized-by.rubiconproject.com/a/api/vast</code>
+    <strong>Magnite Apex je black box.</strong><br>
+    Ne dodavati nikakve wrappere, CSS overrides, VAST parsere, IntersectionObservere.<br>
+    Magnite sve to radi interno. Jedino što treba: apex.js se učita, renderAd() se pozove.
   </div>
 </div>
 
 <script>
-const codes = {
-  magnite: `<!-- KORAK 1: Anchor div (ide nakon 3. paragrafa u članku) -->
-<div id="novi_ba_outstream_video"></div>
-
-<!-- KORAK 2: Magnite Apex tag — BEZ defer! -->
-<script src="https://video-outstream.rubiconproject.com/apex.js"><\/script>
-<script>
-(function() {
-  var anchor = document.getElementById('novi_ba_outstream_video');
-  if (!anchor) {
-    console.warn('[Magnite] anchor div #novi_ba_outstream_video nije pronađen!');
-    return;
-  }
-
-  function renderAd() {
-    if (typeof MagniteApex === 'undefined') {
-      console.warn('[Magnite] MagniteApex nije učitan — provjeri apex.js');
-      return;
-    }
-    MagniteApex.renderAd({
-      magnite: {
-        account_id: 12398,
-        site_id:    529542,
-        zone_id:    4059987,
-        size_id:    203
-      },
-      width:  640,
-      height: 360,
-      placement: {
-        attachTo: anchor,
-        position: 'after',
-        align:    'center'
-      },
-      collapse:    true,
-      closeButton: true
-    });
-  }
-
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    renderAd();
-  } else {
-    document.addEventListener('DOMContentLoaded', renderAd);
-  }
-})();
-<\/script>`,
-  adform: `<!-- Adform Outstream — novi.ba, placement ID 2236422 -->
-<div id="adform-outstream" style="min-height:1px;width:100%;">
-  <script src="https://s1.adform.net/banners/scripts/video/outstream/inview.js"
-          data-pmp-id="2236422">
-  <\/script>
-<\/div>`,
-  prebid: `<script>
-var pbjs = pbjs || {};
-pbjs.que = pbjs.que || [];
-pbjs.que.push(function() {
-  pbjs.setConfig({
-    bidderTimeout: 2000,
-    enableSendAllBids: false,
-    cache: {
-      url: 'https://prebid.adnxs.com/pbc/v1/cache'
-    }
-  });
-});
-<\/script>`
-};
-
-function copyCode(id, btn) {
-  navigator.clipboard.writeText(codes[id]).then(() => {
+document.getElementById('copy-magnite').addEventListener('click', function(){
+  var code = "(function(){\n  var s = document.createElement('script');\n  s.src = 'https://video-outstream.rubiconproject.com/apex.js';\n  s.onload = function(){\n    MagniteApex.renderAd({\n      magnite: {\n        account_id: 12398,\n        site_id:    529542,\n        zone_id:    4059987,\n        size_id:    203\n      },\n      width:       640,\n      height:      360,\n      placement: {\n        attachTo: 'top',\n        position: 'after',\n        align:    'center'\n      },\n      collapse:    true,\n      closeButton: true\n    });\n  };\n  document.head.appendChild(s);\n})();";
+  navigator.clipboard.writeText(code).then(function(){
+    var btn = document.getElementById('copy-magnite');
     btn.textContent = 'Kopirano!';
     btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2000);
+    setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('ok'); }, 2000);
   });
-}
+});
 </script>
 </body>
 </html>
