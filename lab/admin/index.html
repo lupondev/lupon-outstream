@@ -14,11 +14,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
 .nav a:hover,.nav a.active{background:#1a1a2e;color:#fff}
 .layout{display:grid;grid-template-columns:280px 1fr;height:calc(100vh - 56px)}
-
-/* Sidebar */
-.sidebar{background:#0a0a12;border-right:1px solid #111;overflow-y:auto;padding:16px}
+.sidebar{background:#0a0a12;border-right:1px solid #111;overflow-y:auto;padding:16px;display:flex;flex-direction:column}
 .sidebar-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:12px;font-weight:700;padding:0 4px}
-.bidder-list{margin-bottom:20px}
+.bidder-list{flex:1;margin-bottom:12px}
 .bidder-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:all .15s;margin-bottom:2px;border:1px solid transparent}
 .bidder-item:hover{background:#0d0d1a;border-color:#1a1a2e}
 .bidder-item.active{background:#7c3aed15;border-color:#7c3aed33}
@@ -28,16 +26,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .bidder-status{font-size:10px;margin-top:1px}
 .bidder-status.ok{color:#56d364}
 .bidder-status.fail{color:#f85149}
-.bidder-status.pending{color:#555}
-.add-btn{width:100%;padding:10px;background:#7c3aed15;border:1px dashed #7c3aed33;border-radius:8px;color:#a78bfa;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.add-btn:hover{background:#7c3aed25;border-color:#7c3aed55}
-
-/* Main */
+.bidder-status.planned{color:#555}
+.add-btn{width:100%;padding:10px;background:#7c3aed15;border:1px dashed #7c3aed44;border-radius:8px;color:#a78bfa;font-size:13px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;flex-shrink:0}
+.add-btn:hover{background:#7c3aed25;border-color:#7c3aed77}
 .main{overflow-y:auto;padding:32px}
-.main-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px}
+.main-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;gap:16px}
 .main-title{font-size:20px;font-weight:700;color:#fff;margin-bottom:4px}
 .main-subtitle{font-size:13px;color:#444}
-.action-btns{display:flex;gap:8px}
+.action-btns{display:flex;gap:8px;flex-shrink:0}
 .btn{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:none}
 .btn-primary{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff}
 .btn-primary:hover{opacity:.9}
@@ -47,69 +43,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btn-danger:hover{background:rgba(248,81,73,.2)}
 .btn-test{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
 .btn-test:hover{background:rgba(86,211,100,.2)}
-
-/* Form */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .form-group{display:flex;flex-direction:column;gap:6px}
-.form-group.full{grid-column:1/-1}
 .form-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#444;font-weight:600}
-.form-input{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px 12px;font-size:13px;color:#e0e0e0;transition:border-color .15s;font-family:inherit}
+.form-input{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px 12px;font-size:13px;color:#e0e0e0;transition:border-color .15s;font-family:inherit;width:100%}
 .form-input:focus{outline:none;border-color:#7c3aed55;background:#0f0f1f}
 .form-input::placeholder{color:#333}
 select.form-input option{background:#0d0d1a}
 .form-hint{font-size:11px;color:#333;line-height:1.4}
-
-/* Sections */
 .section{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:10px;padding:20px;margin-bottom:16px}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;cursor:pointer}
-.section-title{font-size:13px;font-weight:600;color:#e0e0e0;display:flex;align-items:center;gap:8px}
-.section-toggle{color:#444;font-size:12px}
-.section-body{}
-.section-body.collapsed{display:none}
-
-/* Params table */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;cursor:pointer;user-select:none}
+.sec-title{font-size:13px;font-weight:600;color:#e0e0e0}
+.sec-toggle{color:#444;font-size:16px}
+.sec-body{}
+.sec-body.collapsed{display:none}
 .params-table{width:100%;border-collapse:collapse;font-size:12px}
 .params-table th{text-align:left;color:#333;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:6px 8px;border-bottom:1px solid #111;font-weight:700}
 .params-table td{padding:8px;border-bottom:1px solid #0a0a12;vertical-align:middle}
 .params-table tr:last-child td{border:none}
-.params-table .param-key{font-family:monospace;color:#a78bfa;font-size:11px}
-.params-table .param-val{font-family:monospace;color:#56d364;font-size:11px}
-.params-table .param-req{color:#f85149;font-size:10px}
-.param-input{background:#080810;border:1px solid #1a1a2e;border-radius:4px;padding:4px 8px;font-size:11px;color:#e0e0e0;font-family:monospace;width:100%;transition:border-color .15s}
+.param-key{font-family:monospace;color:#a78bfa;font-size:11px}
+.param-req{color:#f85149;font-size:10px;margin-left:2px}
+.param-input{background:#080810;border:1px solid #1a1a2e;border-radius:4px;padding:5px 8px;font-size:12px;color:#e0e0e0;font-family:monospace;width:100%;transition:border-color .15s}
 .param-input:focus{outline:none;border-color:#7c3aed44}
-
-/* Status */
-.test-result{background:#050508;border:1px solid #111;border-radius:8px;padding:16px;margin-top:16px;font-family:monospace;font-size:11px;line-height:1.8;min-height:80px;display:none}
+.param-hint{color:#333;font-size:10px}
+.test-result{background:#050508;border:1px solid #111;border-radius:8px;padding:16px;margin-top:16px;font-family:monospace;font-size:11px;line-height:1.8;display:none}
 .test-result.show{display:block}
 .tr-ok{color:#56d364}.tr-err{color:#f85149}.tr-warn{color:#e3b341}.tr-info{color:#3b82f6}
-
-/* Tags */
-.format-tags{display:flex;gap:6px;flex-wrap:wrap}
-.ftag{padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;border:1px solid #1a1a2e;background:#0a0a12;color:#444;transition:all .15s;user-select:none}
-.ftag.selected.video{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.4);color:#a78bfa}
-.ftag.selected.display{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4);color:#69b0f5}
-.ftag.selected.native{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#34d399}
-.ftag.selected.ctv{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#f87171}
-
-/* Chips */
-.chip{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}
-.chip.live{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
-.chip.fail{background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.2)}
-.chip.planned{background:rgba(80,80,100,.1);color:#555;border:1px solid #1e1e2e}
-
-/* JSON output */
-.json-output{background:#050508;border:1px solid #111;border-radius:8px;padding:16px;font-family:monospace;font-size:11px;line-height:1.7;color:#888;white-space:pre-wrap;word-break:break-all}
-.json-output .key{color:#69b0f5}
-.json-output .str{color:#a78bfa}
-.json-output .num{color:#56d364}
-
-/* Toast */
+.format-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.ftag{padding:4px 12px;border-radius:4px;font-size:11px;cursor:pointer;border:1px solid #1a1a2e;background:#0a0a12;color:#444;transition:all .15s;user-select:none}
+.ftag:hover{border-color:#333;color:#888}
+.ftag.on-video{background:rgba(124,58,237,.15);border-color:rgba(124,58,237,.4);color:#a78bfa}
+.ftag.on-display{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4);color:#69b0f5}
+.ftag.on-native{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#34d399}
+.ftag.on-ctv{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.4);color:#f87171}
+.chip{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px}
+.chip-ok{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
+.chip-fail{background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.2)}
+.chip-planned{background:rgba(80,80,100,.1);color:#555;border:1px solid #1e1e2e}
+.json-output{background:#050508;border:1px solid #111;border-radius:8px;padding:14px;font-family:monospace;font-size:11px;line-height:1.7;white-space:pre-wrap;word-break:break-all;min-height:60px}
+.jk{color:#69b0f5}.js{color:#a78bfa}.jn{color:#56d364}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px 20px;font-size:13px;color:#e0e0e0;z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
 .toast.ok{border-color:rgba(86,211,100,.3);color:#56d364}
 .toast.err{border-color:rgba(248,81,73,.3);color:#f85149}
-
-/* Empty state */
 .empty{text-align:center;padding:60px 32px;color:#333}
 .empty h3{font-size:16px;color:#444;margin-bottom:8px}
 .empty p{font-size:13px;line-height:1.5}
@@ -133,353 +109,269 @@ select.form-input option{background:#0d0d1a}
 </div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="sidebar-title">Bidders</div>
     <div class="bidder-list" id="bidder-list"></div>
-    <button class="add-btn" onclick="addNewBidder()">+ Add New Bidder</button>
+    <button class="add-btn" id="add-btn">+ Add New Bidder</button>
   </div>
-
-  <!-- MAIN -->
   <div class="main" id="main-area">
     <div class="empty" id="empty-state">
       <h3>Select a bidder to configure</h3>
-      <p>Choose from the list on the left, or add a new bidder to get started.</p>
+      <p>Choose from the list on the left,<br>or click "+ Add New Bidder" to get started.</p>
     </div>
-    <div id="bidder-form" style="display:none">
-      <!-- injected by JS -->
-    </div>
+    <div id="bidder-form" style="display:none"></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ── DEFAULT BIDDER LIBRARY ────────────────────────────────────────────────
-var BIDDER_TEMPLATES = {
-  rubicon: {
-    id: 'rubicon', name: 'Magnite / Rubicon', icon: '🟣',
-    prebidAdapter: 'rubicon',
-    formats: ['display', 'video'],
-    status: 'fail',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/rubicon.html',
-    params: [
-      { key: 'accountId', label: 'Account ID', value: '12398', required: true, hint: 'Magnite publisher account ID' },
-      { key: 'siteId',    label: 'Site ID',    value: '529542', required: true, hint: 'Site ID from Magnite dashboard' },
-      { key: 'zoneId',    label: 'Zone ID',    value: '4059987', required: true, hint: 'Zone ID (display). For video use separate zone.' },
-      { key: 'sizeId',    label: 'Size ID',    value: '203', required: false, hint: '203 = outstream video' },
-    ],
-  },
-  adform: {
-    id: 'adform', name: 'Adform', icon: '🔵',
-    prebidAdapter: 'adform',
-    formats: ['display', 'video'],
-    status: 'fail',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/adform.html',
-    params: [
-      { key: 'mid',          label: 'Placement ID (mid)', value: '2236422', required: true, hint: 'Adform Master Tag ID' },
-      { key: 'publisher_id', label: 'Publisher ID',       value: '83364',   required: false, hint: 'Adform publisher account ID' },
-    ],
-  },
-  criteo: {
-    id: 'criteo', name: 'Criteo', icon: '🟡',
-    prebidAdapter: 'criteo',
-    formats: ['display', 'video', 'native'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/criteo.html',
-    params: [
-      { key: 'networkId', label: 'Network ID', value: '', required: true, hint: 'Get from Criteo dashboard → Publishers → Network ID' },
-    ],
-  },
-  pubmatic: {
-    id: 'pubmatic', name: 'PubMatic', icon: '🔷',
-    prebidAdapter: 'pubmatic',
-    formats: ['display', 'video'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/pubmatic.html',
-    params: [
-      { key: 'publisherId', label: 'Publisher ID', value: '', required: true,  hint: 'PubMatic publisher account ID' },
-      { key: 'adSlot',      label: 'Ad Slot',      value: '', required: false, hint: 'Format: adUnitName@WxH e.g. lupon_300x250@300x250' },
-    ],
-  },
-  ix: {
-    id: 'ix', name: 'Index Exchange', icon: '🔮',
-    prebidAdapter: 'ix',
-    formats: ['display', 'video'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/ix.html',
-    params: [
-      { key: 'siteId', label: 'Site ID', value: '', required: true, hint: 'IX site ID from your IX dashboard' },
-    ],
-  },
-  appnexus: {
-    id: 'appnexus', name: 'Xandr / AppNexus', icon: '⬛',
-    prebidAdapter: 'appnexus',
-    formats: ['display', 'video', 'native'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/appnexus.html',
-    params: [
-      { key: 'placementId', label: 'Placement ID', value: '', required: true, hint: 'AppNexus/Xandr placement ID' },
-    ],
-  },
-  sovrn: {
-    id: 'sovrn', name: 'Sovrn', icon: '🔶',
-    prebidAdapter: 'sovrn',
-    formats: ['display'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/sovrn.html',
-    params: [
-      { key: 'tagid', label: 'Tag ID', value: '', required: true, hint: 'Sovrn tag ID from your Sovrn dashboard' },
-    ],
-  },
-  onetag: {
-    id: 'onetag', name: 'OneTag', icon: '🏷️',
-    prebidAdapter: 'onetag',
-    formats: ['display', 'video'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/onetag.html',
-    params: [
-      { key: 'pubId', label: 'Publisher ID', value: '', required: true, hint: 'OneTag publisher ID' },
-    ],
-  },
-  teads: {
-    id: 'teads', name: 'Teads', icon: '🟠',
-    prebidAdapter: 'teads',
-    formats: ['video', 'native'],
-    status: 'ok',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/teads.html',
-    params: [
-      { key: 'pageId',      label: 'Page ID',      value: '240401', required: true,  hint: 'Teads page ID (novi.ba = 240401)' },
-      { key: 'placementId', label: 'Placement ID', value: '',       required: false, hint: 'Optional Teads placement ID' },
-    ],
-  },
-  seedtag: {
-    id: 'seedtag', name: 'Seedtag', icon: '🌱',
-    prebidAdapter: 'seedtag',
-    formats: ['native', 'display'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/seedtag.html',
-    params: [
-      { key: 'publisherId', label: 'Publisher ID', value: '', required: true,  hint: 'Seedtag publisher ID' },
-      { key: 'adUnitId',    label: 'Ad Unit ID',   value: '', required: true,  hint: 'Seedtag ad unit ID' },
-      { key: 'placement',   label: 'Placement',    value: 'inBanner', required: false, hint: 'inBanner | inArticle | inImage' },
-    ],
-  },
-  across33: {
-    id: 'across33', name: '33Across', icon: '3️⃣',
-    prebidAdapter: '33across',
-    formats: ['video'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/33across.html',
-    params: [
-      { key: 'siteId',  label: 'Site ID',  value: '', required: true,  hint: '33Across site ID' },
-      { key: 'productId', label: 'Product ID', value: 'siab', required: false, hint: 'siab = outstream' },
-    ],
-  },
-  ttd: {
-    id: 'ttd', name: 'The Trade Desk', icon: '📊',
-    prebidAdapter: 'ttdBidAdapter',
-    formats: ['display', 'video'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/ttd.html',
-    params: [
-      { key: 'supplySourceId', label: 'Supply Source ID', value: 'lupon', required: true, hint: 'Provided by TTD account manager' },
-      { key: 'publisherId',    label: 'Publisher ID',     value: '',       required: true, hint: 'TTD publisher ID' },
-    ],
-  },
-};
+// ── TEMPLATES ─────────────────────────────────────────────────────────
+var TEMPLATES = [
+  { id:'rubicon',  name:'Magnite / Rubicon', icon:'🟣', prebidAdapter:'rubicon',    formats:['display','video'],          status:'fail',    docs:'https://docs.prebid.org/dev-docs/bidders/rubicon.html',   params:[{key:'accountId',label:'Account ID',value:'12398',required:true,hint:'Magnite account ID'},{key:'siteId',label:'Site ID',value:'529542',required:true,hint:'Site ID from Magnite'},{key:'zoneId',label:'Zone ID',value:'4059987',required:true,hint:'Zone ID for display'},{key:'sizeId',label:'Size ID',value:'203',required:false,hint:'203 = outstream'}] },
+  { id:'adform',   name:'Adform',            icon:'🔵', prebidAdapter:'adform',     formats:['display','video'],          status:'fail',    docs:'https://docs.prebid.org/dev-docs/bidders/adform.html',    params:[{key:'mid',label:'Placement ID',value:'2236422',required:true,hint:'Adform Master Tag ID'},{key:'publisher_id',label:'Publisher ID',value:'83364',required:false,hint:'Adform publisher ID'}] },
+  { id:'criteo',   name:'Criteo',            icon:'🟡', prebidAdapter:'criteo',     formats:['display','video','native'], status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/criteo.html',    params:[{key:'networkId',label:'Network ID',value:'',required:true,hint:'Criteo Network ID from dashboard'}] },
+  { id:'pubmatic', name:'PubMatic',          icon:'🔷', prebidAdapter:'pubmatic',   formats:['display','video'],          status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/pubmatic.html',  params:[{key:'publisherId',label:'Publisher ID',value:'',required:true,hint:'PubMatic publisher ID'},{key:'adSlot',label:'Ad Slot',value:'',required:false,hint:'lupon_300x250@300x250'}] },
+  { id:'ix',       name:'Index Exchange',    icon:'🔮', prebidAdapter:'ix',         formats:['display','video'],          status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/ix.html',        params:[{key:'siteId',label:'Site ID',value:'',required:true,hint:'IX site ID'}] },
+  { id:'appnexus', name:'Xandr / AppNexus', icon:'⬛', prebidAdapter:'appnexus',   formats:['display','video','native'], status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/appnexus.html',  params:[{key:'placementId',label:'Placement ID',value:'',required:true,hint:'AppNexus placement ID'}] },
+  { id:'sovrn',    name:'Sovrn',             icon:'🔶', prebidAdapter:'sovrn',      formats:['display'],                  status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/sovrn.html',     params:[{key:'tagid',label:'Tag ID',value:'',required:true,hint:'Sovrn tag ID'}] },
+  { id:'onetag',   name:'OneTag',            icon:'🏷️', prebidAdapter:'onetag',     formats:['display','video'],          status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/onetag.html',    params:[{key:'pubId',label:'Publisher ID',value:'',required:true,hint:'OneTag publisher ID'}] },
+  { id:'teads',    name:'Teads',             icon:'🟠', prebidAdapter:'teads',      formats:['video','native'],           status:'ok',      docs:'https://docs.prebid.org/dev-docs/bidders/teads.html',     params:[{key:'pageId',label:'Page ID',value:'240401',required:true,hint:'Teads page ID'},{key:'placementId',label:'Placement ID',value:'',required:false,hint:'Optional'}] },
+  { id:'seedtag',  name:'Seedtag',           icon:'🌱', prebidAdapter:'seedtag',    formats:['native','display'],         status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/seedtag.html',   params:[{key:'publisherId',label:'Publisher ID',value:'',required:true,hint:'Seedtag publisher ID'},{key:'adUnitId',label:'Ad Unit ID',value:'',required:true,hint:'Seedtag ad unit ID'},{key:'placement',label:'Placement',value:'inBanner',required:false,hint:'inBanner|inArticle|inImage'}] },
+  { id:'across33', name:'33Across',          icon:'3️⃣', prebidAdapter:'33across',   formats:['video'],                    status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/33across.html',  params:[{key:'siteId',label:'Site ID',value:'',required:true,hint:'33Across site ID'},{key:'productId',label:'Product ID',value:'siab',required:false,hint:'siab = outstream'}] },
+  { id:'ttd',      name:'The Trade Desk',    icon:'📊', prebidAdapter:'ttdBidAdapter', formats:['display','video'],       status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/ttd.html',       params:[{key:'supplySourceId',label:'Supply Source ID',value:'lupon',required:true,hint:'From TTD account manager'},{key:'publisherId',label:'Publisher ID',value:'',required:true,hint:'TTD publisher ID'}] },
+];
 
-// ── STATE ───────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────
+var _saved = localStorage.getItem('lupon_bidders');
 var state = {
-  bidders: JSON.parse(localStorage.getItem('lupon_bidders') || 'null') || Object.values(BIDDER_TEMPLATES),
-  activeBidder: null,
+  bidders: _saved ? JSON.parse(_saved) : JSON.parse(JSON.stringify(TEMPLATES)),
+  active: null,
 };
 
-function save() {
-  localStorage.setItem('lupon_bidders', JSON.stringify(state.bidders));
-}
+function save() { localStorage.setItem('lupon_bidders', JSON.stringify(state.bidders)); }
 
 function toast(msg, type) {
   var el = document.getElementById('toast');
   el.textContent = msg;
   el.className = 'toast show ' + (type || '');
-  setTimeout(function() { el.className = 'toast'; }, 2500);
+  setTimeout(function(){ el.className = 'toast'; }, 2500);
 }
 
-// ── SIDEBAR ─────────────────────────────────────────────────────────────
+// ── SIDEBAR ───────────────────────────────────────────────────────────
 function renderSidebar() {
   var el = document.getElementById('bidder-list');
-  el.innerHTML = state.bidders.map(function(b) {
-    var active = state.activeBidder && state.activeBidder.id === b.id;
-    var statusText = b.status === 'ok' ? 'Serving ✅' : b.status === 'fail' ? 'No fill' : 'Planned';
-    return '<div class="bidder-item' + (active ? ' active' : '') + '" onclick="selectBidder(\'' + b.id + '\')">' +
+  el.innerHTML = '';
+  state.bidders.forEach(function(b) {
+    var item = document.createElement('div');
+    item.className = 'bidder-item' + (state.active && state.active.id === b.id ? ' active' : '');
+    item.innerHTML =
       '<span class="bidder-icon">' + b.icon + '</span>' +
       '<div class="bidder-info">' +
         '<div class="bidder-name">' + b.name + '</div>' +
-        '<div class="bidder-status ' + b.status + '">' + statusText + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+        '<div class="bidder-status ' + b.status + '">' + (b.status === 'ok' ? 'Serving ✅' : b.status === 'fail' ? 'No fill' : 'Planned') + '</div>' +
+      '</div>';
+    item.addEventListener('click', function(){ selectBidder(b.id); });
+    el.appendChild(item);
+  });
 }
 
-// ── SELECT BIDDER ─────────────────────────────────────────────────────
+// ── SELECT ────────────────────────────────────────────────────────────
 function selectBidder(id) {
-  state.activeBidder = state.bidders.find(function(b) { return b.id === id; });
+  state.active = state.bidders.find(function(b){ return b.id === id; });
   renderSidebar();
   renderForm();
 }
 
-// ── FORM ───────────────────────────────────────────────────────────────────
+// ── FORM ──────────────────────────────────────────────────────────────
 function renderForm() {
-  var b = state.activeBidder;
+  var b = state.active;
   if (!b) return;
   document.getElementById('empty-state').style.display = 'none';
   var f = document.getElementById('bidder-form');
   f.style.display = 'block';
+  f.innerHTML = '';
 
-  var formatTags = ['display', 'video', 'native', 'ctv'].map(function(fmt) {
-    var sel = b.formats && b.formats.includes(fmt);
-    return '<span class="ftag ' + fmt + (sel ? ' selected' : '') + '" onclick="toggleFormat(\'' + b.id + '\',\'' + fmt + '\',this)">' + fmt + '</span>';
-  }).join('');
+  // Header
+  var hdr = document.createElement('div');
+  hdr.className = 'main-header';
+  var chipClass = b.status === 'ok' ? 'chip chip-ok' : b.status === 'fail' ? 'chip chip-fail' : 'chip chip-planned';
+  var chipText = b.status === 'ok' ? 'Working' : b.status === 'fail' ? 'No fill' : 'Planned';
+  hdr.innerHTML =
+    '<div>' +
+      '<div class="main-title">' + b.icon + ' ' + b.name + ' <span class="' + chipClass + '">' + chipText + '</span></div>' +
+      '<div class="main-subtitle">Adapter: <code style="color:#a78bfa">' + (b.prebidAdapter||b.id) + '</code> &nbsp;·&nbsp; <a href="' + (b.docs||'#') + '" target="_blank" style="color:#555;font-size:12px">Docs →</a></div>' +
+    '</div>' +
+    '<div class="action-btns"></div>';
+  f.appendChild(hdr);
 
-  var paramsRows = (b.params || []).map(function(p, i) {
-    return '<tr>' +
-      '<td><span class="param-key">' + p.key + '</span>' + (p.required ? ' <span class="param-req">*</span>' : '') + '</td>' +
-      '<td><input class="param-input" id="param-' + b.id + '-' + i + '" value="' + (p.value || '') + '" placeholder="' + (p.hint || '') + '" onchange="updateParam(\'' + b.id + '\',' + i + ',this.value)"></td>' +
-      '<td style="color:#333;font-size:10px;max-width:200px;">' + (p.hint || '') + '</td>' +
-    '</tr>';
-  }).join('');
+  var btns = hdr.querySelector('.action-btns');
+  var testBtn = document.createElement('button');
+  testBtn.className = 'btn btn-test';
+  testBtn.textContent = '▶ Live Test';
+  testBtn.addEventListener('click', function(){ runLiveTest(b.id); });
+  btns.appendChild(testBtn);
 
-  var statusChip = b.status === 'ok' ? '<span class="chip live">Working</span>' : b.status === 'fail' ? '<span class="chip fail">No fill</span>' : '<span class="chip planned">Planned</span>';
+  var saveBtn = document.createElement('button');
+  saveBtn.className = 'btn btn-primary';
+  saveBtn.textContent = '✓ Save';
+  saveBtn.addEventListener('click', function(){ saveBidder(b.id); });
+  btns.appendChild(saveBtn);
 
-  f.innerHTML = '
-    <div class="main-header">
-      <div>
-        <div class="main-title">' + b.icon + ' ' + b.name + ' &nbsp;' + statusChip + '</div>
-        <div class="main-subtitle">Prebid adapter: <code style="color:#a78bfa">' + (b.prebidAdapter || b.id) + '</code> &nbsp;·&nbsp; <a href="' + (b.docs || '#') + '" target="_blank" style="color:#555;font-size:12px">Docs →</a></div>
-      </div>
-      <div class="action-btns">
-        <button class="btn btn-test" onclick="runLiveTest(\'' + b.id + '\'">▶ Live Test</button>
-        <button class="btn btn-primary" onclick="saveBidder(\'' + b.id + '\')">✓ Save</button>
-        <button class="btn btn-danger" onclick="deleteBidder(\'' + b.id + '\')">✕ Delete</button>
-      </div>
-    </div>
+  var delBtn = document.createElement('button');
+  delBtn.className = 'btn btn-danger';
+  delBtn.textContent = '✕ Delete';
+  delBtn.addEventListener('click', function(){ deleteBidder(b.id); });
+  btns.appendChild(delBtn);
 
-    <div class="section">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-title">📝 Basic Info</div>
-        <span class="section-toggle">∧</span>
-      </div>
-      <div class="section-body">
-        <div class="form-grid">
-          <div class="form-group">
-            <div class="form-label">Bidder Name</div>
-            <input class="form-input" id="edit-name" value="' + b.name + '" placeholder="e.g. Magnite / Rubicon">
-          </div>
-          <div class="form-group">
-            <div class="form-label">Prebid Adapter ID</div>
-            <input class="form-input" id="edit-adapter" value="' + (b.prebidAdapter || b.id) + '" placeholder="e.g. rubicon">
-            <div class="form-hint">Must match exact Prebid.js adapter name. <a href="https://docs.prebid.org/dev-docs/bidders/" target="_blank" style="color:#555">All adapters →</a></div>
-          </div>
-          <div class="form-group">
-            <div class="form-label">Icon (emoji)</div>
-            <input class="form-input" id="edit-icon" value="' + b.icon + '" placeholder="emoji">
-          </div>
-          <div class="form-group">
-            <div class="form-label">Status</div>
-            <select class="form-input" id="edit-status">
-              <option value="planned"' + (b.status === 'planned' ? ' selected' : '') + '>Planned (not integrated)</option>
-              <option value="fail"' + (b.status === 'fail' ? ' selected' : '') + '>No fill (integrated, no demand)</option>
-              <option value="ok"' + (b.status === 'ok' ? ' selected' : '') + '>Working (serving)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <div class="form-label">Docs URL</div>
-            <input class="form-input" id="edit-docs" value="' + (b.docs || '') + '" placeholder="https://docs.prebid.org/...">
-          </div>
-          <div class="form-group">
-            <div class="form-label">Supported Formats</div>
-            <div class="format-tags">' + formatTags + '</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  // Basic info section
+  var sec1 = makeSection('📝 Basic Info');
+  var grid = document.createElement('div');
+  grid.className = 'form-grid';
+  grid.innerHTML =
+    '<div class="form-group"><div class="form-label">Bidder Name</div><input class="form-input" id="edit-name" value="' + esc(b.name) + '" placeholder="e.g. Magnite"></div>' +
+    '<div class="form-group"><div class="form-label">Prebid Adapter ID</div><input class="form-input" id="edit-adapter" value="' + esc(b.prebidAdapter||b.id) + '" placeholder="e.g. rubicon"><div class="form-hint"><a href="https://docs.prebid.org/dev-docs/bidders/" target="_blank" style="color:#555">All adapters →</a></div></div>' +
+    '<div class="form-group"><div class="form-label">Icon (emoji)</div><input class="form-input" id="edit-icon" value="' + esc(b.icon) + '"></div>' +
+    '<div class="form-group"><div class="form-label">Status</div>' +
+      '<select class="form-input" id="edit-status">' +
+        '<option value="planned"' + (b.status==='planned'?' selected':'') + '>Planned</option>' +
+        '<option value="fail"' + (b.status==='fail'?' selected':'') + '>No fill</option>' +
+        '<option value="ok"' + (b.status==='ok'?' selected':'') + '>Working</option>' +
+      '</select></div>' +
+    '<div class="form-group"><div class="form-label">Docs URL</div><input class="form-input" id="edit-docs" value="' + esc(b.docs||'') + '"></div>';
 
-    <div class="section">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-title">⚙️ Prebid Params</div>
-        <span class="section-toggle">∧</span>
-      </div>
-      <div class="section-body">
-        <table class="params-table">
-          <thead><tr><th>Key</th><th>Value</th><th>Hint</th></tr></thead>
-          <tbody id="params-tbody">' + paramsRows + '</tbody>
-        </table>
-        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addParam(\'' + b.id + '\'">+ Add param</button>
-      </div>
-    </div>
+  // Format tags
+  var fmtGroup = document.createElement('div');
+  fmtGroup.className = 'form-group';
+  fmtGroup.innerHTML = '<div class="form-label">Formats</div><div class="format-tags" id="fmt-tags"></div>';
+  grid.appendChild(fmtGroup);
+  sec1.body.appendChild(grid);
+  f.appendChild(sec1.el);
 
-    <div class="section">
-      <div class="section-header" onclick="toggleSection(this)">
-        <div class="section-title">📝 Prebid Config Preview</div>
-        <span class="section-toggle">∧</span>
-      </div>
-      <div class="section-body">
-        <div class="json-output" id="json-preview"></div>
-        <button class="btn btn-secondary" style="margin-top:10px;font-size:12px" onclick="copyConfig()">📋 Copy config</button>
-      </div>
-    </div>
+  // Render format tags after DOM insert
+  var fmtContainer = fmtGroup.querySelector('#fmt-tags');
+  ['display','video','native','ctv'].forEach(function(fmt) {
+    var tag = document.createElement('span');
+    var on = b.formats && b.formats.includes(fmt);
+    tag.className = 'ftag' + (on ? ' on-' + fmt : '');
+    tag.textContent = fmt;
+    tag.addEventListener('click', function(){
+      if (!b.formats) b.formats = [];
+      var idx = b.formats.indexOf(fmt);
+      if (idx > -1) { b.formats.splice(idx,1); tag.className = 'ftag'; }
+      else { b.formats.push(fmt); tag.className = 'ftag on-' + fmt; }
+      save();
+    });
+    fmtContainer.appendChild(tag);
+  });
 
-    <div class="test-result" id="test-result"></div>
-  ';
+  // Params section
+  var sec2 = makeSection('⚙️ Prebid Params');
+  var tbl = document.createElement('table');
+  tbl.className = 'params-table';
+  tbl.innerHTML = '<thead><tr><th>Key</th><th>Value</th><th>Hint</th></tr></thead>';
+  var tbody = document.createElement('tbody');
+  tbody.id = 'params-tbody';
+  (b.params||[]).forEach(function(p, i){ tbody.appendChild(makeParamRow(b, p, i)); });
+  tbl.appendChild(tbody);
+  sec2.body.appendChild(tbl);
+
+  var addParamBtn = document.createElement('button');
+  addParamBtn.className = 'btn btn-secondary';
+  addParamBtn.style.marginTop = '12px';
+  addParamBtn.style.fontSize = '12px';
+  addParamBtn.textContent = '+ Add param';
+  addParamBtn.addEventListener('click', function(){
+    if (!b.params) b.params = [];
+    b.params.push({key:'newParam',label:'New Param',value:'',required:false,hint:''});
+    save();
+    tbody.appendChild(makeParamRow(b, b.params[b.params.length-1], b.params.length-1));
+  });
+  sec2.body.appendChild(addParamBtn);
+  f.appendChild(sec2.el);
+
+  // JSON preview section
+  var sec3 = makeSection('📋 Prebid Config Preview');
+  var jsonDiv = document.createElement('div');
+  jsonDiv.className = 'json-output';
+  jsonDiv.id = 'json-preview';
+  sec3.body.appendChild(jsonDiv);
+
+  var copyBtn = document.createElement('button');
+  copyBtn.className = 'btn btn-secondary';
+  copyBtn.style.cssText = 'margin-top:10px;font-size:12px';
+  copyBtn.textContent = '📋 Copy config';
+  copyBtn.addEventListener('click', copyConfig);
+  sec3.body.appendChild(copyBtn);
+  f.appendChild(sec3.el);
+
+  // Test result
+  var testRes = document.createElement('div');
+  testRes.className = 'test-result';
+  testRes.id = 'test-result';
+  f.appendChild(testRes);
 
   updateJsonPreview();
 }
 
-// ── HELPERS ─────────────────────────────────────────────────────────────
-function toggleFormat(id, fmt, el) {
-  var b = state.bidders.find(function(x) { return x.id === id; });
-  if (!b.formats) b.formats = [];
-  var idx = b.formats.indexOf(fmt);
-  if (idx > -1) { b.formats.splice(idx, 1); el.classList.remove('selected'); }
-  else { b.formats.push(fmt); el.classList.add('selected'); }
-  save();
+function makeSection(title) {
+  var el = document.createElement('div');
+  el.className = 'section';
+  var hdr = document.createElement('div');
+  hdr.className = 'sec-header';
+  hdr.innerHTML = '<span class="sec-title">' + title + '</span><span class="sec-toggle">∧</span>';
+  var body = document.createElement('div');
+  body.className = 'sec-body';
+  hdr.addEventListener('click', function(){
+    body.classList.toggle('collapsed');
+    hdr.querySelector('.sec-toggle').textContent = body.classList.contains('collapsed') ? '∨' : '∧';
+  });
+  el.appendChild(hdr);
+  el.appendChild(body);
+  return { el: el, body: body };
 }
 
-function updateParam(id, idx, val) {
-  var b = state.bidders.find(function(x) { return x.id === id; });
-  if (b && b.params && b.params[idx]) { b.params[idx].value = val; save(); updateJsonPreview(); }
+function makeParamRow(b, p, i) {
+  var tr = document.createElement('tr');
+  var tdKey = document.createElement('td');
+  tdKey.innerHTML = '<span class="param-key">' + esc(p.key) + '</span>' + (p.required ? '<span class="param-req">*</span>' : '');
+  var tdVal = document.createElement('td');
+  var inp = document.createElement('input');
+  inp.className = 'param-input';
+  inp.value = p.value || '';
+  inp.placeholder = p.hint || '';
+  inp.addEventListener('change', function(){
+    if (b.params && b.params[i]) { b.params[i].value = inp.value; save(); updateJsonPreview(); }
+  });
+  tdVal.appendChild(inp);
+  var tdHint = document.createElement('td');
+  tdHint.className = 'param-hint';
+  tdHint.textContent = p.hint || '';
+  tr.appendChild(tdKey);
+  tr.appendChild(tdVal);
+  tr.appendChild(tdHint);
+  return tr;
 }
 
-function addParam(id) {
-  var b = state.bidders.find(function(x) { return x.id === id; });
-  if (!b.params) b.params = [];
-  b.params.push({ key: 'newParam', label: 'New Param', value: '', required: false, hint: '' });
-  save(); renderForm();
-}
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function toggleSection(header) {
-  var body = header.nextElementSibling;
-  var toggle = header.querySelector('.section-toggle');
-  if (body.classList.contains('collapsed')) { body.classList.remove('collapsed'); toggle.textContent = '∧'; }
-  else { body.classList.add('collapsed'); toggle.textContent = '∨'; }
-}
-
+// ── ACTIONS ───────────────────────────────────────────────────────────
 function saveBidder(id) {
-  var b = state.bidders.find(function(x) { return x.id === id; });
+  var b = state.bidders.find(function(x){ return x.id===id; });
   b.name = document.getElementById('edit-name').value;
   b.prebidAdapter = document.getElementById('edit-adapter').value;
   b.icon = document.getElementById('edit-icon').value;
   b.status = document.getElementById('edit-status').value;
   b.docs = document.getElementById('edit-docs').value;
+  state.active = b;
   save(); renderSidebar(); updateJsonPreview();
   toast('✓ ' + b.name + ' saved', 'ok');
 }
 
 function deleteBidder(id) {
   if (!confirm('Delete this bidder?')) return;
-  state.bidders = state.bidders.filter(function(b) { return b.id !== id; });
-  state.activeBidder = null;
+  state.bidders = state.bidders.filter(function(b){ return b.id!==id; });
+  state.active = null;
   save(); renderSidebar();
   document.getElementById('bidder-form').style.display = 'none';
   document.getElementById('empty-state').style.display = '';
@@ -488,90 +380,76 @@ function deleteBidder(id) {
 
 function addNewBidder() {
   var id = 'custom_' + Date.now();
-  var newBidder = {
-    id: id, name: 'New Bidder', icon: '🔷',
-    prebidAdapter: '',
-    formats: ['display'],
-    status: 'planned',
-    docs: 'https://docs.prebid.org/dev-docs/bidders/',
-    params: [{ key: 'siteId', label: 'Site ID', value: '', required: true, hint: 'Required param' }],
-  };
-  state.bidders.push(newBidder);
+  var b = { id:id, name:'New Bidder', icon:'🔷', prebidAdapter:'', formats:['display'], status:'planned', docs:'https://docs.prebid.org/dev-docs/bidders/', params:[{key:'siteId',label:'Site ID',value:'',required:true,hint:'Required param'}] };
+  state.bidders.push(b);
   save(); renderSidebar(); selectBidder(id);
+  toast('New bidder added — fill in the details', 'ok');
 }
 
 function updateJsonPreview() {
   var el = document.getElementById('json-preview');
-  if (!el || !state.activeBidder) return;
-  var b = state.activeBidder;
+  if (!el || !state.active) return;
+  var b = state.active;
   var params = {};
-  (b.params || []).forEach(function(p) { if (p.value) params[p.key] = isNaN(p.value) ? p.value : Number(p.value); });
-  var obj = { bidder: b.prebidAdapter || b.id, params: params };
-  el.textContent = JSON.stringify(obj, null, 2)
-    .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
-    .replace(/: "([^"]*)"/g, ': <span class="str">"$1"</span>')
-    .replace(/: (\d+)/g, ': <span class="num">$1</span>');
-  el.innerHTML = el.textContent; // re-apply
-  el.innerHTML = JSON.stringify(obj, null, 2)
+  (b.params||[]).forEach(function(p){ if (p.value) params[p.key] = isNaN(p.value)||p.value==='' ? p.value : Number(p.value); });
+  var obj = { bidder: b.prebidAdapter||b.id, params: params };
+  var json = JSON.stringify(obj, null, 2);
+  el.innerHTML = json
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"([^"]+)":/g,'<span class="key">"$1"</span>:')
-    .replace(/: "([^"]*)"/g,': <span class="str">"$1"</span>')
-    .replace(/: (\d+)$/gm,': <span class="num">$1</span>');
+    .replace(/"([^"]+)":/g,'<span class="jk">"$1"</span>:')
+    .replace(/: "([^"]*)"/g,': <span class="js">"$1"</span>')
+    .replace(/: (\d+)/g,': <span class="jn">$1</span>');
 }
 
 function copyConfig() {
-  var b = state.activeBidder;
+  var b = state.active;
+  if (!b) return;
   var params = {};
-  (b.params || []).forEach(function(p) { if (p.value) params[p.key] = isNaN(p.value) ? p.value : Number(p.value); });
-  var obj = { bidder: b.prebidAdapter || b.id, params: params };
-  navigator.clipboard.writeText(JSON.stringify(obj, null, 2)).then(function() { toast('Copied!', 'ok'); });
+  (b.params||[]).forEach(function(p){ if (p.value) params[p.key] = isNaN(p.value)||p.value==='' ? p.value : Number(p.value); });
+  navigator.clipboard.writeText(JSON.stringify({bidder:b.prebidAdapter||b.id,params:params},null,2))
+    .then(function(){ toast('Copied!', 'ok'); });
 }
 
 function runLiveTest(id) {
-  var b = state.bidders.find(function(x) { return x.id === id; });
+  var b = state.bidders.find(function(x){ return x.id===id; });
   var el = document.getElementById('test-result');
   el.className = 'test-result show';
-  el.innerHTML = '<span class="tr-info">Testing ' + b.name + ' via Prebid.js...</span>';
-
-  setTimeout(function() {
-    // Check if real pbjs available
+  el.innerHTML = '<span class="tr-info">Testing ' + b.name + '...</span>';
+  setTimeout(function(){
     if (typeof window.pbjs !== 'undefined' && typeof window.pbjs.requestBids === 'function') {
-      el.innerHTML += '<br><span class="tr-ok">✓ pbjs found (v' + window.pbjs.version + ')</span>';
-      // Real auction
+      el.innerHTML += '<br><span class="tr-ok">✓ pbjs v' + window.pbjs.version + ' found</span>';
       var params = {};
-      (b.params || []).forEach(function(p) { if (p.value) params[p.key] = isNaN(p.value) ? p.value : Number(p.value); });
-      window.pbjs.que.push(function() {
-        window.pbjs.requestBids({
-          timeout: 2000,
-          adUnits: [{ code: 'test-unit', mediaTypes: { banner: { sizes: [[300,250]] } }, bids: [{ bidder: b.prebidAdapter || b.id, params: params }] }],
-          bidsBackHandler: function(bids) {
-            var unit = bids['test-unit'];
-            if (unit && unit.bids && unit.bids.length) {
-              var win = unit.bids[0];
-              el.innerHTML += '<br><span class="tr-ok">✅ BID RECEIVED: $' + win.cpm.toFixed(3) + ' CPM from ' + b.name + '</span>';
-              b.status = 'ok'; save(); renderSidebar();
+      (b.params||[]).forEach(function(p){ if (p.value) params[p.key] = isNaN(p.value)||p.value==='' ? p.value : Number(p.value); });
+      window.pbjs.que.push(function(){
+        window.pbjs.requestBids({ timeout:2000,
+          adUnits:[{code:'test',mediaTypes:{banner:{sizes:[[300,250]]}},bids:[{bidder:b.prebidAdapter||b.id,params:params}]}],
+          bidsBackHandler:function(bids){
+            var unit = bids['test'];
+            if (unit&&unit.bids&&unit.bids.length) {
+              el.innerHTML += '<br><span class="tr-ok">✅ BID: $' + unit.bids[0].cpm.toFixed(3) + ' CPM</span>';
+              b.status='ok'; save(); renderSidebar();
             } else {
-              el.innerHTML += '<br><span class="tr-err">❌ No bid received (no fill or adapter not in build)</span>';
+              el.innerHTML += '<br><span class="tr-err">❌ No bid received</span>';
             }
           }
         });
       });
     } else {
-      el.innerHTML += '<br><span class="tr-warn">⚠ pbjs not loaded — upload prebid.js to cdn.luponmedia.com/prebid/prebid.js for live tests</span>';
-      el.innerHTML += '<br><span class="tr-info">Simulating response for ' + b.name + '...</span>';
-      setTimeout(function() {
-        var hasFill = b.status === 'ok' || (b.params && b.params.every(function(p) { return !p.required || p.value; }));
-        if (hasFill) {
-          el.innerHTML += '<br><span class="tr-ok">✅ Params valid — ready for auction</span>';
+      el.innerHTML += '<br><span class="tr-warn">⚠ prebid.js not loaded — param validation only</span>';
+      setTimeout(function(){
+        var missing = (b.params||[]).filter(function(p){ return p.required && !p.value; });
+        if (missing.length) {
+          el.innerHTML += '<br><span class="tr-err">❌ Missing: ' + missing.map(function(p){return p.key;}).join(', ') + '</span>';
         } else {
-          el.innerHTML += '<br><span class="tr-err">❌ Missing required params — fill in all required fields</span>';
+          el.innerHTML += '<br><span class="tr-ok">✅ All required params filled — ready for auction</span>';
         }
-      }, 800);
+      }, 600);
     }
   }, 400);
 }
 
-// Init
+// ── INIT ──────────────────────────────────────────────────────────────
+document.getElementById('add-btn').addEventListener('click', addNewBidder);
 renderSidebar();
 </script>
 </body>
