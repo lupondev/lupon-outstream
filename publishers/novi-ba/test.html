@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>novi.ba — Outstream TEST</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, sans-serif; background: #f5f5f5; color: #333; max-width: 780px; margin: 0 auto; padding: 24px; }
+h1 { font-size: 22px; margin-bottom: 6px; }
+.meta { font-size: 13px; color: #888; margin-bottom: 24px; }
+.article { background: #fff; border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.article h2 { font-size: 20px; margin-bottom: 16px; }
+p { font-size: 15px; line-height: 1.7; color: #444; margin-bottom: 14px; }
+.slot-label { background: #e8f4ff; border: 1px dashed #4a90e2; border-radius: 4px; padding: 6px 12px; font-size: 12px; color: #4a90e2; margin: 16px 0 8px; display: inline-block; }
+.status { position: fixed; bottom: 16px; right: 16px; background: #1a1a2e; color: #fff; border-radius: 8px; padding: 12px 16px; font-size: 12px; font-family: monospace; min-width: 260px; z-index: 9999; }
+.status .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.status .row:last-child { margin-bottom: 0; }
+.ok { color: #56d364; }
+.err { color: #f85149; }
+.pending { color: #e3b341; }
+</style>
+</head>
+<body>
+
+<h1>🧪 Outstream Test — novi.ba</h1>
+<p class="meta">Izolirana test stranica — bez Adxbid, bez novi.ba koda. Samo čisti Magnite + Adform tagovi.</p>
+
+<div class="article">
+  <h2>Zelenski: Kijev spreman za novu rundu pregovora</h2>
+
+  <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
+
+  <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
+
+  <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
+
+  <!-- ✅ MAGNITE APEX — bez defer, čist tag -->
+  <div class="slot-label">📍 Magnite Apex slot (pozicija 3)</div>
+  <script src="https://video-outstream.rubiconproject.com/apex.js"></script>
+  <script>
+  (function() {
+    window._magniteStatus = 'loading';
+    function renderMagnite() {
+      try {
+        MagniteApex.renderAd({
+          magnite: { account_id: 12398, site_id: 529542, zone_id: 4059987, size_id: 203 },
+          width: 640,
+          height: 360,
+          placement: { attachTo: "top", position: "after", align: "center" },
+          collapse: true,
+          closeButton: true
+        });
+        window._magniteStatus = 'rendered';
+      } catch(e) {
+        window._magniteStatus = 'error: ' + e.message;
+      }
+    }
+    if (typeof MagniteApex !== 'undefined') {
+      renderMagnite();
+    } else {
+      var s = document.querySelector('script[src*="apex.js"]');
+      s.addEventListener('load', renderMagnite);
+      s.addEventListener('error', function() { window._magniteStatus = 'apex.js load failed'; });
+    }
+  })();
+  </script>
+
+  <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak trilateralnih pregovora o rješenju krize u Ukrajini.</p>
+
+  <p>Međunarodna zajednica pažljivo prati razvoj situacije, s posebnim naglaskom na humanitarne koridore i zaštitu civilnog stanovništva.</p>
+
+  <p>Europska unija najavila je dodatnu financijsku pomoć Ukrajini u iznosu od pet milijardi eura, namijenjenu obnovi kritične infrastrukture.</p>
+
+  <!-- ✅ ADFORM OUTSTREAM — bez height:0, bez overflow:hidden -->
+  <div class="slot-label">📍 Adform Outstream slot (pozicija 6)</div>
+  <div id="adform-outstream">
+    <script>
+    window._adformStatus = 'loading';
+    var adfScript = document.createElement('script');
+    adfScript.src = 'https://s1.adform.net/banners/scripts/video/outstream/inview.js';
+    adfScript.setAttribute('data-pmp-id', '2236422');
+    adfScript.onload = function() { window._adformStatus = 'loaded'; };
+    adfScript.onerror = function() { window._adformStatus = 'load failed'; };
+    document.getElementById('adform-outstream').appendChild(adfScript);
+    </script>
+  </div>
+
+  <p>Zelenski je pozvao sve strane da se uzdrže od eskalacije sukoba i da prioritet daju diplomatskom rješenju krize.</p>
+
+  <p>Pregovori se očekuju u formatu koji uključuje predstavnike obje strane, uz prisustvo međunarodnih posmatrača i garantnih sila.</p>
+
+</div>
+
+<!-- Status panel -->
+<div class="status" id="statusPanel">
+  <div class="row"><span>Magnite apex.js</span><span id="s-apex" class="pending">čekam...</span></div>
+  <div class="row"><span>Magnite renderAd()</span><span id="s-render" class="pending">čekam...</span></div>
+  <div class="row"><span>Adform inview.js</span><span id="s-adform" class="pending">čekam...</span></div>
+  <div class="row"><span>JW state</span><span id="s-jw" class="pending">čekam...</span></div>
+  <div class="row"><span>JW adError</span><span id="s-err" class="pending">—</span></div>
+</div>
+
+<script>
+// Status monitor
+function updateStatus() {
+  // Magnite apex.js
+  var apexEl = document.getElementById('s-apex');
+  if (typeof MagniteApex !== 'undefined') {
+    apexEl.textContent = '✅ loaded'; apexEl.className = 'ok';
+  } else {
+    apexEl.textContent = '⏳ loading...'; apexEl.className = 'pending';
+  }
+
+  // Magnite renderAd
+  var renderEl = document.getElementById('s-render');
+  var ms = window._magniteStatus || '—';
+  renderEl.textContent = ms.includes('error') ? '❌ ' + ms : ms === 'rendered' ? '✅ rendered' : '⏳ ' + ms;
+  renderEl.className = ms.includes('error') ? 'err' : ms === 'rendered' ? 'ok' : 'pending';
+
+  // Adform
+  var adfEl = document.getElementById('s-adform');
+  var as = window._adformStatus || '—';
+  adfEl.textContent = as === 'loaded' ? '✅ loaded' : as === 'load failed' ? '❌ failed' : '⏳ ' + as;
+  adfEl.className = as === 'loaded' ? 'ok' : as === 'load failed' ? 'err' : 'pending';
+
+  // JWPlayer state
+  var jwEl = document.getElementById('s-jw');
+  var errEl = document.getElementById('s-err');
+  var player = document.querySelector('[id^="MagniteApexPlayer"]');
+  if (player && window.jwplayer) {
+    var jw = window.jwplayer(player.id);
+    if (jw && jw.getState) {
+      var state = jw.getState();
+      jwEl.textContent = state;
+      jwEl.className = state === 'playing' ? 'ok' : state === 'idle' ? 'pending' : 'pending';
+
+      // Track adError
+      if (!window._jwTracked) {
+        window._jwTracked = true;
+        jw.on('adError', function(e) {
+          errEl.textContent = '❌ ' + (e.message || 'error') + ' (code ' + e.adErrorCode + ')';
+          errEl.className = 'err';
+        });
+        jw.on('adStarted', function() {
+          errEl.textContent = '✅ ad started!';
+          errEl.className = 'ok';
+        });
+        jw.on('adImpression', function() {
+          errEl.textContent = '✅ impression!';
+          errEl.className = 'ok';
+        });
+      }
+    }
+  } else {
+    jwEl.textContent = 'no player yet';
+  }
+}
+
+setInterval(updateStatus, 500);
+</script>
+
+</body>
+</html>
