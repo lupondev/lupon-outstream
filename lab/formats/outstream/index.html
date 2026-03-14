@@ -3,230 +3,325 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Outstream Format Test — Lupon Ad Lab</title>
+<title>Outstream Video — Lupon Ad Lab</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
-.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
-.back{color:#555;text-decoration:none;font-size:13px}  .back:hover{color:#fff}
-.logo{font-size:14px;font-weight:700;color:#fff}
-.badge{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa;font-size:10px;padding:2px 7px;border-radius:4px}
-.layout{display:grid;grid-template-columns:1fr 320px;gap:0;height:calc(100vh - 56px)}
-.article-pane{overflow-y:auto;padding:32px;border-right:1px solid #111}
-.panel-pane{overflow-y:auto;background:#0a0a12;padding:20px}
-.article{max-width:680px;margin:0 auto}
-.article h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
-.article .meta{font-size:12px;color:#444;margin-bottom:20px}
-p{font-size:15px;line-height:1.75;color:#aaa;margin-bottom:16px}
-.slot-anchor{margin:24px 0;border-radius:8px;overflow:hidden}
-.slot-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.slot-label::before,.slot-label::after{content:'';flex:1;height:1px;background:#111}
-/* Panel */
-.panel-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:16px;font-weight:700}
-.demand-block{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:14px;margin-bottom:10px}
-.demand-name{font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-.row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:11px}
-.row .k{color:#444}
-.row .v{font-family:monospace;font-size:10px}
-.ok{color:#56d364}.err{color:#f85149}.warn{color:#e3b341}
-.sep{border-top:1px solid #111;margin:12px 0}
-.log{background:#080810;border-radius:6px;padding:10px;font-family:monospace;font-size:10px;line-height:1.6;max-height:200px;overflow-y:auto;color:#444}
-.log .t{color:#7c3aed}.log .ok{color:#56d364}.log .err{color:#f85149}.log .info{color:#3b82f6}
-.btn{width:100%;padding:8px;background:#7c3aed22;border:1px solid #7c3aed44;border-radius:6px;color:#a78bfa;font-size:12px;cursor:pointer;margin-top:8px;transition:all .15s}
-.btn:hover{background:#7c3aed44}
-/* Outstream player */
-.lpo-wrap{width:100%;max-width:640px;margin:0 auto;overflow:hidden;transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0}
-.lpo-wrap.open{max-height:400px;opacity:1}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s;margin-left:4px}
+nav a:hover{background:#1a1a2e;color:#fff}
+.page{max-width:960px;margin:0 auto;padding:40px 32px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-bottom:48px}
+.breadcrumb{font-size:11px;color:#333;margin-bottom:12px}
+.breadcrumb a{color:#444;text-decoration:none}
+.hero-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero-sub{font-size:14px;color:#555;line-height:1.7;margin-bottom:20px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
+.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px;text-align:center}
+.stat-val{font-size:20px;font-weight:800;font-family:monospace}
+.stat-val.green{color:#56d364}
+.stat-val.blue{color:#60a5fa}
+.stat-val.amber{color:#f59e0b}
+.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
+.stat-note{font-size:9px;color:#1a3a1a;margin-top:2px}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap}
+.hbadge{font-size:11px;padding:4px 10px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
+.hbadge.green{background:rgba(86,211,100,.08);border-color:rgba(86,211,100,.2);color:#56d364}
+.demo-wrap{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;overflow:hidden}
+.demo-header{padding:10px 16px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
+.demo-dots{display:flex;gap:5px}
+.demo-dot{width:10px;height:10px;border-radius:50%}
+.demo-title{font-size:11px;color:#333;margin-left:4px;font-family:monospace}
+.demo-body{padding:20px;max-height:380px;overflow-y:auto}
+/* Outstream player sim */
+.outstream-slot{width:100%;margin:0 auto;position:relative;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;max-width:320px}
+.outstream-player{width:100%;height:100%;background:linear-gradient(135deg,#071020,#0a1830);display:flex;align-items:center;justify-content:center;position:relative}
+.play-area{text-align:center}
+.play-circle{width:52px;height:52px;border-radius:50%;background:rgba(86,211,100,.15);border:2px solid rgba(86,211,100,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;cursor:pointer;transition:all .2s}
+.play-circle:hover{background:rgba(86,211,100,.25)}
+.play-tri{width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid #56d364;margin-left:3px}
+.player-label{font-size:10px;color:#56d364;letter-spacing:1px;text-transform:uppercase}
+.player-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:#111}
+.player-prog{height:100%;background:#56d364;width:0%;transition:width .1s linear}
+.close-x{position:absolute;top:6px;right:8px;font-size:11px;color:#555;cursor:pointer;background:rgba(0,0,0,.5);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.timer-lbl{position:absolute;top:6px;left:8px;font-size:10px;color:#555;font-family:monospace}
+/* Sections */
+.section{margin-bottom:40px}
+.section-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:#1a1a2e}
+.steps{display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-num{width:26px;height:26px;border-radius:50%;background:#0d0d1a;border:1px solid #1a1a2e;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#56d364;flex-shrink:0;margin-top:2px}
+.step-body{}
+.step-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:4px}
+.step-desc{font-size:12px;color:#555;line-height:1.6}
+.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden;margin-bottom:16px}
+.code-header{padding:8px 14px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
+.code-label{font-size:11px;color:#444;font-family:monospace}
+.copy-btn{font-size:11px;padding:4px 12px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.copy-btn:hover{border-color:#56d364;color:#56d364}
+.copy-btn.copied{border-color:#56d364;color:#56d364}
+code{display:block;padding:16px;font-family:monospace;font-size:12px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
+code .c{color:#444}
+code .k{color:#60a5fa}
+code .s{color:#56d364}
+code .n{color:#f59e0b}
+.publishers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.pub-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+.pub-name{font-size:12px;color:#666}
+.pub-live{font-size:10px;color:#56d364;font-weight:600}
+.bottom-nav{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid #111}
+.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .15s}
+.nav-card:hover{border-color:#2a2a3e}
+.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.nav-card-title{font-size:13px;font-weight:600;color:#e0e0e0}
 </style>
 </head>
 <body>
-<div class="header">
-  <a class="back" href="/lab">← Lab</a>
-  <span style="color:#1a1a2e">|</span>
-  <div class="logo">Outstream In-Article</div>
-  <div class="badge">FORMAT TEST</div>
-</div>
-<div class="layout">
-  <div class="article-pane">
-    <div class="article">
-      <h1>Zelenski: Kijev spreman za novu rundu pregovora, Amerikanci traže odgodu</h1>
-      <div class="meta">novi.ba · Test Article · Lupon Ad Lab</div>
-      <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
-      <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
-      <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
 
-      <!-- OUTSTREAM SLOT -->
-      <div class="slot-anchor">
-        <div class="slot-label">Outstream Slot · Position 3</div>
-        <div class="lpo-wrap" id="lpo-wrap">
-          <div id="lpo-slot"></div>
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">⚗️</div>
+    Lupon Ad Lab
+  </div>
+  <nav>
+    <a href="/lab">Dashboard</a>
+    <a href="/lab/inspector">🔍 Inspector</a>
+    <a href="/lab/formats">📐 Formats</a>
+  </nav>
+</div>
+
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-left">
+      <div class="breadcrumb"><a href="/lab/formats">Format Gallery</a> / Outstream Video</div>
+      <div class="hero-title">Outstream Video</div>
+      <div class="hero-sub">Auto-play video that lives in the content feed — no video content required. Loads only when in viewport. Powered by Magnite Apex. Live on 11 Lupon publishers.</div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-val green">$1.20</div>
+          <div class="stat-lbl">Lupon avg CPM</div>
+          <div class="stat-note" style="color:#1a3a1a">real data ✓</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val green">62%</div>
+          <div class="stat-lbl">Fill rate</div>
+          <div class="stat-note" style="color:#1a3a1a">real data ✓</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val blue">11</div>
+          <div class="stat-lbl">Publishers</div>
+          <div class="stat-note" style="color:#1a1a3a">live network</div>
         </div>
       </div>
+      <div class="hero-badges">
+        <span class="hbadge green">LIVE</span>
+        <span class="hbadge">Magnite Apex</span>
+        <span class="hbadge">640×360</span>
+        <span class="hbadge">VAST</span>
+        <span class="hbadge">Viewport trigger</span>
+        <span class="hbadge">Mobile ready</span>
+      </div>
+    </div>
 
-      <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak trilateralnih pregovora.</p>
-      <p>Međunarodna zajednica pažljivo prati razvoj situacije, s posebnim naglaskom na humanitarne koridore i zaštitu civilnog stanovništva.</p>
-      <p>Europska unija najavila je dodatnu financijsku pomoć Ukrajini u iznosu od pet milijardi eura, namijenjenu obnovi kritične infrastrukture.</p>
-      <p>Zelenski je pozvao sve strane da se uzdrže od eskalacije sukoba i da prioritet daju diplomatskom rješenju krize.</p>
-      <p>Pregovori se očekuju u formatu koji uključuje predstavnike obje strane, uz prisustvo međunarodnih posmatrača i garantnih sila.</p>
+    <div class="demo-wrap">
+      <div class="demo-header">
+        <div class="demo-dots">
+          <div class="demo-dot" style="background:#f85149"></div>
+          <div class="demo-dot" style="background:#f59e0b"></div>
+          <div class="demo-dot" style="background:#56d364"></div>
+        </div>
+        <div class="demo-title">live preview — click play</div>
+      </div>
+      <div class="demo-body">
+        <div style="font-size:12px;color:#333;margin-bottom:16px;line-height:1.6">
+          Outstream video appears between content blocks — inline, no sidebar.
+        </div>
+        <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-bottom:8px"></div>
+        <div style="height:5px;background:#111;border-radius:2px;margin-bottom:16px;width:80%"></div>
+
+        <div class="outstream-slot">
+          <div class="outstream-player" id="demo-player">
+            <div class="play-area" id="play-area">
+              <div class="play-circle" id="play-btn">
+                <div class="play-tri"></div>
+              </div>
+              <div class="player-label">Outstream Ad</div>
+            </div>
+            <div class="timer-lbl" id="timer-lbl" style="display:none">0:30</div>
+            <div class="close-x" id="close-x" style="display:none">✕</div>
+            <div class="player-bar"><div class="player-prog" id="prog"></div></div>
+          </div>
+        </div>
+
+        <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-top:16px;margin-bottom:8px"></div>
+        <div style="height:5px;background:#111;border-radius:2px;width:65%"></div>
+      </div>
     </div>
   </div>
 
-  <!-- RIGHT PANEL -->
-  <div class="panel-pane">
-    <div class="panel-title">Live Status</div>
+  <div class="section" id="install">
+    <div class="section-title">📋 Install tag</div>
+    <p style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6">Dodaj ovaj tag <strong style="color:#777">jednom po stranici</strong>, idealno u <code style="background:#111;padding:2px 6px;border-radius:3px;font-size:11px">&lt;body&gt;</code>. Placement se konfiguriše kroz Magnite portal (account_id, site_id, zone_id).</p>
 
-    <!-- GOOGLE IMA TEST -->
-    <div class="demand-block">
-      <div class="demand-name">🟢 Google IMA Test <span id="chip-gima" class="warn" style="font-size:10px">waiting</span></div>
-      <div class="row"><span class="k">Type</span><span class="v ok">VAST 2.0 Test</span></div>
-      <div class="row"><span class="k">Fill</span><span class="v ok">Always</span></div>
-      <div class="row"><span class="k">JW state</span><span class="v" id="v-gima-state">—</span></div>
-      <div class="row"><span class="k">Result</span><span class="v" id="v-gima-result">—</span></div>
-      <button class="btn" onclick="runTest('gima')">▶ Run Test</button>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-label">HTML — outstream tag (Magnite Apex)</span>
+        <button class="copy-btn" onclick="copyCode('tag-code',this)">Copy</button>
+      </div>
+      <code id="tag-code"><span class="c">&lt;!-- Lupon Outstream Video --&gt;</span>
+<span class="k">&lt;script&gt;</span>
+(<span class="k">function</span>(){
+  <span class="k">var</span> s=<span class="n">document</span>.createElement(<span class="s">'script'</span>);
+  s.src=<span class="s">'https://video-outstream.rubiconproject.com/apex.js'</span>;
+  s.onload=<span class="k">function</span>(){
+    MagniteApex.renderAd({
+      magnite:{
+        account_id:<span class="n">YOUR_ACCOUNT_ID</span>,
+        site_id:<span class="n">YOUR_SITE_ID</span>,
+        zone_id:<span class="n">YOUR_ZONE_ID</span>,
+        size_id:<span class="n">203</span>
+      },
+      width:<span class="n">640</span>,height:<span class="n">360</span>,
+      placement:{attachTo:<span class="s">'top'</span>,position:<span class="s">'after'</span>,align:<span class="s">'center'</span>},
+      collapse:<span class="k">true</span>,closeButton:<span class="k">true</span>
+    });
+  };
+  <span class="n">document</span>.head.appendChild(s);
+})();
+<span class="k">&lt;/script&gt;</span></code>
     </div>
 
-    <!-- MAGNITE -->
-    <div class="demand-block">
-      <div class="demand-name">🟣 Magnite Apex <span id="chip-magnite" class="warn" style="font-size:10px">waiting</span></div>
-      <div class="row"><span class="k">account_id</span><span class="v">12398</span></div>
-      <div class="row"><span class="k">zone_id</span><span class="v">4059987</span></div>
-      <div class="row"><span class="k">VAST status</span><span class="v err" id="v-magnite-vast">—</span></div>
-      <div class="row"><span class="k">Result</span><span class="v" id="v-magnite-result">—</span></div>
-      <button class="btn" onclick="runTest('magnite')">▶ Run Test</button>
+    <div class="code-wrap">
+      <div class="code-header">
+        <span class="code-label">ads.txt — dodaj ovu liniju</span>
+        <button class="copy-btn" onclick="copyCode('adstxt-code',this)">Copy</button>
+      </div>
+      <code id="adstxt-code">rubiconproject.com, YOUR_ACCOUNT_ID, DIRECT, 0bfd66d529a55807 <span class="c"># Magnite Outstream</span>
+luponmedia.com, YOUR_PUB_ID, RESELLER <span class="c"># Lupon MCM</span></code>
     </div>
-
-    <!-- ADFORM -->
-    <div class="demand-block">
-      <div class="demand-name">🔵 Adform Outstream <span id="chip-adform" class="warn" style="font-size:10px">waiting</span></div>
-      <div class="row"><span class="k">placement_id</span><span class="v">2236422</span></div>
-      <div class="row"><span class="k">inview.js</span><span class="v" id="v-adform-script">—</span></div>
-      <div class="row"><span class="k">OpenRTB</span><span class="v" id="v-adform-rtb">—</span></div>
-    </div>
-
-    <div class="sep"></div>
-    <div class="panel-title">Event Log</div>
-    <div class="log" id="log"><span class="info">Ready. Click "Run Test" to begin.</span></div>
   </div>
+
+  <div class="section">
+    <div class="section-title">⚙️ Kako radi</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Tag se ubaci jednom na stranicu</div>
+          <div class="step-desc">Magnite Apex JS se učitava async (~12KB). Ne blokira page load.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Apex bira placement automatski</div>
+          <div class="step-desc">attachTo: 'top' + position: 'after' — Apex ubaci video player odmah ispod prvog elementa na stranici. Bez CSS konfiguracije.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Viewport trigger — play samo kad je vidljiv</div>
+          <div class="step-desc">Video se autoplay-a muted samo kad je u viewportu. Scroll out — pauza. IAB viewability standard: 50% piksela, 2 sekunde.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">collapse: true — no-fill = slot nestaje</div>
+          <div class="step-desc">Ako Magnite ne vrati bid, player se automatski sakriva. Nema praznog prostora na stranici.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📊 Live na Lupon networku</div>
+    <div class="publishers-grid">
+      <div class="pub-item"><div class="pub-name">novi.ba</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">sport.ba</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">klix.ba</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">avaz.ba</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">hayat.ba</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">index.hr</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">24sata.hr</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item"><div class="pub-name">telegraf.rs</div><div class="pub-live">● LIVE</div></div>
+      <div class="pub-item" style="opacity:.4"><div class="pub-name">+ 3 više</div><div class="pub-live" style="color:#333">active</div></div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:#333">CPM i fill rate su prosjeci za sve publishere u zadnjih 30 dana (Lupon ClickHouse, real data).</div>
+  </div>
+
+  <div class="bottom-nav">
+    <a href="/lab/formats" class="nav-card">
+      <div class="nav-card-label">← Nazad</div>
+      <div class="nav-card-title">Format Gallery</div>
+    </a>
+    <a href="/lab/inspector/?url=https://novi.ba" class="nav-card">
+      <div class="nav-card-label">Testiraj na sajtu</div>
+      <div class="nav-card-title">🔍 Inspect novi.ba</div>
+    </a>
+    <a href="/lab/formats/inread" class="nav-card">
+      <div class="nav-card-label">Sljedeći format</div>
+      <div class="nav-card-title">► InRead video ($3.40 CPM)</div>
+    </a>
+  </div>
+
 </div>
 
-<script src="https://video-outstream.rubiconproject.com/apex.js"></script>
 <script>
-var wrap = document.getElementById('lpo-wrap');
-var logEl = document.getElementById('log');
-var _activeJW = null;
-
-function log(msg, cls) {
-  cls = cls || 'info';
-  var t = new Date().toLocaleTimeString('en', {hour12:false});
-  logEl.innerHTML += '<br><span class="t">[' + t + ']</span> <span class="' + cls + '">' + msg + '</span>';
-  logEl.scrollTop = logEl.scrollHeight;
-}
-
-function collapsePlayer() {
-  wrap.classList.remove('open');
-  if (_activeJW) { try { _activeJW.remove(); } catch(e){} _activeJW = null; }
-  document.getElementById('lpo-slot').innerHTML = '';
-}
-
-function runTest(which) {
-  collapsePlayer();
-  log('Starting ' + which + ' test...', 'info');
-
-  var VAST_URLS = {
-    gima: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=' + Date.now(),
-    magnite: 'https://optimized-by.rubiconproject.com/a/api/vast?account_id=12398&site_id=529542&zone_id=4059987&size_id=203&rf=' + encodeURIComponent(location.href)
-  };
-
-  if (!VAST_URLS[which]) return;
-
-  wrap.classList.add('open');
-
-  setTimeout(function() {
-    if (typeof window.jwplayer !== 'function') {
-      log('JWPlayer not ready', 'err');
-      return;
-    }
-    try {
-      var jw = window.jwplayer('lpo-slot').setup({
-        width: '100%', height: 360, mute: true, autostart: true,
-        advertising: { client: 'vast', tag: VAST_URLS[which], outstream: true }
-      });
-      _activeJW = jw;
-
-      jw.on('adRequest', function(e) {
-        log('adRequest sent', 'info');
-        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = 'requesting';
-      });
-      jw.on('adStarted', function() {
-        log('✅ Ad started playing!', 'ok');
-        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').textContent = '✅ Playing';
-        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').className = 'v ok';
-        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = '✅ playing';
-        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).className = 'ok';
-      });
-      jw.on('adComplete', function() {
-        log('Ad complete → collapsing', 'ok');
-        setTimeout(collapsePlayer, 500);
-      });
-      jw.on('adError', function(e) {
-        log('❌ adError: ' + e.message + ' (code ' + e.adErrorCode + ')', 'err');
-        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').textContent = '❌ ' + e.message;
-        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').className = 'v err';
-        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = '❌ error';
-        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).className = 'err';
-        if (which !== 'gima') setTimeout(collapsePlayer, 300);
-      });
-      if (which === 'gima') { document.getElementById('v-gima-state').textContent = 'buffering'; document.getElementById('v-gima-state').className = 'v warn'; }
-      jw.on('buffer', function() { log('Buffering VAST...', 'info'); });
-      log('JW setup OK, requesting VAST...', 'info');
-    } catch(e) {
-      log('Setup error: ' + e.message, 'err');
-      collapsePlayer();
-    }
-  }, 300);
-}
-
-// Adform
+// Demo player
 (function(){
-  var s = document.createElement('script');
-  s.src = 'https://s1.adform.net/banners/scripts/video/outstream/inview.js';
-  s.setAttribute('data-pmp-id', '2236422');
-  s.onload = function() {
-    document.getElementById('v-adform-script').textContent = '✅ loaded';
-    document.getElementById('v-adform-script').className = 'v ok';
-    log('Adform inview.js loaded', 'ok');
-  };
-  s.onerror = function() {
-    document.getElementById('v-adform-script').textContent = '❌ failed';
-    document.getElementById('v-adform-script').className = 'v err';
-  };
-  document.body.appendChild(s);
-  // Monitor openrtb calls
-  var origFetch = window.fetch;
-  window.fetch = function(u) {
-    var url = typeof u === 'string' ? u : (u && u.url) || '';
-    var r = origFetch.apply(this, arguments);
-    if (url.includes('adform')) {
-      r.then(function(res) {
-        var status = res.status;
-        document.getElementById('v-adform-rtb').textContent = status === 204 ? '204 No Content' : status + ' OK';
-        document.getElementById('v-adform-rtb').className = status === 204 ? 'v err' : 'v ok';
-        log('Adform OpenRTB: ' + status, status === 204 ? 'err' : 'ok');
-      }).catch(function(){});
-    }
-    return r;
-  };
+  var btn=document.getElementById('play-btn');
+  var playArea=document.getElementById('play-area');
+  var timer=document.getElementById('timer-lbl');
+  var closeX=document.getElementById('close-x');
+  var prog=document.getElementById('prog');
+  var interval=null;
+  var elapsed=0;
+  var DURATION=30;
+  var playing=false;
+
+  btn.addEventListener('click',function(){
+    if(playing)return;
+    playing=true;
+    playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px;text-transform:uppercase">PLAYING</div>';
+    timer.style.display='block';
+    closeX.style.display='flex';
+    interval=setInterval(function(){
+      elapsed+=0.1;
+      prog.style.width=Math.min((elapsed/DURATION)*100,100)+'%';
+      var r=Math.max(0,Math.ceil(DURATION-elapsed));
+      timer.textContent='0:'+(r<10?'0':'')+r;
+      if(elapsed>=DURATION){
+        clearInterval(interval);
+        timer.textContent='Done';
+        playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px;text-transform:uppercase">AD COMPLETE</div>';
+      }
+    },100);
+  });
+
+  closeX.addEventListener('click',function(){
+    clearInterval(interval);
+    playing=false;
+    playArea.innerHTML='<div class="play-circle" id="play-btn" onclick="location.reload()"><div class="play-tri"></div></div><div class="player-label">Closed</div>';
+    timer.style.display='none';
+    closeX.style.display='none';
+    prog.style.width='0';
+  });
 })();
 
-// Magnite VAST preflight check
-fetch('https://optimized-by.rubiconproject.com/a/api/vast?account_id=12398&site_id=529542&zone_id=4059987&size_id=203')
-  .then(function(r){ return r.text(); })
-  .then(function(xml){
-    var hasAd = xml.includes('<Ad');
-    document.getElementById('v-magnite-vast').textContent = hasAd ? '✅ Has creative' : '❌ Empty VAST';
-    document.getElementById('v-magnite-vast').className = hasAd ? 'v ok' : 'v err';
-    log('Magnite VAST preflight: ' + (hasAd ? 'has creative' : 'empty'), hasAd ? 'ok' : 'err');
-  }).catch(function(e){ log('Magnite preflight error: ' + e.message, 'err'); });
+function copyCode(id,btn){
+  var el=document.getElementById(id);
+  navigator.clipboard.writeText(el.innerText).then(function(){
+    btn.textContent='Copied ✓';
+    btn.className='copy-btn copied';
+    setTimeout(function(){btn.textContent='Copy';btn.className='copy-btn';},2000);
+  });
+}
 </script>
 </body>
 </html>
