@@ -23,7 +23,6 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .scan-btn{background:linear-gradient(135deg,#7c3aed,#3b82f6);border:none;color:#fff;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
 .scan-btn:hover{opacity:.9}
 .scan-btn:disabled{opacity:.4;cursor:not-allowed}
-/* Extension status pill */
 .ext-status{display:flex;align-items:center;gap:6px;font-size:11px;padding:4px 10px;border-radius:20px;margin-left:8px;border:1px solid #1a1a2e;color:#333;cursor:pointer;transition:all .15s}
 .ext-status.connected{background:rgba(86,211,100,.08);border-color:rgba(86,211,100,.25);color:#56d364}
 .ext-status.disconnected{background:rgba(248,81,73,.05);border-color:rgba(248,81,73,.2);color:#f85149}
@@ -45,8 +44,7 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .pbid-tab:hover{color:#888}
 .pbid-tab.active{color:#a78bfa;border-bottom-color:#7c3aed}
 .pbid-content{flex:1;overflow-y:auto;padding:12px 16px}
-/* Connection banner */
-.conn-banner{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.conn-banner{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .conn-banner.hidden{display:none}
 .conn-banner.ext{border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.05)}
 .conn-banner.bm{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.05)}
@@ -56,7 +54,6 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .conn-btn.blue{background:#3b82f6;color:#fff}
 .bm-code{font-family:monospace;font-size:10px;background:#050508;border:1px solid #1a1a2e;border-radius:4px;padding:6px 10px;color:#a78bfa;margin-top:6px;display:none;word-break:break-all;line-height:1.4}
 .bm-code.show{display:block}
-/* Tables */
 .pbid-table{width:100%;border-collapse:collapse;font-size:11px}
 .pbid-table th{text-align:left;color:#333;font-size:10px;text-transform:uppercase;letter-spacing:.8px;padding:4px 8px;border-bottom:1px solid #111;font-weight:700}
 .pbid-table td{padding:6px 8px;border-bottom:1px solid #0a0a12;vertical-align:middle}
@@ -65,8 +62,8 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .cpm-ok{color:#56d364;font-family:monospace;font-weight:600}
 .cpm-zero{color:#333;font-family:monospace}
 .bidder-tag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:3px;background:#111;border:1px solid #1e1e2e;color:#555;margin:1px}
-.bidder-tag.won{background:rgba(86,211,100,.1);border-color:rgba(86,211,100,.3);color:#56d364}
 .bidder-tag.bid{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:#3b82f6}
+.bidder-tag.won{background:rgba(86,211,100,.1);border-color:rgba(86,211,100,.3);color:#56d364}
 .bidder-tag.timeout{background:rgba(248,81,73,.1);border-color:rgba(248,81,73,.3);color:#f85149}
 .event-row{display:flex;gap:8px;padding:4px 0;border-bottom:1px solid #0a0a12;font-size:11px}
 .event-time{color:#333;font-family:monospace;flex-shrink:0;width:60px}
@@ -75,7 +72,6 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .event-detail{color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .config-block{background:#050508;border:1px solid #111;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;line-height:1.7;white-space:pre-wrap;color:#555}
 .cfg-key{color:#69b0f5}.cfg-val{color:#a78bfa}.cfg-num{color:#56d364}
-/* Checks */
 .group{margin-bottom:20px}
 .group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .group-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#333}
@@ -142,7 +138,7 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
     <span class="search-label">🔍</span>
     <input class="url-input" id="url-input" placeholder="https://novi.ba" value="https://novi.ba">
     <button class="scan-btn" id="scan-btn">Scan →</button>
-    <div class="ext-status disconnected" id="ext-status" title="Professor Prebid Chrome Extension">
+    <div class="ext-status disconnected" id="ext-status" title="Professor Prebid Extension (lupondev/professor-prebid)">
       <span class="ext-dot"></span>
       <span id="ext-status-text">Extension</span>
     </div>
@@ -197,37 +193,34 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
       <span class="pbid-toggle" id="pbid-toggle-icon">∧</span>
     </div>
     <div class="pbid-body" id="pbid-body">
-
-      <!-- Connection options -->
-      <div id="conn-area">
-        <!-- Option 1: Extension (preferred) -->
-        <div class="conn-banner ext" id="ext-banner">
+      <div id="conn-area" style="padding:8px 16px">
+        <!-- Extension detected -->
+        <div class="conn-banner ext" id="ext-banner" style="display:none">
           <div class="conn-text">
-            <strong style="color:#a78bfa">🔌 Professor Prebid Extension detected!</strong><br>
-            Click to pull live pbjs data from the active publisher tab.
+            <strong style="color:#a78bfa">🔌 Professor Prebid extension detected!</strong><br>
+            Click to pull live pbjs data from the active publisher tab automatically.
           </div>
           <button class="conn-btn purple" id="ext-pull-btn">Pull Live Data</button>
         </div>
-        <!-- Option 1b: Extension not installed -->
+        <!-- Extension not installed -->
         <div class="conn-banner" id="no-ext-banner">
           <div class="conn-text">
             <strong style="color:#888">Extension not detected.</strong>
-            Install Professor Prebid extension for automatic live data, or use the bookmarklet below.
+            Build &amp; install our Professor Prebid fork for automatic live data, or use the bookmarklet below.
+            <br><span style="color:#444;font-size:10px">→ github.com/lupondev/professor-prebid → npm run build → Load in Chrome</span>
           </div>
-          <button class="conn-btn blue" onclick="window.open('https://github.com/lupondev/professor-prebid','_blank')">Install Extension</button>
+          <button class="conn-btn blue" onclick="window.open('https://github.com/lupondev/professor-prebid','_blank')">View Repo →</button>
         </div>
-        <!-- Option 2: Bookmarklet fallback -->
+        <!-- Bookmarklet fallback -->
         <div class="conn-banner bm" id="bm-banner" style="display:none">
           <div class="conn-text">
-            <strong style="color:#69b0f5">📎 Bookmarklet fallback</strong><br>
-            Open <strong id="bm-target-url" style="color:#e0e0e0"></strong> in a new tab, then paste this in the address bar:
+            <strong style="color:#69b0f5">📎 Bookmarklet fallback</strong> — open target page in new tab, paste in address bar:
             <div class="bm-code show" id="bm-code"></div>
           </div>
           <button class="conn-btn blue" id="bm-copy-btn">Copy</button>
         </div>
       </div>
 
-      <!-- Tabs -->
       <div class="pbid-tabs">
         <div class="pbid-tab active" data-tab="adunits">Ad Units</div>
         <div class="pbid-tab" data-tab="bids">Bids</div>
@@ -246,15 +239,11 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 </div>
 
 <script>
-// ── EXTENSION ID ───────────────────────────────────────────────────
-// TODO: Replace with actual extension ID from chrome://extensions
-// Format: 32 lowercase letters, e.g. "abcdefghijklmnopqrstuvwxyzabcdef"
+// Extension ID — set once via the pill click or auto-detect
+// Our fork: github.com/lupondev/professor-prebid
 var PROFESSOR_PREBID_EXT_ID = localStorage.getItem('lupon_ext_id') || '';
-
-// ── STATE ─────────────────────────────────────────────────────────
 var state = { url:'', results:{}, scanning:false, fetchedData:{}, pbData:null, extConnected:false };
 
-// ── CHECKS ────────────────────────────────────────────────────────
 var CHECKS = [
   { id:'adstxt',      group:'Setup',    name:'ads.txt accessible',         critical:true,  fn: checkAdstxt },
   { id:'adstxt_lupon',group:'Setup',    name:'ads.txt has Lupon entry',     critical:true,  fn: checkAdstxtLupon },
@@ -288,400 +277,79 @@ var CHECKS = [
   { id:'page_speed',  group:'Delivery', name:'Page load reasonable',        critical:false, fn: checkPageSpeed },
 ];
 
-function ok(d)   { return { status:'ok',   detail: d||'' }; }
-function fail(d) { return { status:'fail', detail: d||'' }; }
-function warn(d) { return { status:'warn', detail: d||'' }; }
-function skip(d) { return { status:'skip', detail: d||'N/A' }; }
-function live(d) { return { status:'warn', detail: '⬇ ' + (d||'Professor Prebid panel below') }; }
+function ok(d){return{status:'ok',detail:d||''};}
+function fail(d){return{status:'fail',detail:d||''};}
+function warn(d){return{status:'warn',detail:d||''};}
+function skip(d){return{status:'skip',detail:d||'N/A'};}
+function live(d){return{status:'warn',detail:'⬇ '+(d||'Professor Prebid panel below')};}
 
-async function checkAdstxt() {
-  try {
-    var r = await fetch(new URL(state.url).origin + '/ads.txt');
-    if (!r.ok) return fail('ads.txt returns ' + r.status);
-    var txt = await r.text(); state.fetchedData.adstxt = txt;
-    return ok(txt.split('\n').filter(function(l){ return l.trim() && !l.startsWith('#'); }).length + ' entries');
-  } catch(e) { return fail('Cannot fetch: ' + e.message); }
-}
-async function checkAdstxtLupon() {
-  if (!state.fetchedData.adstxt) return skip('ads.txt not fetched');
-  var t = state.fetchedData.adstxt.toLowerCase();
-  if (t.includes('luponmedia')) return ok('luponmedia entry ✓');
-  if (t.includes('rubiconproject')) return warn('Magnite found, no Lupon entry');
-  return fail('No Lupon entry in ads.txt');
-}
-async function checkHttps() { return state.url.startsWith('https') ? ok('HTTPS ✓') : fail('HTTP — bids blocked'); }
-async function checkCMP() {
-  if (state.pbData && state.pbData.config && state.pbData.config.consentManagement) return ok('CMP via Prebid ✓');
-  try { var r = await fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' + encodeURIComponent(state.url) + '&strategy=mobile', {signal:AbortSignal.timeout(8000)}); if (r.ok) state.fetchedData.pagespeed = await r.json(); } catch(e) {}
-  return warn('CMP — check Professor Prebid panel');
-}
-async function checkPrebid() {
-  if (state.pbData) return ok('Prebid.js v' + (state.pbData.version||'?') + ' (live)');
-  if (state.fetchedData.html && (state.fetchedData.html.includes('prebid')||state.fetchedData.html.includes('pbjs'))) return ok('Prebid found in source');
-  return live('Connect Professor Prebid');
-}
-async function checkPrebidVersion() {
-  if (state.pbData && state.pbData.version) return ok('v' + state.pbData.version);
-  if (state.fetchedData.html) { var m = state.fetchedData.html.match(/prebid[._-]?v?([\d.]+)/i); if (m) return ok('v' + m[1] + ' (source)'); }
-  return live('Professor Prebid → live version');
-}
-async function checkGPT() {
-  if (state.fetchedData.html) return (state.fetchedData.html.includes('googletag')||state.fetchedData.html.includes('gpt.js')) ? ok('GPT detected') : warn('GPT not in source');
-  return live('Requires page load');
-}
-async function checkJSErrors() {
-  if (state.pbData && state.pbData.errors && state.pbData.errors.length) return fail(state.pbData.errors.length + ' errors: ' + state.pbData.errors[0]);
-  if (state.pbData) return ok('No JS errors (Professor Prebid)');
-  return live('→ Errors tab below');
-}
-async function checkAdUnits() {
-  if (state.pbData && state.pbData.adUnits) return ok(state.pbData.adUnits.length + ' ad units (live)');
-  if (state.fetchedData.html) { var found = ['div-gpt-ad','adxp_','ad-slot','lupon','novi_ba_'].filter(function(p){ return state.fetchedData.html.toLowerCase().includes(p); }); if (found.length) return ok('Slots: ' + found.join(', ')); }
-  return live('→ Ad Units tab below');
-}
-async function checkViewport() {
-  if (state.fetchedData.html) return state.fetchedData.html.includes('viewport') ? ok('Viewport meta ✓') : fail('Missing viewport meta');
-  return live('Requires source');
-}
-async function checkPbjsAdUnits() {
-  if (state.pbData && state.pbData.adUnits) { var n = state.pbData.adUnits.length; return n > 0 ? ok(n + ' ad units in pbjs') : fail('0 ad units in pbjs'); }
-  return live('→ Ad Units tab below');
-}
-async function checkBidders() {
-  if (state.pbData && state.pbData.bidders) { var n = state.pbData.bidders.length; return n >= 2 ? ok(n + ' bidders') : n === 1 ? warn('Only 1 bidder') : fail('0 bidders'); }
-  if (state.fetchedData.html) { var found = ['rubiconproject','adform','criteo','pubmatic','appnexus','sovrn','teads'].filter(function(p){ return state.fetchedData.html.toLowerCase().includes(p); }); if (found.length) return ok(found.length + ' bidders in source'); }
-  return live('→ Bidders tab below');
-}
-async function checkTimeout() {
-  if (state.pbData && state.pbData.config && state.pbData.config.bidderTimeout) { var ms = state.pbData.config.bidderTimeout; return ms <= 2000 ? ok(ms + 'ms ✓') : warn(ms + 'ms — too high'); }
-  if (state.fetchedData.html) { var m = state.fetchedData.html.match(/bidderTimeout[\s"]*[:=][\s"]*(\d+)/i); if (m) { var ms = parseInt(m[1]); return ms <= 2000 ? ok(ms + 'ms ✓') : warn(ms + 'ms — too high'); } }
-  return live('→ Config tab below');
-}
-async function checkFloors() {
-  if (state.pbData && state.pbData.config && state.pbData.config.floors) return ok('Price floors ✓');
-  if (state.fetchedData.html && state.fetchedData.html.includes('priceFloors')) return ok('priceFloors in source');
-  return live('→ Config tab below');
-}
-async function checkGDPRBids() {
-  if (state.pbData && state.pbData.config) return state.pbData.config.consentManagement ? ok('GDPR/TCF ✓') : fail('No consent management in pbjs');
-  if (state.fetchedData.html && (state.fetchedData.html.includes('consentManagement')||state.fetchedData.html.includes('gdpr'))) return ok('GDPR in source');
-  return live('→ Config tab below');
-}
-async function checkBidRequests() {
-  if (state.pbData && state.pbData.events) { var n = state.pbData.events.filter(function(e){ return e.eventType==='bidRequested'; }).length; return n > 0 ? ok(n + ' bid requests fired') : fail('No bid requests'); }
-  return live('→ Events tab below');
-}
-async function checkBidResponses() {
-  if (state.pbData && state.pbData.events) { var r = state.pbData.events.filter(function(e){ return e.eventType==='bidResponse'; }).length; var t = state.pbData.events.filter(function(e){ return e.eventType==='bidTimeout'; }).length; return r > 0 ? ok(r + ' responses, ' + t + ' timeouts') : warn('0 responses'); }
-  return live('→ Bids tab below');
-}
-async function checkTimeoutRate() {
-  if (state.pbData && state.pbData.events) { var req = state.pbData.events.filter(function(e){ return e.eventType==='bidRequested'; }).length; var to = state.pbData.events.filter(function(e){ return e.eventType==='bidTimeout'; }).length; if (!req) return warn('No requests'); var r = Math.round((to/req)*100); return r < 30 ? ok(r + '% timeout ✓') : warn(r + '% timeout — high'); }
-  return live('→ Events tab below');
-}
-async function checkWinners() {
-  if (state.pbData && state.pbData.events) { var n = state.pbData.events.filter(function(e){ return e.eventType==='bidWon'; }).length; return n > 0 ? ok(n + ' winners') : warn('No winners yet'); }
-  return live('→ Events tab below');
-}
-async function checkNoBid() {
-  if (state.pbData && state.pbData.events) { var nb = state.pbData.events.filter(function(e){ return e.eventType==='noBid'; }).length; var r = state.pbData.events.filter(function(e){ return e.eventType==='bidResponse'; }).length; if (nb && !r) return fail('All bidders no-bid'); if (nb) return warn(nb + ' no-bids'); return ok('No all-nobid'); }
-  return live('→ Bids tab below');
-}
-async function checkIframes() { if (state.pbData) return ok('Check iframes in browser DevTools'); return live('Requires live inspection'); }
-async function checkVAST() {
-  if (state.fetchedData.html && (state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream'))) return ok('Outstream/VAST tag detected');
-  return live('VAST via live inspection');
-}
-async function checkAdblock() { return live('AdBlock requires live page'); }
-async function checkViewability() {
-  if (state.fetchedData.pagespeed) { var fcp = state.fetchedData.pagespeed.lighthouseResult && state.fetchedData.pagespeed.lighthouseResult.audits && state.fetchedData.pagespeed.lighthouseResult.audits['first-contentful-paint']; if (fcp) return ok('FCP: ' + fcp.displayValue); }
-  return live('PageSpeed loading...');
-}
-async function checkCLS() {
-  if (state.fetchedData.pagespeed) { var cls = state.fetchedData.pagespeed.lighthouseResult && state.fetchedData.pagespeed.lighthouseResult.audits && state.fetchedData.pagespeed.lighthouseResult.audits['cumulative-layout-shift']; if (cls) { var s = parseFloat(cls.displayValue); return s < 0.1 ? ok('CLS: ' + cls.displayValue + ' ✓') : s < 0.25 ? warn('CLS: ' + cls.displayValue) : fail('CLS: ' + cls.displayValue + ' — critical'); } }
-  return live('CLS from PageSpeed...');
-}
-async function checkSellers() {
-  try { var d = new URL(state.url).hostname.replace('www.',''); var r = await fetch('https://' + d + '/sellers.json', {signal:AbortSignal.timeout(4000)}); if (r.ok) { var j = await r.json(); return ok('sellers.json: ' + (j.sellers?j.sellers.length:'?') + ' sellers'); } return warn('sellers.json not found'); } catch(e) { return warn('sellers.json not accessible'); }
-}
-async function checkOutstream() {
-  if (state.fetchedData.html) return (state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')||state.fetchedData.html.includes('inview.js')) ? ok('Outstream tag ✓') : warn('No outstream found');
-  return live('Requires source');
-}
-async function checkNative() {
-  if (state.fetchedData.html) return (state.fetchedData.html.includes('native')||state.fetchedData.html.includes('teads')) ? ok('Native tag ✓') : warn('No native found');
-  return live('Requires source');
-}
-async function checkSafeframe() {
-  if (state.fetchedData.html) return state.fetchedData.html.includes('safeframe') ? ok('SafeFrame ✓') : warn('No SafeFrame');
-  return live('Requires source');
-}
-async function checkPageSpeed() {
-  if (state.fetchedData.pagespeed) { var p = state.fetchedData.pagespeed.lighthouseResult && state.fetchedData.pagespeed.lighthouseResult.categories && state.fetchedData.pagespeed.lighthouseResult.categories.performance; if (p) { var s = Math.round(p.score*100); return s >= 70 ? ok(s + '/100 ✓') : s >= 50 ? warn(s + '/100') : fail(s + '/100 — poor'); } }
-  return live('PageSpeed loading...');
-}
+async function checkAdstxt(){try{var r=await fetch(new URL(state.url).origin+'/ads.txt');if(!r.ok)return fail('ads.txt returns '+r.status);var txt=await r.text();state.fetchedData.adstxt=txt;return ok(txt.split('\n').filter(function(l){return l.trim()&&!l.startsWith('#');}).length+' entries');}catch(e){return fail('Cannot fetch: '+e.message);}}
+async function checkAdstxtLupon(){if(!state.fetchedData.adstxt)return skip('ads.txt not fetched');var t=state.fetchedData.adstxt.toLowerCase();if(t.includes('luponmedia'))return ok('luponmedia entry ✓');if(t.includes('rubiconproject'))return warn('Magnite found, no Lupon entry');return fail('No Lupon entry in ads.txt');}
+async function checkHttps(){return state.url.startsWith('https')?ok('HTTPS ✓'):fail('HTTP — bids blocked');}
+async function checkCMP(){if(state.pbData&&state.pbData.config&&state.pbData.config.consentManagement)return ok('CMP via Prebid ✓');try{var r=await fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='+encodeURIComponent(state.url)+'&strategy=mobile',{signal:AbortSignal.timeout(8000)});if(r.ok)state.fetchedData.pagespeed=await r.json();}catch(e){}return warn('CMP — check Professor Prebid panel');}
+async function checkPrebid(){if(state.pbData)return ok('Prebid.js v'+(state.pbData.version||'?')+' (live)');if(state.fetchedData.html&&(state.fetchedData.html.includes('prebid')||state.fetchedData.html.includes('pbjs')))return ok('Prebid found in source');return live('Connect Professor Prebid');}
+async function checkPrebidVersion(){if(state.pbData&&state.pbData.version)return ok('v'+state.pbData.version);if(state.fetchedData.html){var m=state.fetchedData.html.match(/prebid[._-]?v?([\d.]+)/i);if(m)return ok('v'+m[1]+' (source)');}return live('Professor Prebid → live version');}
+async function checkGPT(){if(state.fetchedData.html)return(state.fetchedData.html.includes('googletag')||state.fetchedData.html.includes('gpt.js'))?ok('GPT detected'):warn('GPT not in source');return live('Requires page load');}
+async function checkJSErrors(){if(state.pbData&&state.pbData.errors&&state.pbData.errors.length)return fail(state.pbData.errors.length+' errors: '+state.pbData.errors[0]);if(state.pbData)return ok('No JS errors (Professor Prebid)');return live('→ Errors tab below');}
+async function checkAdUnits(){if(state.pbData&&state.pbData.adUnits)return ok(state.pbData.adUnits.length+' ad units (live)');if(state.fetchedData.html){var found=['div-gpt-ad','adxp_','ad-slot','lupon','novi_ba_'].filter(function(p){return state.fetchedData.html.toLowerCase().includes(p);});if(found.length)return ok('Slots: '+found.join(', '));}return live('→ Ad Units tab below');}
+async function checkViewport(){if(state.fetchedData.html)return state.fetchedData.html.includes('viewport')?ok('Viewport meta ✓'):fail('Missing viewport meta');return live('Requires source');}
+async function checkPbjsAdUnits(){if(state.pbData&&state.pbData.adUnits){var n=state.pbData.adUnits.length;return n>0?ok(n+' ad units in pbjs'):fail('0 ad units in pbjs');}return live('→ Ad Units tab below');}
+async function checkBidders(){if(state.pbData&&state.pbData.bidders){var n=state.pbData.bidders.length;return n>=2?ok(n+' bidders'):n===1?warn('Only 1 bidder'):fail('0 bidders');}if(state.fetchedData.html){var found=['rubiconproject','adform','criteo','pubmatic','appnexus','sovrn','teads'].filter(function(p){return state.fetchedData.html.toLowerCase().includes(p);});if(found.length)return ok(found.length+' bidders in source');}return live('→ Bidders tab below');}
+async function checkTimeout(){if(state.pbData&&state.pbData.config&&state.pbData.config.bidderTimeout){var ms=state.pbData.config.bidderTimeout;return ms<=2000?ok(ms+'ms ✓'):warn(ms+'ms — too high');}if(state.fetchedData.html){var m=state.fetchedData.html.match(/bidderTimeout[\s"]*[:=][\s"]*(\d+)/i);if(m){var ms=parseInt(m[1]);return ms<=2000?ok(ms+'ms ✓'):warn(ms+'ms — too high');}}return live('→ Config tab below');}
+async function checkFloors(){if(state.pbData&&state.pbData.config&&state.pbData.config.floors)return ok('Price floors ✓');if(state.fetchedData.html&&state.fetchedData.html.includes('priceFloors'))return ok('priceFloors in source');return live('→ Config tab below');}
+async function checkGDPRBids(){if(state.pbData&&state.pbData.config)return state.pbData.config.consentManagement?ok('GDPR/TCF ✓'):fail('No consent management in pbjs');if(state.fetchedData.html&&(state.fetchedData.html.includes('consentManagement')||state.fetchedData.html.includes('gdpr')))return ok('GDPR in source');return live('→ Config tab below');}
+async function checkBidRequests(){if(state.pbData&&state.pbData.events){var n=state.pbData.events.filter(function(e){return e.eventType==='bidRequested';}).length;return n>0?ok(n+' bid requests fired'):fail('No bid requests');}return live('→ Events tab below');}
+async function checkBidResponses(){if(state.pbData&&state.pbData.events){var r=state.pbData.events.filter(function(e){return e.eventType==='bidResponse';}).length;var t=state.pbData.events.filter(function(e){return e.eventType==='bidTimeout';}).length;return r>0?ok(r+' responses, '+t+' timeouts'):warn('0 responses');}return live('→ Bids tab below');}
+async function checkTimeoutRate(){if(state.pbData&&state.pbData.events){var req=state.pbData.events.filter(function(e){return e.eventType==='bidRequested';}).length;var to=state.pbData.events.filter(function(e){return e.eventType==='bidTimeout';}).length;if(!req)return warn('No requests');var r=Math.round((to/req)*100);return r<30?ok(r+'% timeout ✓'):warn(r+'% timeout — high');}return live('→ Events tab below');}
+async function checkWinners(){if(state.pbData&&state.pbData.events){var n=state.pbData.events.filter(function(e){return e.eventType==='bidWon';}).length;return n>0?ok(n+' winners'):warn('No winners yet');}return live('→ Events tab below');}
+async function checkNoBid(){if(state.pbData&&state.pbData.events){var nb=state.pbData.events.filter(function(e){return e.eventType==='noBid';}).length;var r=state.pbData.events.filter(function(e){return e.eventType==='bidResponse';}).length;if(nb&&!r)return fail('All bidders no-bid');if(nb)return warn(nb+' no-bids');return ok('No all-nobid');}return live('→ Bids tab below');}
+async function checkIframes(){if(state.pbData)return ok('Check iframes in DevTools');return live('Requires live inspection');}
+async function checkVAST(){if(state.fetchedData.html&&(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')))return ok('Outstream/VAST tag ✓');return live('VAST via live inspection');}
+async function checkAdblock(){return live('AdBlock requires live page');}
+async function checkViewability(){if(state.fetchedData.pagespeed){var fcp=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['first-contentful-paint'];if(fcp)return ok('FCP: '+fcp.displayValue);}return live('PageSpeed loading...');}
+async function checkCLS(){if(state.fetchedData.pagespeed){var cls=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['cumulative-layout-shift'];if(cls){var s=parseFloat(cls.displayValue);return s<0.1?ok('CLS: '+cls.displayValue+' ✓'):s<0.25?warn('CLS: '+cls.displayValue):fail('CLS: '+cls.displayValue+' — critical');}}return live('CLS from PageSpeed...');}
+async function checkSellers(){try{var d=new URL(state.url).hostname.replace('www.','');var r=await fetch('https://'+d+'/sellers.json',{signal:AbortSignal.timeout(4000)});if(r.ok){var j=await r.json();return ok('sellers.json: '+(j.sellers?j.sellers.length:'?')+' sellers');}return warn('sellers.json not found');}catch(e){return warn('sellers.json not accessible');}}
+async function checkOutstream(){if(state.fetchedData.html)return(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')||state.fetchedData.html.includes('inview.js'))?ok('Outstream tag ✓'):warn('No outstream found');return live('Requires source');}
+async function checkNative(){if(state.fetchedData.html)return(state.fetchedData.html.includes('native')||state.fetchedData.html.includes('teads'))?ok('Native tag ✓'):warn('No native found');return live('Requires source');}
+async function checkSafeframe(){if(state.fetchedData.html)return state.fetchedData.html.includes('safeframe')?ok('SafeFrame ✓'):warn('No SafeFrame');return live('Requires source');}
+async function checkPageSpeed(){if(state.fetchedData.pagespeed){var p=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.categories&&state.fetchedData.pagespeed.lighthouseResult.categories.performance;if(p){var s=Math.round(p.score*100);return s>=70?ok(s+'/100 ✓'):s>=50?warn(s+'/100'):fail(s+'/100 — poor');}}return live('PageSpeed loading...');}
 
-// ── RENDER ────────────────────────────────────────────────────────
-function renderChecks() {
-  var area = document.getElementById('checks-area');
-  area.innerHTML = '';
-  var groups = {}; CHECKS.forEach(function(c){ if (!groups[c.group]) groups[c.group] = []; groups[c.group].push(c); });
-  var icons = { Setup:'🔧', Auction:'⚡', Delivery:'📦' };
-  var nums  = { Setup:0, Auction:10, Delivery:20 };
-  Object.keys(groups).forEach(function(g) {
-    var checks = groups[g];
-    var passed = checks.filter(function(c){ return state.results[c.id] && state.results[c.id].status==='ok'; }).length;
-    var total  = checks.filter(function(c){ return !state.results[c.id] || state.results[c.id].status!=='skip'; }).length;
-    var grp = document.createElement('div'); grp.className = 'group';
-    var hdr = document.createElement('div'); hdr.className = 'group-header';
-    hdr.innerHTML = '<span style="font-size:14px">' + icons[g] + '</span>' +
-      '<span class="group-title">Layer ' + (g==='Setup'?'1':g==='Auction'?'2':'3') + ' — ' + g + '</span>' +
-      '<span class="group-score" style="color:' + (passed===total?'#56d364':'#e3b341') + '">' + passed + '/' + total + '</span>';
-    grp.appendChild(hdr);
-    checks.forEach(function(c, i) {
-      var r = state.results[c.id]; var status = r ? r.status : 'pending'; var detail = r ? r.detail : '—';
-      var el = document.createElement('div'); el.className = 'check'; el.id = 'check-' + c.id;
-      el.innerHTML = '<span class="check-num">' + (nums[g]+i+1) + '</span>' +
-        '<span class="check-icon ' + status + '">' + (status==='ok'?'✓':status==='fail'?'✗':status==='warn'?'!':status==='skip'?'−':'·') + '</span>' +
-        '<div class="check-body"><div class="check-name">' + c.name + (c.critical?' <span style="color:#f85149;font-size:9px">REQ</span>':'') + '</div>' +
-        '<div class="check-detail ' + status + '">' + detail + '</div></div>';
-      grp.appendChild(el);
-    });
-    area.appendChild(grp);
-  });
-}
+function renderChecks(){var area=document.getElementById('checks-area');area.innerHTML='';var groups={};CHECKS.forEach(function(c){if(!groups[c.group])groups[c.group]=[];groups[c.group].push(c);});var icons={Setup:'🔧',Auction:'⚡',Delivery:'📦'};var nums={Setup:0,Auction:10,Delivery:20};Object.keys(groups).forEach(function(g){var checks=groups[g];var passed=checks.filter(function(c){return state.results[c.id]&&state.results[c.id].status==='ok';}).length;var total=checks.filter(function(c){return!state.results[c.id]||state.results[c.id].status!=='skip';}).length;var grp=document.createElement('div');grp.className='group';var hdr=document.createElement('div');hdr.className='group-header';hdr.innerHTML='<span style="font-size:14px">'+icons[g]+'</span><span class="group-title">Layer '+(g==='Setup'?'1':g==='Auction'?'2':'3')+' — '+g+'</span><span class="group-score" style="color:'+(passed===total?'#56d364':'#e3b341')+'">'+passed+'/'+total+'</span>';grp.appendChild(hdr);checks.forEach(function(c,i){var r=state.results[c.id];var status=r?r.status:'pending';var detail=r?r.detail:'—';var el=document.createElement('div');el.className='check';el.id='check-'+c.id;el.innerHTML='<span class="check-num">'+(nums[g]+i+1)+'</span><span class="check-icon '+status+'">'+(status==='ok'?'✓':status==='fail'?'✗':status==='warn'?'!':status==='skip'?'−':'·')+'</span><div class="check-body"><div class="check-name">'+c.name+(c.critical?' <span style="color:#f85149;font-size:9px">REQ</span>':'')+'</div><div class="check-detail '+status+'">'+detail+'</div></div>';grp.appendChild(el);});area.appendChild(grp);});}
 
-function updateCheck(id, result) {
-  state.results[id] = result;
-  var el = document.getElementById('check-' + id); if (!el) return;
-  el.querySelector('.check-icon').className = 'check-icon ' + result.status;
-  el.querySelector('.check-icon').textContent = result.status==='ok'?'✓':result.status==='fail'?'✗':result.status==='warn'?'!':'−';
-  el.querySelector('.check-detail').className = 'check-detail ' + result.status;
-  el.querySelector('.check-detail').textContent = result.detail;
-  updateStats();
-}
+function updateCheck(id,result){state.results[id]=result;var el=document.getElementById('check-'+id);if(!el)return;el.querySelector('.check-icon').className='check-icon '+result.status;el.querySelector('.check-icon').textContent=result.status==='ok'?'✓':result.status==='fail'?'✗':result.status==='warn'?'!':'−';el.querySelector('.check-detail').className='check-detail '+result.status;el.querySelector('.check-detail').textContent=result.detail;updateStats();}
 
-function updateStats() {
-  var res = Object.values(state.results);
-  var passed = res.filter(function(r){ return r.status==='ok'; }).length;
-  var critical = res.filter(function(r){ return r.status==='fail'; }).length;
-  var warnings = res.filter(function(r){ return r.status==='warn'; }).length;
-  var total = CHECKS.filter(function(c){ return !state.results[c.id] || state.results[c.id].status!=='skip'; }).length;
-  var score = total > 0 ? Math.round((passed/total)*100) : 0;
-  document.getElementById('s-passed').textContent = passed + '/' + CHECKS.length;
-  document.getElementById('s-critical').textContent = critical;
-  document.getElementById('s-warnings').textContent = warnings;
-  document.getElementById('score-text').textContent = score;
-  var c = document.getElementById('score-circle');
-  c.style.strokeDashoffset = 175.9 - (score/100)*175.9;
-  c.style.stroke = score>=70?'#56d364':score>=40?'#e3b341':'#f85149';
-  document.getElementById('progress').style.width = (Object.keys(state.results).length/CHECKS.length*100) + '%';
-  var issues = document.getElementById('issue-list');
-  var fails = CHECKS.filter(function(c){ return c.critical && state.results[c.id] && state.results[c.id].status==='fail'; });
-  var warns = CHECKS.filter(function(c){ return state.results[c.id] && state.results[c.id].status==='warn'; });
-  if (!fails.length && !warns.length) { issues.innerHTML = '<span style="font-size:11px;color:#1a1a2e">None yet.</span>'; return; }
-  issues.innerHTML = '';
-  fails.forEach(function(c){ var d = document.createElement('div'); d.className = 'issue-item critical'; d.innerHTML = '<div class="issue-title critical">❌ ' + c.name + '</div><div class="issue-fix">' + (state.results[c.id].detail||'') + '</div>'; issues.appendChild(d); });
-  warns.slice(0,3).forEach(function(c){ var d = document.createElement('div'); d.className = 'issue-item warn'; d.innerHTML = '<div class="issue-title warn">⚠️ ' + c.name + '</div><div class="issue-fix">' + (state.results[c.id].detail||'') + '</div>'; issues.appendChild(d); });
-}
+function updateStats(){var res=Object.values(state.results);var passed=res.filter(function(r){return r.status==='ok';}).length;var critical=res.filter(function(r){return r.status==='fail';}).length;var warnings=res.filter(function(r){return r.status==='warn';}).length;var total=CHECKS.filter(function(c){return!state.results[c.id]||state.results[c.id].status!=='skip';}).length;var score=total>0?Math.round((passed/total)*100):0;document.getElementById('s-passed').textContent=passed+'/'+CHECKS.length;document.getElementById('s-critical').textContent=critical;document.getElementById('s-warnings').textContent=warnings;document.getElementById('score-text').textContent=score;var c=document.getElementById('score-circle');c.style.strokeDashoffset=175.9-(score/100)*175.9;c.style.stroke=score>=70?'#56d364':score>=40?'#e3b341':'#f85149';document.getElementById('progress').style.width=(Object.keys(state.results).length/CHECKS.length*100)+'%';var issues=document.getElementById('issue-list');var fails=CHECKS.filter(function(c){return c.critical&&state.results[c.id]&&state.results[c.id].status==='fail';});var warns=CHECKS.filter(function(c){return state.results[c.id]&&state.results[c.id].status==='warn';});if(!fails.length&&!warns.length){issues.innerHTML='<span style="font-size:11px;color:#1a1a2e">None yet.</span>';return;}issues.innerHTML='';fails.forEach(function(c){var d=document.createElement('div');d.className='issue-item critical';d.innerHTML='<div class="issue-title critical">❌ '+c.name+'</div><div class="issue-fix">'+(state.results[c.id].detail||'')+'</div>';issues.appendChild(d);});warns.slice(0,3).forEach(function(c){var d=document.createElement('div');d.className='issue-item warn';d.innerHTML='<div class="issue-title warn">⚠️ '+c.name+'</div><div class="issue-fix">'+(state.results[c.id].detail||'')+'</div>';issues.appendChild(d);});}
 
-// ── EXTENSION BRIDGE ──────────────────────────────────────────────
-function checkExtension() {
-  if (!PROFESSOR_PREBID_EXT_ID || !window.chrome || !chrome.runtime) {
-    setExtStatus(false);
-    return;
-  }
-  try {
-    chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID, { type: 'LUPON_LAB_PING' }, function(resp) {
-      if (chrome.runtime.lastError || !resp) { setExtStatus(false); return; }
-      setExtStatus(true);
-    });
-  } catch(e) { setExtStatus(false); }
-}
+// ── EXTENSION BRIDGE ─────────────────────────────────────────────
+function checkExtension(){if(!PROFESSOR_PREBID_EXT_ID||!window.chrome||!chrome.runtime){setExtStatus(false);return;}try{chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID,{type:'LUPON_LAB_PING'},function(resp){if(chrome.runtime.lastError||!resp){setExtStatus(false);return;}setExtStatus(true);});}catch(e){setExtStatus(false);}}
 
-function setExtStatus(connected) {
-  state.extConnected = connected;
-  var el = document.getElementById('ext-status');
-  var txt = document.getElementById('ext-status-text');
-  var extBanner = document.getElementById('ext-banner');
-  var noExtBanner = document.getElementById('no-ext-banner');
-  if (connected) {
-    el.className = 'ext-status connected';
-    txt.textContent = 'Extension ✓';
-    extBanner.style.display = 'flex';
-    noExtBanner.style.display = 'none';
-  } else {
-    el.className = 'ext-status disconnected';
-    txt.textContent = 'Extension';
-    extBanner.style.display = 'none';
-    noExtBanner.style.display = 'flex';
-  }
-}
+function setExtStatus(connected){state.extConnected=connected;var el=document.getElementById('ext-status');document.getElementById('ext-status-text').textContent=connected?'Extension ✓':'Extension';el.className='ext-status '+(connected?'connected':'disconnected');document.getElementById('ext-banner').style.display=connected?'flex':'none';document.getElementById('no-ext-banner').style.display=connected?'none':'flex';}
 
-function pullFromExtension() {
-  if (!PROFESSOR_PREBID_EXT_ID) {
-    // Prompt for Extension ID if not set
-    var id = prompt('Paste your Professor Prebid Extension ID (from chrome://extensions):');
-    if (!id || id.length !== 32) { alert('Invalid extension ID. Must be 32 characters.'); return; }
-    PROFESSOR_PREBID_EXT_ID = id.trim();
-    localStorage.setItem('lupon_ext_id', PROFESSOR_PREBID_EXT_ID);
-  }
-  document.getElementById('pbid-status').textContent = '⏳ Pulling data...';
-  try {
-    chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID, { type: 'LUPON_LAB_REQUEST' }, function(data) {
-      if (chrome.runtime.lastError || !data) {
-        document.getElementById('pbid-status').textContent = '❌ Extension error: ' + (chrome.runtime.lastError && chrome.runtime.lastError.message);
-        return;
-      }
-      if (data.error) {
-        document.getElementById('pbid-status').textContent = '❌ ' + data.error;
-        // Show bookmarklet as fallback
-        generateBookmarklet(state.url);
-        document.getElementById('bm-banner').style.display = 'flex';
-        return;
-      }
-      ingestPbData(data);
-    });
-  } catch(e) {
-    document.getElementById('pbid-status').textContent = '❌ chrome.runtime not available';
-    generateBookmarklet(state.url);
-    document.getElementById('bm-banner').style.display = 'flex';
-  }
-}
+function pullFromExtension(){if(!PROFESSOR_PREBID_EXT_ID){var id=prompt('Paste Professor Prebid Extension ID (from chrome://extensions):\nFormat: 32 lowercase letters');if(!id||id.trim().length!==32){alert('Invalid ID — must be 32 chars');return;}PROFESSOR_PREBID_EXT_ID=id.trim();localStorage.setItem('lupon_ext_id',PROFESSOR_PREBID_EXT_ID);}document.getElementById('pbid-status').textContent='⏳ Pulling...';try{chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID,{type:'LUPON_LAB_REQUEST'},function(data){if(chrome.runtime.lastError||!data){document.getElementById('pbid-status').textContent='❌ '+(chrome.runtime.lastError&&chrome.runtime.lastError.message);generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';return;}if(data.error){document.getElementById('pbid-status').textContent='❌ '+data.error;generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';return;}ingestPbData(data);});}catch(e){document.getElementById('pbid-status').textContent='❌ chrome.runtime not available';generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';}}
 
-function ingestPbData(data) {
-  state.pbData = data;
-  var ver = data.version || '?';
-  var units = (data.adUnits || []).length;
-  var bidders = (data.bidders || []).length;
-  document.getElementById('pbid-status').textContent = '🟢 Live — Prebid v' + ver + ' · ' + units + ' units · ' + bidders + ' bidders';
-  document.getElementById('pbid-status').style.color = '#56d364';
-  document.getElementById('conn-area').style.display = 'none';
+function ingestPbData(data){state.pbData=data;var ver=data.version||'?';var units=(data.adUnits||[]).length;var bidders=(data.bidders||[]).length;document.getElementById('pbid-status').textContent='🟢 Live — Prebid v'+ver+' · '+units+' units · '+bidders+' bidders';document.getElementById('pbid-status').style.color='#56d364';document.getElementById('conn-area').style.display='none';var liveIds=['cmp','prebid','prebid_ver','js_errors','adunits','pbjs_adunits','bidders','bid_timeout','floor','consent_gdpr','bid_req','bid_resp','timeouts','winners','nobid'];Promise.all(liveIds.map(function(id){var check=CHECKS.find(function(c){return c.id===id;});if(!check)return;return check.fn().then(function(r){updateCheck(id,r);});})).then(function(){renderChecks();});renderPbidContent();}
 
-  // Re-run live checks
-  var liveIds = ['cmp','prebid','prebid_ver','js_errors','adunits','pbjs_adunits','bidders','bid_timeout','floor','consent_gdpr','bid_req','bid_resp','timeouts','winners','nobid'];
-  Promise.all(liveIds.map(function(id) {
-    var check = CHECKS.find(function(c){ return c.id===id; });
-    if (!check) return;
-    return check.fn().then(function(r){ updateCheck(id, r); });
-  })).then(function(){ renderChecks(); });
-  renderPbidContent();
-}
+function generateBookmarklet(url){var bm='javascript:(function(){var d={version:window.pbjs&&window.pbjs.version,adUnits:window.pbjs&&window.pbjs.adUnits,config:window.pbjs&&window.pbjs.getConfig&&window.pbjs.getConfig(),bidders:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents().filter(function(e){return e.eventType==="bidRequested";}).map(function(e){return e.args&&e.args.bidder;}).filter(function(b,i,a){return b&&a.indexOf(b)===i;}),events:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents(),errors:window.__pbjsErrors||[]};window.opener&&window.opener.postMessage({type:"LUPON_PBJS_DATA",data:d},"*");alert("Sent to Lab! Prebid v"+d.version+" | "+((d.adUnits||[]).length)+" units");})();';document.getElementById('bm-code').textContent=bm;document.getElementById('bm-copy-btn').onclick=function(){navigator.clipboard.writeText(bm).then(function(){document.getElementById('bm-copy-btn').textContent='✓';setTimeout(function(){document.getElementById('bm-copy-btn').textContent='Copy';},2000);});};}
 
-// Bookmarklet fallback
-function generateBookmarklet(url) {
-  var bm = 'javascript:(function(){var d={version:window.pbjs&&window.pbjs.version,adUnits:window.pbjs&&window.pbjs.adUnits,config:window.pbjs&&window.pbjs.getConfig&&window.pbjs.getConfig(),bidders:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents().filter(function(e){return e.eventType==="bidRequested";}).map(function(e){return e.args&&e.args.bidder;}).filter(function(b,i,a){return b&&a.indexOf(b)===i;}),events:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents(),errors:window.__pbjsErrors||[]};window.opener&&window.opener.postMessage({type:"LUPON_PBJS_DATA",data:d},"*");alert("Sent! Prebid v"+d.version+" | "+((d.adUnits||[]).length)+" units");})();';
-  document.getElementById('bm-code').textContent = bm;
-  document.getElementById('bm-target-url').textContent = url || state.url;
-  document.getElementById('bm-copy-btn').onclick = function() {
-    navigator.clipboard.writeText(bm).then(function(){ document.getElementById('bm-copy-btn').textContent = '✓'; setTimeout(function(){ document.getElementById('bm-copy-btn').textContent = 'Copy'; }, 2000); });
-  };
-}
+window.addEventListener('message',function(e){if(e.data&&e.data.type==='LUPON_PBJS_DATA')ingestPbData(e.data.data);});
 
-// postMessage listener (bookmarklet)
-window.addEventListener('message', function(e) {
-  if (e.data && e.data.type === 'LUPON_PBJS_DATA') ingestPbData(e.data.data);
-});
+async function startScan(){var url=document.getElementById('url-input').value.trim();if(!url)return;if(!url.startsWith('http'))url='https://'+url;state.url=url;state.results={};state.fetchedData={};state.scanning=true;var btn=document.getElementById('scan-btn');btn.disabled=true;btn.textContent='Scanning...';document.getElementById('empty-state').style.display='none';document.getElementById('checks-area').style.display='block';var badge=document.getElementById('status-badge');badge.className='status-badge scanning';badge.innerHTML='<span class="pulse"></span> Scanning...';renderChecks();try{var r=await fetch(url,{signal:AbortSignal.timeout(8000)});if(r.ok)state.fetchedData.html=await r.text();}catch(e){state.fetchedData.html='';}for(var i=0;i<CHECKS.length;i++){try{updateCheck(CHECKS[i].id,await CHECKS[i].fn());}catch(e){updateCheck(CHECKS[i].id,warn('Error: '+e.message));}renderChecks();await new Promise(function(res){setTimeout(res,60);});}state.scanning=false;badge.className='status-badge done';badge.innerHTML='✅ Scan complete';btn.disabled=false;btn.textContent='Rescan ↺';document.getElementById('s-prebid').textContent=state.results['prebid']&&state.results['prebid'].status==='ok'?'✅':'⚠️';document.getElementById('s-bidders').textContent=state.results['bidders']?state.results['bidders'].detail:'—';document.getElementById('s-cmp').textContent=state.results['cmp']&&state.results['cmp'].status==='ok'?'✅':'⚠️';document.getElementById('s-adstxt').textContent=state.results['adstxt']&&state.results['adstxt'].status==='ok'?'✅':'❌';generateBookmarklet(url);if(state.extConnected){setTimeout(pullFromExtension,500);}else{document.getElementById('bm-banner').style.display='flex';}}
 
-// ── SCAN ──────────────────────────────────────────────────────────
-async function startScan() {
-  var url = document.getElementById('url-input').value.trim();
-  if (!url) return;
-  if (!url.startsWith('http')) url = 'https://' + url;
-  state.url = url; state.results = {}; state.fetchedData = {}; state.scanning = true;
-  var btn = document.getElementById('scan-btn');
-  btn.disabled = true; btn.textContent = 'Scanning...';
-  document.getElementById('empty-state').style.display = 'none';
-  document.getElementById('checks-area').style.display = 'block';
-  var badge = document.getElementById('status-badge');
-  badge.className = 'status-badge scanning';
-  badge.innerHTML = '<span class="pulse"></span> Scanning...';
-  renderChecks();
-  try { var r = await fetch(url, {signal:AbortSignal.timeout(8000)}); if (r.ok) state.fetchedData.html = await r.text(); } catch(e) { state.fetchedData.html = ''; }
-  for (var i = 0; i < CHECKS.length; i++) {
-    try { updateCheck(CHECKS[i].id, await CHECKS[i].fn()); } catch(e) { updateCheck(CHECKS[i].id, warn('Error: ' + e.message)); }
-    renderChecks();
-    await new Promise(function(res){ setTimeout(res, 60); });
-  }
-  state.scanning = false;
-  badge.className = 'status-badge done'; badge.innerHTML = '✅ Scan complete';
-  btn.disabled = false; btn.textContent = 'Rescan ↺';
-  document.getElementById('s-prebid').textContent = state.results['prebid'] && state.results['prebid'].status==='ok' ? '✅' : '⚠️';
-  document.getElementById('s-bidders').textContent = state.results['bidders'] ? state.results['bidders'].detail : '—';
-  document.getElementById('s-cmp').textContent = state.results['cmp'] && state.results['cmp'].status==='ok' ? '✅' : '⚠️';
-  document.getElementById('s-adstxt').textContent = state.results['adstxt'] && state.results['adstxt'].status==='ok' ? '✅' : '❌';
-  generateBookmarklet(url);
-  // Auto-pull from extension if connected
-  if (state.extConnected) {
-    setTimeout(pullFromExtension, 500);
-  } else {
-    document.getElementById('bm-banner').style.display = 'flex';
-  }
-}
+var pbidOpen=true;var activeTab='adunits';
+document.getElementById('pbid-toggle-btn').addEventListener('click',function(){pbidOpen=!pbidOpen;document.getElementById('pbid-body').classList.toggle('collapsed',!pbidOpen);document.getElementById('pbid-toggle-icon').textContent=pbidOpen?'∧':'∨';});
+document.querySelectorAll('.pbid-tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.pbid-tab').forEach(function(t){t.classList.remove('active');});tab.classList.add('active');activeTab=tab.dataset.tab;renderPbidContent();});});
 
-// ── PROFESSOR PREBID TABS ─────────────────────────────────────────
-var pbidOpen = true; var activeTab = 'adunits';
-document.getElementById('pbid-toggle-btn').addEventListener('click', function() {
-  pbidOpen = !pbidOpen;
-  document.getElementById('pbid-body').classList.toggle('collapsed', !pbidOpen);
-  document.getElementById('pbid-toggle-icon').textContent = pbidOpen ? '∧' : '∨';
-});
-document.querySelectorAll('.pbid-tab').forEach(function(tab) {
-  tab.addEventListener('click', function() {
-    document.querySelectorAll('.pbid-tab').forEach(function(t){ t.classList.remove('active'); });
-    tab.classList.add('active'); activeTab = tab.dataset.tab; renderPbidContent();
-  });
-});
+function renderPbidContent(){var el=document.getElementById('pbid-content');var d=state.pbData;if(!d){el.innerHTML='<div style="text-align:center;padding:20px;color:#222;font-size:12px">Connect extension or use bookmarklet.</div>';return;}if(activeTab==='adunits'){if(!d.adUnits||!d.adUnits.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No ad units in pbjs</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Code</th><th>Sizes</th><th>Types</th><th>Bidders</th></tr></thead><tbody>';d.adUnits.forEach(function(u){var sz=(u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes)?u.mediaTypes.banner.sizes.map(function(s){return s.join('x');}).join(', '):'—';var tp=Object.keys(u.mediaTypes||{}).join(', ')||'—';var bd=(u.bids||[]).map(function(b){return'<span class="bidder-tag">'+b.bidder+'</span>';}).join('');h+='<tr><td style="font-family:monospace;color:#a78bfa;font-size:11px">'+u.code+'</td><td style="color:#555;font-size:10px">'+sz+'</td><td style="color:#555;font-size:10px">'+tp+'</td><td>'+bd+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}else if(activeTab==='bids'){var bids=(d.events||[]).filter(function(e){return e.eventType==='bidResponse';});if(!bids.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bid responses</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Unit</th><th>CPM</th><th>Size</th><th>Time</th></tr></thead><tbody>';bids.forEach(function(e){var b=e.args||{};h+='<tr><td style="font-weight:600;color:#e0e0e0">'+(b.bidder||b.bidderCode||'?')+'</td><td style="font-family:monospace;font-size:10px;color:#555">'+(b.adUnitCode||'?')+'</td><td class="'+(b.cpm?'cpm-ok':'cpm-zero')+'">'+(b.cpm?'$'+b.cpm.toFixed(3):'—')+'</td><td style="color:#555;font-size:10px">'+(b.width&&b.height?b.width+'x'+b.height:'—')+'</td><td style="color:#555;font-size:10px">'+(b.timeToRespond?b.timeToRespond+'ms':'—')+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}else if(activeTab==='bidders'){var bd=d.bidders||[];if(!bd.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bidders</div>';return;}el.innerHTML='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>'+bd.map(function(b){return'<tr><td style="font-weight:600;color:#e0e0e0">'+b+'</td><td><span class="bidder-tag bid">active</span></td></tr>';}).join('')+'</tbody></table>';}else if(activeTab==='events'){var ev=(d.events||[]).slice(-30).reverse();if(!ev.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No events</div>';return;}el.innerHTML=ev.map(function(e){var tc=e.eventType.includes('Win')?'win':e.eventType.includes('Timeout')?'timeout':(e.eventType.includes('bid')||e.eventType.includes('Bid'))?'bid':'auction';var det=(e.args&&e.args.bidder?e.args.bidder:'')+(e.args&&e.args.cpm?' $'+e.args.cpm.toFixed(3):'');return'<div class="event-row"><span class="event-time">'+(e.elapsedTime?e.elapsedTime+'ms':'—')+'</span><span class="event-type '+tc+'">'+e.eventType+'</span><span class="event-detail">'+det+'</span></div>';}).join('');}else if(activeTab==='config'){var str=JSON.stringify(d.config||{},null,2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"([^"]+)":/g,'<span class="cfg-key">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="cfg-val">"$1"</span>').replace(/: (\d+)/g,': <span class="cfg-num">$1</span>');el.innerHTML='<div class="config-block">'+str+'</div>';}else if(activeTab==='errors'){var errs=d.errors||[];el.innerHTML=errs.length?errs.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+e+'</div>';}).join(''):'<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';}}
 
-function renderPbidContent() {
-  var el = document.getElementById('pbid-content'); var d = state.pbData;
-  if (!d) { el.innerHTML = '<div style="text-align:center;padding:20px;color:#222;font-size:12px">Connect extension or use bookmarklet.</div>'; return; }
-  if (activeTab === 'adunits') {
-    if (!d.adUnits || !d.adUnits.length) { el.innerHTML = '<div style="color:#333;padding:8px;font-size:12px">No ad units in pbjs</div>'; return; }
-    var h = '<table class="pbid-table"><thead><tr><th>Code</th><th>Sizes</th><th>Types</th><th>Bidders</th></tr></thead><tbody>';
-    d.adUnits.forEach(function(u) {
-      var sz = (u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes)?u.mediaTypes.banner.sizes.map(function(s){return s.join('x');}).join(', '):'—';
-      var tp = Object.keys(u.mediaTypes||{}).join(', ')||'—';
-      var bd = (u.bids||[]).map(function(b){ return '<span class="bidder-tag">' + b.bidder + '</span>'; }).join('');
-      h += '<tr><td style="font-family:monospace;color:#a78bfa;font-size:11px">' + u.code + '</td><td style="color:#555;font-size:10px">' + sz + '</td><td style="color:#555;font-size:10px">' + tp + '</td><td>' + bd + '</td></tr>';
-    });
-    el.innerHTML = h + '</tbody></table>';
-  } else if (activeTab === 'bids') {
-    var bids = (d.events||[]).filter(function(e){ return e.eventType==='bidResponse'; });
-    if (!bids.length) { el.innerHTML = '<div style="color:#333;padding:8px;font-size:12px">No bid responses</div>'; return; }
-    var h = '<table class="pbid-table"><thead><tr><th>Bidder</th><th>Unit</th><th>CPM</th><th>Size</th><th>Time</th></tr></thead><tbody>';
-    bids.forEach(function(e) { var b = e.args||{}; h += '<tr><td style="font-weight:600;color:#e0e0e0">' + (b.bidder||b.bidderCode||'?') + '</td><td style="font-family:monospace;font-size:10px;color:#555">' + (b.adUnitCode||'?') + '</td><td class="' + (b.cpm?'cpm-ok':'cpm-zero') + '">' + (b.cpm?'$'+b.cpm.toFixed(3):'—') + '</td><td style="color:#555;font-size:10px">' + (b.width&&b.height?b.width+'x'+b.height:'—') + '</td><td style="color:#555;font-size:10px">' + (b.timeToRespond?b.timeToRespond+'ms':'—') + '</td></tr>'; });
-    el.innerHTML = h + '</tbody></table>';
-  } else if (activeTab === 'bidders') {
-    var bd = d.bidders||[]; if (!bd.length) { el.innerHTML = '<div style="color:#333;padding:8px;font-size:12px">No bidders</div>'; return; }
-    el.innerHTML = '<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>' + bd.map(function(b){ return '<tr><td style="font-weight:600;color:#e0e0e0">' + b + '</td><td><span class="bidder-tag bid">active</span></td></tr>'; }).join('') + '</tbody></table>';
-  } else if (activeTab === 'events') {
-    var ev = (d.events||[]).slice(-30).reverse(); if (!ev.length) { el.innerHTML = '<div style="color:#333;padding:8px;font-size:12px">No events</div>'; return; }
-    el.innerHTML = ev.map(function(e){ var tc = e.eventType.includes('Win')?'win':e.eventType.includes('Timeout')?'timeout':(e.eventType.includes('bid')||e.eventType.includes('Bid'))?'bid':'auction'; var det = (e.args&&e.args.bidder?e.args.bidder:'') + (e.args&&e.args.cpm?' $'+e.args.cpm.toFixed(3):''); return '<div class="event-row"><span class="event-time">' + (e.elapsedTime?e.elapsedTime+'ms':'—') + '</span><span class="event-type ' + tc + '">' + e.eventType + '</span><span class="event-detail">' + det + '</span></div>'; }).join('');
-  } else if (activeTab === 'config') {
-    var str = JSON.stringify(d.config||{}, null, 2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"([^"]+)":/g,'<span class="cfg-key">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="cfg-val">"$1"</span>').replace(/: (\d+)/g,': <span class="cfg-num">$1</span>');
-    el.innerHTML = '<div class="config-block">' + str + '</div>';
-  } else if (activeTab === 'errors') {
-    var errs = d.errors||[]; el.innerHTML = errs.length ? errs.map(function(e){ return '<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ ' + e + '</div>'; }).join('') : '<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';
-  }
-}
+document.getElementById('scan-btn').addEventListener('click',startScan);
+document.getElementById('url-input').addEventListener('keydown',function(e){if(e.key==='Enter')startScan();});
+document.getElementById('ext-pull-btn')&&document.getElementById('ext-pull-btn').addEventListener('click',pullFromExtension);
+document.getElementById('ext-status').addEventListener('click',function(){var id=prompt('Paste Professor Prebid Extension ID:\n(chrome://extensions → Professor Prebid → ID)\nFormat: 32 lowercase letters',PROFESSOR_PREBID_EXT_ID);if(id&&id.trim().length===32){PROFESSOR_PREBID_EXT_ID=id.trim();localStorage.setItem('lupon_ext_id',PROFESSOR_PREBID_EXT_ID);checkExtension();}});
 
-// ── INIT ──────────────────────────────────────────────────────────
-document.getElementById('scan-btn').addEventListener('click', startScan);
-document.getElementById('url-input').addEventListener('keydown', function(e){ if (e.key==='Enter') startScan(); });
-document.getElementById('ext-pull-btn') && document.getElementById('ext-pull-btn').addEventListener('click', pullFromExtension);
-document.getElementById('ext-status').addEventListener('click', function() {
-  var id = prompt('Paste Professor Prebid Extension ID (from chrome://extensions):\nFormat: 32 lowercase letters', PROFESSOR_PREBID_EXT_ID);
-  if (id && id.trim().length === 32) { PROFESSOR_PREBID_EXT_ID = id.trim(); localStorage.setItem('lupon_ext_id', PROFESSOR_PREBID_EXT_ID); checkExtension(); }
-});
-
-// Check extension on load
 checkExtension();
-setExtStatus(false); // default until checked
-
-// Auto-scan
-var urlParam = new URLSearchParams(location.search).get('url');
-if (urlParam) { document.getElementById('url-input').value = urlParam; startScan(); }
+setExtStatus(false);
+var urlParam=new URLSearchParams(location.search).get('url');
+if(urlParam){document.getElementById('url-input').value=urlParam;startScan();}
 </script>
 </body>
 </html>
