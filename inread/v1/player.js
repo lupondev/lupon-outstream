@@ -1,6 +1,5 @@
 /**
  * Lupon InRead v1 — Vanilla JS wrapper around Fluid Player
- * Scans for div[data-lupon-inread], IntersectionObserver trigger, lazy-loads Fluid Player, VAST from data-* attrs.
  * cdn.luponmedia.com/inread/v1/player.js
  */
 (function () {
@@ -9,7 +8,6 @@
   var SLOT_SEL = 'div[data-lupon-inread]';
   var VAST_BASE = 'https://vast.luponmedia.com/v1';
   var DEFAULT_FLOOR = '0.10';
-  var fluidScriptLoaded = false;
   var fluidScriptLoading = null;
 
   function getScriptBase() {
@@ -18,136 +16,110 @@
   }
 
   function loadFluidPlayer(base, done) {
-    if (typeof window.fluidPlayer === 'function') {
-      done();
-      return;
-    }
-    if (fluidScriptLoading) {
-      fluidScriptLoading.then(done);
-      return;
-    }
+    if (typeof window.fluidPlayer === 'function') { done(); return; }
+    if (fluidScriptLoading) { fluidScriptLoading.then(function(){ done(); }); return; }
     var script = document.createElement('script');
     script.src = base + 'fluidplayer.min.js';
     script.async = true;
     fluidScriptLoading = new Promise(function (resolve) {
-      script.onload = function () {
-        fluidScriptLoaded = true;
-        resolve();
-        done();
-      };
-      script.onerror = function () {
-        done(new Error('Fluid Player failed to load'));
-      };
+      script.onload = function () { resolve(); done(); };
+      script.onerror = function () { done(new Error('fluidplayer.min.js failed to load')); };
     });
     document.head.appendChild(script);
   }
 
   function buildVastUrl(pubId, siteId, floor) {
-    var params = new URLSearchParams();
-    if (pubId) params.set('pub', pubId);
-    if (siteId) params.set('site', siteId);
-    params.set('floor', floor != null && floor !== '' ? String(floor) : DEFAULT_FLOOR);
-    params.set('pos', 'inread');
-    return VAST_BASE + '?' + params.toString();
+    var p = [];
+    if (pubId) p.push('pub=' + encodeURIComponent(pubId));
+    if (siteId) p.push('site=' + encodeURIComponent(siteId));
+    p.push('floor=' + encodeURIComponent(floor || DEFAULT_FLOOR));
+    p.push('pos=inread');
+    return VAST_BASE + '?' + p.join('&');
   }
 
   function collapseSlot(slot) {
-    if (slot && slot.style) {
-      slot.style.display = 'none';
-      slot.style.height = '0';
-      slot.style.overflow = 'hidden';
-    }
+    slot.style.display = 'none';
+    slot.style.height = '0';
+    slot.style.overflow = 'hidden';
   }
 
   function initSlot(slot, index) {
-    if (slot._luponInreadInit) return;
-    slot._luponInreadInit = true;
+    if (slot._luponInit) return;
+    slot._luponInit = true;
 
-    var pubId = slot.getAttribute('data-pub-id') || '';
-    var siteId = slot.getAttribute('data-site-id') || '';
-    var floor = slot.getAttribute('data-floor');
+    var pubId  = slot.getAttribute('data-pub-id')   || '';
+    var siteId = slot.getAttribute('data-site-id')  || '';
+    var floor  = slot.getAttribute('data-floor')    || DEFAULT_FLOOR;
     var vastUrl = buildVastUrl(pubId, siteId, floor);
 
-    var videoId = 'lupon-inread-' + index + '-' + Math.random().toString(36).slice(2, 9);
+    // Create video element
+    var videoId = 'lupon-ir-' + index + '-' + Math.random().toString(36).slice(2, 8);
     var video = document.createElement('video');
     video.id = videoId;
     video.setAttribute('playsinline', '');
-    video.className = 'lupon-inread-video';
+    video.style.width = '100%';
     slot.innerHTML = '';
     slot.appendChild(video);
+    slot._luponVideo = video;
 
     var base = getScriptBase();
     loadFluidPlayer(base, function (err) {
-      if (err) {
-        collapseSlot(slot);
-        return;
-      }
+      if (err) { collapseSlot(slot); return; }
+
       try {
-        var instance = window.fluidPlayer(videoId, {
+        window.fluidPlayer(videoId, {
           vastOptions: {
-            adList: [{ roll: 'preRoll', vastTag: vastUrl }]
+            adList: [{ roll: 'preRoll', vastTag: vastUrl }],
+            // Fluid Player fires vastError callback on no-fill / error
+            vastAdvError: function () { collapseSlot(slot); },
+            vastTimeout: 5000
           },
           layoutControls: {
             autoPlay: true,
-            mute: true
+            mute: true,
+            fillToContainer: true
           }
-        });
-        slot._luponPlayer = instance;
-        slot._luponVideo = video;
-        if (instance && instance.vast && typeof instance.vast.getVastResponse === 'function') {
-          instance.vast.on('vastNoFill', function () { collapseSlot(slot); });
-        }
-        if (instance && instance.vast && instance.vast.vastPlayer) {
-          instance.vast.vastPlayer.on('error', function () { collapseSlot(slot); });
-        }
-        video.addEventListener('error', function () {
-          if (video.error && video.error.code >= 2) collapseSlot(slot);
         });
       } catch (e) {
         collapseSlot(slot);
       }
+
+      // Collapse on video element error (network / decode)
+      video.addEventListener('error', function () {
+        if (video.error && video.error.code >= 2) collapseSlot(slot);
+      });
     });
   }
 
   function setupPauseResume(slot) {
     var video = slot._luponVideo;
     if (!video) return;
-    var io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.target !== slot) return;
-          if (entry.isIntersecting) {
-            if (video && video.play) video.play().catch(function () {});
-          } else {
-            if (video && video.pause) video.pause();
-          }
-        });
-      },
-      { threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    io.observe(slot);
-    slot._luponPauseResumeObserver = io;
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          video.play && video.play().catch(function(){});
+        } else {
+          video.pause && video.pause();
+        }
+      });
+    }, { threshold: 0.3 }).observe(slot);
   }
 
   function run() {
     var base = getScriptBase();
     var slots = document.querySelectorAll(SLOT_SEL);
-    var index = 0;
-    slots.forEach(function (slot) {
-      var i = index++;
-      var observer = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.target !== slot || !entry.isIntersecting) return;
-            observer.disconnect();
-            slot._luponTriggered = true;
-            initSlot(slot, i);
-            setTimeout(function () { setupPauseResume(slot); }, 1500);
-          });
-        },
-        { threshold: 0.5 }
-      );
-      observer.observe(slot);
+    slots.forEach(function (slot, i) {
+      // Trigger observer — fires once at 50% viewport
+      var trigger = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          trigger.disconnect();
+          initSlot(slot, i);
+          // Setup pause/resume after player has had time to init
+          setTimeout(function () { setupPauseResume(slot); }, 1000);
+        });
+      }, { threshold: 0.5 });
+      trigger.observe(slot);
     });
   }
 
