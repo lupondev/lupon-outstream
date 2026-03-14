@@ -76,37 +76,17 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .event-detail{color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .config-block{background:#050508;border:1px solid #111;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;line-height:1.7;white-space:pre-wrap;color:#555}
 .cfg-key{color:#69b0f5}.cfg-val{color:#a78bfa}.cfg-num{color:#56d364}
-/* AI Tab */
 .ai-header{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(124,58,237,.1));border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:12px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ai-title{font-size:13px;font-weight:700;color:#f59e0b;display:flex;align-items:center;gap:6px}
+.ai-title{font-size:13px;font-weight:700;color:#f59e0b}
 .ai-subtitle{font-size:11px;color:#555;margin-top:2px}
 .ai-analyze-btn{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#000;padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;white-space:nowrap}
 .ai-analyze-btn:hover{opacity:.85}
 .ai-analyze-btn:disabled{opacity:.4;cursor:not-allowed}
-.ai-key-row{display:flex;gap:6px;margin-bottom:10px;align-items:center}
-.ai-key-input{flex:1;background:#050508;border:1px solid #1a1a2e;border-radius:5px;padding:6px 10px;font-size:11px;color:#e0e0e0;font-family:monospace}
-.ai-key-input:focus{outline:none;border-color:#f59e0b44}
-.ai-key-input::placeholder{color:#222}
-.ai-key-save{background:#1a1a2e;border:none;color:#888;padding:6px 10px;border-radius:5px;font-size:11px;cursor:pointer}
-.ai-key-save:hover{color:#fff}
-.ai-output{background:#050508;border:1px solid #1a1a2e;border-radius:8px;padding:14px;font-size:12px;line-height:1.7;color:#e0e0e0;white-space:pre-wrap;min-height:120px}
-.ai-output.loading{color:#555;font-style:italic}
-.ai-output.error{color:#f85149}
-/* AI output sections */
-.ai-section{margin-bottom:12px}
-.ai-section-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #111}
-.ai-section-title.critical{color:#f85149}
-.ai-section-title.warn{color:#e3b341}
-.ai-section-title.ok{color:#56d364}
-.ai-section-title.rec{color:#3b82f6}
-.ai-section-title.score{color:#f59e0b}
-.ai-text{font-size:12px;line-height:1.7;color:#ccc}
 .ai-thinking{display:flex;align-items:center;gap:8px;color:#555;font-size:12px;padding:20px 0}
 .ai-dot{width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:aidot 1.2s infinite}
 .ai-dot:nth-child(2){animation-delay:.2s}
 .ai-dot:nth-child(3){animation-delay:.4s}
 @keyframes aidot{0%,80%,100%{opacity:.2}40%{opacity:1}}
-/* Checks */
 .group{margin-bottom:20px}
 .group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .group-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#333}
@@ -120,12 +100,10 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .check-icon.pending{background:#111;color:#222;border:1px solid #1a1a2e}
 .check-icon.skip{background:#0d0d1a;color:#1a1a2e;border:1px solid #111}
 .check-icon.na{background:#0a0a10;color:#1a1a2e;border:1px solid #0f0f18}
-.check-detail.na{color:#1a1a2e}
-.check-name.na-name{color:#2a2a3a}
 .check-body{flex:1;min-width:0}
 .check-name{font-size:12px;color:#e0e0e0;margin-bottom:1px}
 .check-detail{font-size:10px;line-height:1.4;font-family:monospace}
-.check-detail.ok{color:#56d364}.check-detail.fail{color:#f85149}.check-detail.warn{color:#e3b341}.check-detail.pending{color:#222}.check-detail.skip{color:#1a1a2e}
+.check-detail.ok{color:#56d364}.check-detail.fail{color:#f85149}.check-detail.warn{color:#e3b341}.check-detail.pending{color:#222}.check-detail.skip{color:#1a1a2e}.check-detail.na{color:#1a1a2e}
 .check-num{font-size:9px;color:#1a1a2e;width:14px;text-align:right;flex-shrink:0;margin-top:3px}
 .panel-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;font-weight:700;margin-bottom:10px}
 .score-ring{width:70px;height:70px;margin:0 auto 12px;position:relative}
@@ -272,7 +250,6 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 var PROFESSOR_PREBID_EXT_ID = localStorage.getItem('lupon_ext_id') || 'kmmnbanjkdiphdabpjhnfcgechcjlgkj';
 var state = { url:'', results:{}, scanning:false, fetchedData:{}, pbData:null, extConnected:false, aiResult:null };
 
-// ── DRAG RESIZE ──────────────────────────────────────────────────
 (function(){
   var handle=document.getElementById('resize-handle'),panel=document.getElementById('pbid-panel');
   var dragging=false,startY,startH,MIN_H=42,MAX_H=600;
@@ -281,55 +258,46 @@ var state = { url:'', results:{}, scanning:false, fetchedData:{}, pbData:null, e
   document.addEventListener('mouseup',function(){if(!dragging)return;dragging=false;document.body.style.cursor='';document.body.style.userSelect='';});
 })();
 
-var CHECKS = [
-  { id:'adstxt',      group:'Setup',    name:'ads.txt accessible',        critical:true,  scored:true,  fn:checkAdstxt },
-  { id:'adstxt_lupon',group:'Setup',    name:'ads.txt has Lupon entry',    critical:true,  scored:true,  fn:checkAdstxtLupon },
-  { id:'https',       group:'Setup',    name:'HTTPS / secure context',     critical:true,  scored:true,  fn:checkHttps },
-  { id:'cmp',         group:'Setup',    name:'CMP / Consent detected',     critical:true,  scored:true,  fn:checkCMP },
-  { id:'prebid',      group:'Setup',    name:'Prebid.js loaded',           critical:false, scored:true,  fn:checkPrebid },
-  { id:'prebid_ver',  group:'Setup',    name:'Prebid.js version',          critical:false, scored:true,  fn:checkPrebidVersion },
-  { id:'gpt',         group:'Setup',    name:'Google Publisher Tag',       critical:false, scored:false, fn:checkGPT },
-  { id:'js_errors',   group:'Setup',    name:'No critical JS errors',      critical:true,  scored:true,  fn:checkJSErrors },
-  { id:'adunits',     group:'Setup',    name:'Ad units in DOM',            critical:true,  scored:true,  fn:checkAdUnits },
-  { id:'viewport',    group:'Setup',    name:'Viewport meta tag',          critical:false, scored:false, fn:checkViewport },
-  { id:'pbjs_adunits',group:'Auction',  name:'Prebid ad units configured', critical:true,  scored:true,  fn:checkPbjsAdUnits },
-  { id:'bidders',     group:'Auction',  name:'Bidders configured',         critical:true,  scored:true,  fn:checkBidders },
-  { id:'bid_timeout', group:'Auction',  name:'Bid timeout ≤ 2000ms',       critical:false, scored:true,  fn:checkTimeout },
-  { id:'floor',       group:'Auction',  name:'Price floors configured',    critical:false, scored:true,  fn:checkFloors },
-  { id:'consent_gdpr',group:'Auction',  name:'GDPR consent in bids',       critical:true,  scored:true,  fn:checkGDPRBids },
-  { id:'bid_req',     group:'Auction',  name:'Bid requests firing',        critical:true,  scored:true,  fn:checkBidRequests },
-  { id:'bid_resp',    group:'Auction',  name:'Bid responses received',     critical:false, scored:true,  fn:checkBidResponses },
-  { id:'timeouts',    group:'Auction',  name:'Timeout rate < 30%',         critical:false, scored:true,  fn:checkTimeoutRate },
-  { id:'winners',     group:'Auction',  name:'Auction winners detected',   critical:false, scored:true,  fn:checkWinners },
-  { id:'nobid',       group:'Auction',  name:'No all-nobid scenario',      critical:false, scored:true,  fn:checkNoBid },
-  { id:'iframes',     group:'Delivery', name:'Ad iframes rendering',       critical:false, scored:true,  fn:checkIframes },
-  { id:'vast',        group:'Delivery', name:'No empty VAST responses',    critical:false, scored:false, fn:checkVAST },
-  { id:'adblock',     group:'Delivery', name:'AdBlock detection',          critical:false, scored:false, fn:checkAdblock },
-  { id:'viewability', group:'Delivery', name:'Ad slots in viewport',       critical:false, scored:false, fn:checkViewability },
-  { id:'cls',         group:'Delivery', name:'No CLS from ads',            critical:false, scored:false, fn:checkCLS },
-  { id:'sellers',     group:'Delivery', name:'sellers.json accessible',    critical:false, scored:true,  fn:checkSellers },
-  { id:'outstream',   group:'Delivery', name:'Outstream player detected',  critical:false, scored:false, fn:checkOutstream },
-  { id:'native',      group:'Delivery', name:'Native ads configured',      critical:false, scored:false, fn:checkNative },
-  { id:'safeframe',   group:'Delivery', name:'SafeFrame / sandboxing',     critical:false, scored:false, fn:checkSafeframe },
-  { id:'page_speed',  group:'Delivery', name:'Page load reasonable',       critical:false, scored:false, fn:checkPageSpeed },
+var CHECKS=[
+  {id:'adstxt',group:'Setup',name:'ads.txt accessible',critical:true,scored:true,fn:checkAdstxt},
+  {id:'adstxt_lupon',group:'Setup',name:'ads.txt has Lupon entry',critical:true,scored:true,fn:checkAdstxtLupon},
+  {id:'https',group:'Setup',name:'HTTPS / secure context',critical:true,scored:true,fn:checkHttps},
+  {id:'cmp',group:'Setup',name:'CMP / Consent detected',critical:true,scored:true,fn:checkCMP},
+  {id:'prebid',group:'Setup',name:'Prebid.js loaded',critical:false,scored:true,fn:checkPrebid},
+  {id:'prebid_ver',group:'Setup',name:'Prebid.js version',critical:false,scored:true,fn:checkPrebidVersion},
+  {id:'gpt',group:'Setup',name:'Google Publisher Tag',critical:false,scored:false,fn:checkGPT},
+  {id:'js_errors',group:'Setup',name:'No critical JS errors',critical:true,scored:true,fn:checkJSErrors},
+  {id:'adunits',group:'Setup',name:'Ad units in DOM',critical:true,scored:true,fn:checkAdUnits},
+  {id:'viewport',group:'Setup',name:'Viewport meta tag',critical:false,scored:false,fn:checkViewport},
+  {id:'pbjs_adunits',group:'Auction',name:'Prebid ad units configured',critical:true,scored:true,fn:checkPbjsAdUnits},
+  {id:'bidders',group:'Auction',name:'Bidders configured',critical:true,scored:true,fn:checkBidders},
+  {id:'bid_timeout',group:'Auction',name:'Bid timeout ≤ 2000ms',critical:false,scored:true,fn:checkTimeout},
+  {id:'floor',group:'Auction',name:'Price floors configured',critical:false,scored:true,fn:checkFloors},
+  {id:'consent_gdpr',group:'Auction',name:'GDPR consent in bids',critical:true,scored:true,fn:checkGDPRBids},
+  {id:'bid_req',group:'Auction',name:'Bid requests firing',critical:true,scored:true,fn:checkBidRequests},
+  {id:'bid_resp',group:'Auction',name:'Bid responses received',critical:false,scored:true,fn:checkBidResponses},
+  {id:'timeouts',group:'Auction',name:'Timeout rate < 30%',critical:false,scored:true,fn:checkTimeoutRate},
+  {id:'winners',group:'Auction',name:'Auction winners detected',critical:false,scored:true,fn:checkWinners},
+  {id:'nobid',group:'Auction',name:'No all-nobid scenario',critical:false,scored:true,fn:checkNoBid},
+  {id:'iframes',group:'Delivery',name:'Ad iframes rendering',critical:false,scored:true,fn:checkIframes},
+  {id:'vast',group:'Delivery',name:'No empty VAST responses',critical:false,scored:false,fn:checkVAST},
+  {id:'adblock',group:'Delivery',name:'AdBlock detection',critical:false,scored:false,fn:checkAdblock},
+  {id:'viewability',group:'Delivery',name:'Ad slots in viewport',critical:false,scored:false,fn:checkViewability},
+  {id:'cls',group:'Delivery',name:'No CLS from ads',critical:false,scored:false,fn:checkCLS},
+  {id:'sellers',group:'Delivery',name:'sellers.json accessible',critical:false,scored:true,fn:checkSellers},
+  {id:'outstream',group:'Delivery',name:'Outstream player detected',critical:false,scored:false,fn:checkOutstream},
+  {id:'native',group:'Delivery',name:'Native ads configured',critical:false,scored:false,fn:checkNative},
+  {id:'safeframe',group:'Delivery',name:'SafeFrame / sandboxing',critical:false,scored:false,fn:checkSafeframe},
+  {id:'page_speed',group:'Delivery',name:'Page load reasonable',critical:false,scored:false,fn:checkPageSpeed},
 ];
 
 function ok(d){return{status:'ok',detail:d||''};}
 function fail(d){return{status:'fail',detail:d||''};}
 function warn(d){return{status:'warn',detail:d||''};}
 function skip(d){return{status:'skip',detail:d||'N/A'};}
-function na(d){return{status:'na',detail:d||'Requires live browser — use extension'};}
+function na(d){return{status:'na',detail:d||'Requires live browser'};}
 
-async function checkAdstxt(){
-  try{
-    var origin=new URL(state.url).origin;
-    var proxy='https://api.allorigins.win/get?url='+encodeURIComponent(origin+'/ads.txt');
-    var r=await fetch(proxy,{signal:AbortSignal.timeout(8000)});
-    if(r.ok){var j=await r.json();var txt=j.contents;if(txt){state.fetchedData.adstxt=txt;return ok(txt.split('\n').filter(function(l){return l.trim()&&!l.startsWith('#');}).length+' entries');}}
-  }catch(e){}
-  try{var r=await fetch(new URL(state.url).origin+'/ads.txt',{signal:AbortSignal.timeout(5000)});if(!r.ok)return fail('ads.txt returns '+r.status);var txt=await r.text();state.fetchedData.adstxt=txt;return ok(txt.split('\n').filter(function(l){return l.trim()&&!l.startsWith('#');}).length+' entries');}
-  catch(e){return warn('Cannot fetch (CORS) — check manually');}
-}
+async function checkAdstxt(){try{var proxy='https://api.allorigins.win/get?url='+encodeURIComponent(new URL(state.url).origin+'/ads.txt');var r=await fetch(proxy,{signal:AbortSignal.timeout(8000)});if(r.ok){var j=await r.json();if(j.contents){state.fetchedData.adstxt=j.contents;return ok(j.contents.split('\n').filter(function(l){return l.trim()&&!l.startsWith('#');}).length+' entries');}}}catch(e){}try{var r=await fetch(new URL(state.url).origin+'/ads.txt',{signal:AbortSignal.timeout(5000)});if(!r.ok)return fail('ads.txt returns '+r.status);var txt=await r.text();state.fetchedData.adstxt=txt;return ok(txt.split('\n').filter(function(l){return l.trim()&&!l.startsWith('#');}).length+' entries');}catch(e){return warn('Cannot fetch (CORS) — check manually');}}
 async function checkAdstxtLupon(){if(!state.fetchedData.adstxt)return skip('ads.txt not fetched');var t=state.fetchedData.adstxt.toLowerCase();if(t.includes('luponmedia'))return ok('luponmedia entry ✓');if(t.includes('rubiconproject'))return warn('Magnite found, no Lupon entry');return fail('No Lupon entry in ads.txt');}
 async function checkHttps(){return state.url.startsWith('https')?ok('HTTPS ✓'):fail('HTTP — bids blocked');}
 async function checkCMP(){if(state.pbData&&state.pbData.config&&state.pbData.config.consentManagement)return ok('CMP via Prebid ✓');try{var r=await fetch('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='+encodeURIComponent(state.url)+'&strategy=mobile',{signal:AbortSignal.timeout(8000)});if(r.ok)state.fetchedData.pagespeed=await r.json();}catch(e){}return warn('CMP — check Professor Prebid Config tab');}
@@ -337,7 +305,7 @@ async function checkPrebid(){if(state.pbData)return ok('Prebid '+state.pbData.ve
 async function checkPrebidVersion(){if(state.pbData&&state.pbData.version)return ok(state.pbData.version);if(state.fetchedData.html){var m=state.fetchedData.html.match(/prebid[._-]?v?([\d.]+)/i);if(m)return ok('v'+m[1]+' (source)');}return skip('Use extension for live version');}
 async function checkGPT(){if(state.fetchedData.html)return(state.fetchedData.html.includes('googletag')||state.fetchedData.html.includes('gpt.js'))?ok('GPT detected'):warn('GPT not in source');return na('Requires page source');}
 async function checkJSErrors(){if(state.pbData&&state.pbData.errors&&state.pbData.errors.length)return fail(state.pbData.errors.length+' errors: '+state.pbData.errors[0]);if(state.pbData)return ok('No JS errors');return na('Requires extension');}
-async function checkAdUnits(){if(state.pbData&&state.pbData.adUnits)return ok(state.pbData.adUnits.length+' ad units (live)');if(state.fetchedData.html){var found=['div-gpt-ad','adxp_','ad-slot','lupon','novi_ba_','DABPlus'].filter(function(p){return state.fetchedData.html.toLowerCase().includes(p.toLowerCase());});if(found.length)return ok('Slots found: '+found.join(', '));}return na('Requires extension');}
+async function checkAdUnits(){if(state.pbData&&state.pbData.adUnits)return ok(state.pbData.adUnits.length+' ad units (live)');if(state.fetchedData.html){var found=['div-gpt-ad','adxp_','ad-slot','lupon','novi_ba_','DABPlus'].filter(function(p){return state.fetchedData.html.toLowerCase().includes(p.toLowerCase());});if(found.length)return ok('Slots: '+found.join(', '));}return na('Requires extension');}
 async function checkViewport(){if(state.fetchedData.html)return state.fetchedData.html.includes('viewport')?ok('Viewport meta ✓'):fail('Missing viewport meta');return na('Requires source');}
 async function checkPbjsAdUnits(){if(state.pbData&&state.pbData.adUnits){var n=state.pbData.adUnits.length;return n>0?ok(n+' ad units in pbjs'):fail('0 ad units in pbjs');}return na('Requires extension');}
 async function checkBidders(){if(state.pbData&&state.pbData.bidders){var n=state.pbData.bidders.length;return n>=2?ok(n+' bidders'):n===1?warn('Only 1 bidder'):warn('0 bidders — pull again after auction');}if(state.fetchedData.html){var found=['rubiconproject','adform','criteo','pubmatic','appnexus','sovrn','teads'].filter(function(p){return state.fetchedData.html.toLowerCase().includes(p);});if(found.length)return ok(found.length+' bidders in source');}return na('Requires extension');}
@@ -347,85 +315,23 @@ async function checkGDPRBids(){if(state.pbData&&state.pbData.config)return state
 async function checkBidRequests(){if(state.pbData&&state.pbData.events){var n=state.pbData.events.filter(function(e){return e.eventType==='bidRequested';}).length;return n>0?ok(n+' bid requests fired'):fail('No bid requests');}return na('Requires extension');}
 async function checkBidResponses(){if(state.pbData&&state.pbData.events){var r=state.pbData.events.filter(function(e){return e.eventType==='bidResponse';}).length;var t=state.pbData.events.filter(function(e){return e.eventType==='bidTimeout';}).length;return r>0?ok(r+' responses, '+t+' timeouts'):warn('0 responses');}return na('Requires extension');}
 async function checkTimeoutRate(){if(state.pbData&&state.pbData.events){var req=state.pbData.events.filter(function(e){return e.eventType==='bidRequested';}).length;var to=state.pbData.events.filter(function(e){return e.eventType==='bidTimeout';}).length;if(!req)return warn('No requests yet');var r=Math.round((to/req)*100);return r<30?ok(r+'% ✓'):warn(r+'% — high');}return na('Requires extension');}
-async function checkWinners(){if(state.pbData&&state.pbData.events){var n=state.pbData.events.filter(function(e){return e.eventType==='bidWon';}).length;return n>0?ok(n+' auction winner(s)'):warn('No winners yet');}return na('Requires extension');}
+async function checkWinners(){if(state.pbData&&state.pbData.events){var n=state.pbData.events.filter(function(e){return e.eventType==='bidWon';}).length;return n>0?ok(n+' winner(s)'):warn('No winners yet');}return na('Requires extension');}
 async function checkNoBid(){if(state.pbData&&state.pbData.events){var nb=state.pbData.events.filter(function(e){return e.eventType==='noBid';}).length;var r=state.pbData.events.filter(function(e){return e.eventType==='bidResponse';}).length;if(nb&&!r)return fail('All bidders no-bid');if(nb)return warn(nb+' no-bids');return ok('No all-nobid');}return na('Requires extension');}
-async function checkIframes(){if(state.pbData)return ok('Extension active — check DevTools Network for iframes');return na('Requires extension');}
-async function checkVAST(){if(state.fetchedData.html&&(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')))return ok('Outstream/VAST tag ✓');if(state.fetchedData.html)return warn('No outstream tag found');return na('Requires page source');}
+async function checkIframes(){if(state.pbData)return ok('Extension active');return na('Requires extension');}
+async function checkVAST(){if(state.fetchedData.html&&(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')))return ok('Outstream tag ✓');if(state.fetchedData.html)return warn('No outstream found');return na('Requires source');}
 async function checkAdblock(){return na('Requires live browser');}
-async function checkViewability(){if(state.fetchedData.pagespeed){var fcp=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['first-contentful-paint'];if(fcp)return ok('FCP: '+fcp.displayValue);}return na('PageSpeed data unavailable');}
-async function checkCLS(){if(state.fetchedData.pagespeed){var cls=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['cumulative-layout-shift'];if(cls){var s=parseFloat(cls.displayValue);return s<0.1?ok('CLS '+cls.displayValue+' ✓'):s<0.25?warn('CLS '+cls.displayValue):fail('CLS '+cls.displayValue+' — critical');}}return na('PageSpeed data unavailable');}
-async function checkSellers(){try{var d=new URL(state.url).hostname.replace('www.','');var r=await fetch('https://'+d+'/sellers.json',{signal:AbortSignal.timeout(4000)});if(r.ok){var j=await r.json();return ok('sellers.json: '+(j.sellers?j.sellers.length:'?')+' sellers');}return warn('sellers.json not found ('+r.status+')');}catch(e){return warn('sellers.json not accessible');}}
+async function checkViewability(){if(state.fetchedData.pagespeed){var fcp=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['first-contentful-paint'];if(fcp)return ok('FCP: '+fcp.displayValue);}return na('PageSpeed unavailable');}
+async function checkCLS(){if(state.fetchedData.pagespeed){var cls=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.audits&&state.fetchedData.pagespeed.lighthouseResult.audits['cumulative-layout-shift'];if(cls){var s=parseFloat(cls.displayValue);return s<0.1?ok('CLS '+cls.displayValue+' ✓'):s<0.25?warn('CLS '+cls.displayValue):fail('CLS '+cls.displayValue);}}return na('PageSpeed unavailable');}
+async function checkSellers(){try{var d=new URL(state.url).hostname.replace('www.','');var r=await fetch('https://'+d+'/sellers.json',{signal:AbortSignal.timeout(4000)});if(r.ok){var j=await r.json();return ok('sellers.json: '+(j.sellers?j.sellers.length:'?')+' sellers');}return warn('sellers.json not found');}catch(e){return warn('sellers.json not accessible');}}
 async function checkOutstream(){if(state.fetchedData.html)return(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')||state.fetchedData.html.includes('inview.js'))?ok('Outstream tag ✓'):warn('No outstream found');return na('Requires source');}
 async function checkNative(){if(state.fetchedData.html)return(state.fetchedData.html.includes('native')||state.fetchedData.html.includes('teads'))?ok('Native tag ✓'):warn('No native found');return na('Requires source');}
 async function checkSafeframe(){if(state.fetchedData.html)return state.fetchedData.html.includes('safeframe')?ok('SafeFrame ✓'):warn('No SafeFrame');return na('Requires source');}
-async function checkPageSpeed(){if(state.fetchedData.pagespeed){var p=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.categories&&state.fetchedData.pagespeed.lighthouseResult.categories.performance;if(p){var s=Math.round(p.score*100);return s>=70?ok(s+'/100 ✓'):s>=50?warn(s+'/100'):fail(s+'/100 — poor');}}return na('PageSpeed data unavailable');}
+async function checkPageSpeed(){if(state.fetchedData.pagespeed){var p=state.fetchedData.pagespeed.lighthouseResult&&state.fetchedData.pagespeed.lighthouseResult.categories&&state.fetchedData.pagespeed.lighthouseResult.categories.performance;if(p){var s=Math.round(p.score*100);return s>=70?ok(s+'/100 ✓'):s>=50?warn(s+'/100'):fail(s+'/100 — poor');}}return na('PageSpeed unavailable');}
 
-function renderChecks(){
-  var area=document.getElementById('checks-area');area.innerHTML='';
-  var groups={};CHECKS.forEach(function(c){if(!groups[c.group])groups[c.group]=[];groups[c.group].push(c);});
-  var icons={Setup:'🔧',Auction:'⚡',Delivery:'📦'};var nums={Setup:0,Auction:10,Delivery:20};
-  Object.keys(groups).forEach(function(g){
-    var checks=groups[g];
-    var scored=checks.filter(function(c){return c.scored&&state.results[c.id]&&state.results[c.id].status!=='na';});
-    var passed=scored.filter(function(c){return state.results[c.id]&&state.results[c.id].status==='ok';}).length;
-    var total=scored.length||checks.filter(function(c){return c.scored;}).length;
-    var grp=document.createElement('div');grp.className='group';
-    var hdr=document.createElement('div');hdr.className='group-header';
-    hdr.innerHTML='<span style="font-size:14px">'+icons[g]+'</span><span class="group-title">Layer '+(g==='Setup'?'1':g==='Auction'?'2':'3')+' — '+g+'</span><span class="group-score" style="color:'+(passed===total?'#56d364':'#e3b341')+'">'+passed+'/'+total+'</span>';
-    grp.appendChild(hdr);
-    checks.forEach(function(c,i){
-      var r=state.results[c.id];var status=r?r.status:'pending';var detail=r?r.detail:'—';
-      var isNa=status==='na';
-      var el=document.createElement('div');el.className='check';el.id='check-'+c.id;
-      if(isNa)el.style.opacity='0.35';
-      el.innerHTML='<span class="check-num">'+(nums[g]+i+1)+'</span>'+
-        '<span class="check-icon '+(isNa?'na':status)+'">'+(status==='ok'?'✓':status==='fail'?'✗':status==='warn'?'!':'·')+'</span>'+
-        '<div class="check-body"><div class="check-name'+(isNa?' na-name':'')+'">'+c.name+(c.critical&&!isNa?' <span style="color:#f85149;font-size:9px">REQ</span>':'')+(isNa?' <span style="color:#1a1a2e;font-size:9px">N/A</span>':'')+'</div>'+
-        '<div class="check-detail '+(isNa?'na':status)+'">'+detail+'</div></div>';
-      grp.appendChild(el);
-    });
-    area.appendChild(grp);
-  });
-}
+function renderChecks(){var area=document.getElementById('checks-area');area.innerHTML='';var groups={};CHECKS.forEach(function(c){if(!groups[c.group])groups[c.group]=[];groups[c.group].push(c);});var icons={Setup:'🔧',Auction:'⚡',Delivery:'📦'};var nums={Setup:0,Auction:10,Delivery:20};Object.keys(groups).forEach(function(g){var checks=groups[g];var scored=checks.filter(function(c){return c.scored&&state.results[c.id]&&state.results[c.id].status!=='na';});var passed=scored.filter(function(c){return state.results[c.id]&&state.results[c.id].status==='ok';}).length;var total=scored.length||checks.filter(function(c){return c.scored;}).length;var grp=document.createElement('div');grp.className='group';var hdr=document.createElement('div');hdr.className='group-header';hdr.innerHTML='<span style="font-size:14px">'+icons[g]+'</span><span class="group-title">Layer '+(g==='Setup'?'1':g==='Auction'?'2':'3')+' — '+g+'</span><span class="group-score" style="color:'+(passed===total?'#56d364':'#e3b341')+'">'+passed+'/'+total+'</span>';grp.appendChild(hdr);checks.forEach(function(c,i){var r=state.results[c.id];var status=r?r.status:'pending';var detail=r?r.detail:'—';var isNa=status==='na';var el=document.createElement('div');el.className='check';el.id='check-'+c.id;if(isNa)el.style.opacity='0.35';el.innerHTML='<span class="check-num">'+(nums[g]+i+1)+'</span><span class="check-icon '+(isNa?'na':status)+'">'+(status==='ok'?'✓':status==='fail'?'✗':status==='warn'?'!':'·')+'</span><div class="check-body"><div class="check-name">'+c.name+(c.critical&&!isNa?' <span style="color:#f85149;font-size:9px">REQ</span>':'')+(isNa?' <span style="color:#1a1a2e;font-size:9px">N/A</span>':'')+'</div><div class="check-detail '+(isNa?'na':status)+'">'+detail+'</div></div>';grp.appendChild(el);});area.appendChild(grp);});}
+function updateCheck(id,result){state.results[id]=result;var el=document.getElementById('check-'+id);if(!el)return;var isNa=result.status==='na';if(isNa)el.style.opacity='0.35';else el.style.opacity='';el.querySelector('.check-icon').className='check-icon '+(isNa?'na':result.status);el.querySelector('.check-icon').textContent=result.status==='ok'?'✓':result.status==='fail'?'✗':result.status==='warn'?'!':'·';el.querySelector('.check-detail').className='check-detail '+(isNa?'na':result.status);el.querySelector('.check-detail').textContent=result.detail;updateStats();}
+function updateStats(){var scoredChecks=CHECKS.filter(function(c){return c.scored;});var res=state.results;var passed=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='ok';}).length;var critical=CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).length;var warnings=CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';}).length;var total=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status!=='na';}).length||scoredChecks.length;var score=total>0?Math.round((passed/total)*100):0;document.getElementById('s-passed').textContent=passed+'/'+total;document.getElementById('s-critical').textContent=critical;document.getElementById('s-warnings').textContent=warnings;document.getElementById('score-text').textContent=score;var c=document.getElementById('score-circle');c.style.strokeDashoffset=175.9-(score/100)*175.9;c.style.stroke=score>=70?'#56d364':score>=40?'#e3b341':'#f85149';document.getElementById('progress').style.width=(Object.keys(res).length/CHECKS.length*100)+'%';var issues=document.getElementById('issue-list');var fails=CHECKS.filter(function(c){return c.critical&&res[c.id]&&res[c.id].status==='fail';});var warns=CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';});if(!fails.length&&!warns.length){issues.innerHTML='<span style="font-size:11px;color:#1a1a2e">None yet.</span>';return;}issues.innerHTML='';fails.forEach(function(c){var d=document.createElement('div');d.className='issue-item critical';d.innerHTML='<div class="issue-title critical">❌ '+c.name+'</div><div class="issue-fix">'+(res[c.id].detail||'')+'</div>';issues.appendChild(d);});warns.slice(0,3).forEach(function(c){var d=document.createElement('div');d.className='issue-item warn';d.innerHTML='<div class="issue-title warn">⚠️ '+c.name+'</div><div class="issue-fix">'+(res[c.id].detail||'')+'</div>';issues.appendChild(d);});}
 
-function updateCheck(id,result){
-  state.results[id]=result;
-  var el=document.getElementById('check-'+id);if(!el)return;
-  var isNa=result.status==='na';
-  if(isNa)el.style.opacity='0.35';else el.style.opacity='';
-  el.querySelector('.check-icon').className='check-icon '+(isNa?'na':result.status);
-  el.querySelector('.check-icon').textContent=result.status==='ok'?'✓':result.status==='fail'?'✗':result.status==='warn'?'!':'·';
-  el.querySelector('.check-detail').className='check-detail '+(isNa?'na':result.status);
-  el.querySelector('.check-detail').textContent=result.detail;
-  updateStats();
-}
-
-function updateStats(){
-  var scoredChecks=CHECKS.filter(function(c){return c.scored;});
-  var res=state.results;
-  var passed=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='ok';}).length;
-  var critical=CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).length;
-  var warnings=CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';}).length;
-  var total=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status!=='na';}).length||scoredChecks.length;
-  var score=total>0?Math.round((passed/total)*100):0;
-  document.getElementById('s-passed').textContent=passed+'/'+total;
-  document.getElementById('s-critical').textContent=critical;
-  document.getElementById('s-warnings').textContent=warnings;
-  document.getElementById('score-text').textContent=score;
-  var c=document.getElementById('score-circle');
-  c.style.strokeDashoffset=175.9-(score/100)*175.9;
-  c.style.stroke=score>=70?'#56d364':score>=40?'#e3b341':'#f85149';
-  document.getElementById('progress').style.width=(Object.keys(res).length/CHECKS.length*100)+'%';
-  var issues=document.getElementById('issue-list');
-  var fails=CHECKS.filter(function(c){return c.critical&&res[c.id]&&res[c.id].status==='fail';});
-  var warns=CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';});
-  if(!fails.length&&!warns.length){issues.innerHTML='<span style="font-size:11px;color:#1a1a2e">None yet.</span>';return;}
-  issues.innerHTML='';
-  fails.forEach(function(c){var d=document.createElement('div');d.className='issue-item critical';d.innerHTML='<div class="issue-title critical">❌ '+c.name+'</div><div class="issue-fix">'+(res[c.id].detail||'')+'</div>';issues.appendChild(d);});
-  warns.slice(0,3).forEach(function(c){var d=document.createElement('div');d.className='issue-item warn';d.innerHTML='<div class="issue-title warn">⚠️ '+c.name+'</div><div class="issue-fix">'+(res[c.id].detail||'')+'</div>';issues.appendChild(d);});
-}
-
-// ── EXTENSION ────────────────────────────────────────────────────
 function checkExtension(){if(!window.chrome||!chrome.runtime){setExtStatus(false);return;}try{chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID,{type:'LUPON_LAB_PING'},function(resp){if(chrome.runtime.lastError){setExtStatus(false);}else{setExtStatus(true);}});}catch(e){setExtStatus(false);}}
 function setExtStatus(connected){state.extConnected=connected;var el=document.getElementById('ext-status');document.getElementById('ext-status-text').textContent=connected?'🟢 Extension':'🔴 Extension';el.className='ext-status '+(connected?'connected':'disconnected');document.getElementById('ext-banner').style.display=connected?'flex':'none';document.getElementById('no-ext-banner').style.display=connected?'none':'flex';document.getElementById('pbid-status').textContent=connected?'Ready — click Pull Live Data':'Extension not responding';}
 function pullFromExtension(){document.getElementById('pbid-status').textContent='⏳ Pulling...';try{chrome.runtime.sendMessage(PROFESSOR_PREBID_EXT_ID,{type:'LUPON_LAB_REQUEST'},function(data){if(chrome.runtime.lastError||!data){document.getElementById('pbid-status').textContent='❌ '+(chrome.runtime.lastError&&chrome.runtime.lastError.message);generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';return;}if(data.error){document.getElementById('pbid-status').textContent='⚠️ '+data.error;generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';return;}ingestPbData(data);});}catch(e){document.getElementById('pbid-status').textContent='❌ chrome.runtime unavailable';generateBookmarklet(state.url);document.getElementById('bm-banner').style.display='flex';}}
@@ -433,128 +339,158 @@ function ingestPbData(data){state.pbData=data;var ver=data.version||'?';var unit
 function generateBookmarklet(url){var bm='javascript:(function(){var d={version:window.pbjs&&window.pbjs.version,adUnits:window.pbjs&&window.pbjs.adUnits,config:window.pbjs&&window.pbjs.getConfig&&window.pbjs.getConfig(),bidders:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents().filter(function(e){return e.eventType==="bidRequested";}).map(function(e){return e.args&&e.args.bidder;}).filter(function(b,i,a){return b&&a.indexOf(b)===i;}),events:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents(),errors:window.__pbjsErrors||[]};window.opener&&window.opener.postMessage({type:"LUPON_PBJS_DATA",data:d},"*");alert("Sent! Prebid v"+d.version+" | "+((d.adUnits||[]).length)+" units");})();';document.getElementById('bm-code').textContent=bm;document.getElementById('bm-copy-btn').onclick=function(){navigator.clipboard.writeText(bm).then(function(){document.getElementById('bm-copy-btn').textContent='✓';setTimeout(function(){document.getElementById('bm-copy-btn').textContent='Copy';},2000);});};}
 window.addEventListener('message',function(e){if(e.data&&e.data.type==='LUPON_PBJS_DATA')ingestPbData(e.data.data);});
 
-// ── LUPON AI ANALYSIS ────────────────────────────────────────────
+// ── LUPON AI — RICH CONTEXT ────────────────────────────────────────
 function buildAIContext() {
   var d = state.pbData || {};
-  var res = state.results;
   var events = d.events || [];
 
-  // Bid statistics
-  var bidResponses = events.filter(function(e){return e.eventType==='bidResponse';});
-  var bidWon = events.filter(function(e){return e.eventType==='bidWon';});
-  var bidTimeout = events.filter(function(e){return e.eventType==='bidTimeout';});
-  var bidRequested = events.filter(function(e){return e.eventType==='bidRequested';});
-  var noBid = events.filter(function(e){return e.eventType==='noBid';});
-  var bidErrors = events.filter(function(e){return e.eventType==='bidderError';});
-
-  // CPM data
-  var cpms = bidResponses.filter(function(e){return e.args&&e.args.cpm>0;}).map(function(e){return e.args.cpm;});
-  var avgCpm = cpms.length ? (cpms.reduce(function(a,b){return a+b;},0)/cpms.length).toFixed(3) : null;
-  var maxCpm = cpms.length ? Math.max.apply(null,cpms).toFixed(3) : null;
-  var winCpm = bidWon.length && bidWon[0].args ? bidWon[0].args.cpm : null;
-
-  // Bidder breakdown
-  var bidderStats = {};
-  bidResponses.forEach(function(e){
-    var b = e.args&&(e.args.bidder||e.args.bidderCode);
-    if(!b)return;
-    if(!bidderStats[b])bidderStats[b]={bids:0,wins:0,cpms:[],timeouts:0};
-    bidderStats[b].bids++;
-    if(e.args.cpm)bidderStats[b].cpms.push(e.args.cpm);
+  // Full bid response details
+  var bidResponses = events.filter(function(e){return e.eventType==='bidResponse';}).map(function(e){
+    return {bidder:(e.args&&(e.args.bidder||e.args.bidderCode))||'?', cpm:e.args&&e.args.cpm, adUnit:e.args&&e.args.adUnitCode, size:e.args&&e.args.width&&(e.args.width+'x'+e.args.height), timeToRespond:e.args&&e.args.timeToRespond};
   });
-  bidWon.forEach(function(e){var b=e.args&&(e.args.bidder||e.args.bidderCode);if(b&&bidderStats[b])bidderStats[b].wins++;});
-  bidTimeout.forEach(function(e){var b=e.args&&e.args.bidder;if(b&&bidderStats[b])bidderStats[b].timeouts++;});
 
-  // Check results summary
-  var checkSummary = {};
+  // No-bids per bidder
+  var noBidsByBidder = {};
+  events.filter(function(e){return e.eventType==='noBid';}).forEach(function(e){
+    var b=(e.args&&e.args.bidder)||'?'; noBidsByBidder[b]=(noBidsByBidder[b]||0)+1;
+  });
+
+  // Timeouts per bidder
+  var timeoutsByBidder = {};
+  events.filter(function(e){return e.eventType==='bidTimeout';}).forEach(function(e){
+    var bids=Array.isArray(e.args)?e.args:[e.args];
+    bids.forEach(function(b){var n=b&&b.bidder;if(n)timeoutsByBidder[n]=(timeoutsByBidder[n]||0)+1;});
+  });
+
+  // Bidder errors with messages
+  var bidderErrors = events.filter(function(e){return e.eventType==='bidderError';}).map(function(e){
+    return {bidder:e.args&&e.args.bidder, message:e.args&&e.args.error&&(e.args.error.message||String(e.args.error)), status:e.args&&e.args.error&&e.args.error.status};
+  });
+
+  // Auction debug events
+  var auctionDebug = events.filter(function(e){return e.eventType==='auctionDebug';}).slice(0,10).map(function(e){
+    return {type:e.args&&e.args.type, msg:e.args&&(e.args.arguments||e.args.message)};
+  });
+
+  // Winners with details
+  var winners = events.filter(function(e){return e.eventType==='bidWon';}).map(function(e){
+    return {bidder:e.args&&(e.args.bidder||e.args.bidderCode), cpm:e.args&&e.args.cpm, adUnit:e.args&&e.args.adUnitCode};
+  });
+
+  // Ad unit details
+  var adUnitDetails = (d.adUnits||[]).map(function(u){
+    return {code:u.code, sizes:u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes, bidders:(u.bids||[]).map(function(b){return b.bidder;})};
+  });
+
+  // Check results — only non-NA
+  var checkResults = {};
   CHECKS.forEach(function(c){
-    if(res[c.id]&&res[c.id].status!=='na'){
-      checkSummary[c.id]={status:res[c.id].status,detail:res[c.id].detail};
+    if(state.results[c.id]&&state.results[c.id].status!=='na'){
+      checkResults[c.name]={status:state.results[c.id].status,detail:state.results[c.id].detail};
     }
   });
 
-  // Ad unit names
-  var adUnitNames = (d.adUnits||[]).map(function(u){return u.code;});
+  var reqs=events.filter(function(e){return e.eventType==='bidRequested';}).length;
+  var resps=bidResponses.length;
+  var tos=Object.values(timeoutsByBidder).reduce(function(a,b){return a+b;},0);
+  var noBids=Object.values(noBidsByBidder).reduce(function(a,b){return a+b;},0);
+  var cpms=bidResponses.filter(function(b){return b.cpm>0;}).map(function(b){return b.cpm;});
 
   return {
-    publisher_url: state.url,
-    scan_date: new Date().toISOString(),
-    prebid: {
-      version: d.version,
-      namespace: d.namespace,
-      dab_instances: d.dabInstances,
-      ad_units_count: (d.adUnits||[]).length,
-      ad_unit_names: adUnitNames,
-      bidder_timeout_ms: d.config && d.config.bidderTimeout,
-      price_floors: d.config && d.config.floors ? 'configured' : 'not configured',
-      consent_management: d.config && d.config.consentManagement ? 'configured' : 'missing',
+    publisher: state.url,
+    scan_time: new Date().toISOString(),
+    prebid_version: d.version,
+    wrapper: d.namespace || 'standard_pbjs',
+    dab_instances: d.dabInstances,
+
+    ad_units: adUnitDetails,
+    bidder_timeout_ms: d.config && d.config.bidderTimeout,
+    price_floors: d.config && d.config.floors ? JSON.stringify(d.config.floors).substring(0,200) : 'NOT CONFIGURED',
+    consent: d.config && d.config.consentManagement ? 'configured' : 'MISSING',
+    full_config: d.config || {},
+
+    auction_summary: {
+      bid_requests: reqs,
+      bid_responses: resps,
+      timeouts: tos,
+      no_bids: noBids,
+      wins: winners.length,
+      fill_rate_pct: reqs > 0 ? Math.round((winners.length/reqs)*100) : 0,
+      timeout_rate_pct: reqs > 0 ? Math.round((tos/reqs)*100) : 0,
+      avg_cpm: cpms.length ? (cpms.reduce(function(a,b){return a+b;},0)/cpms.length).toFixed(4) : null,
+      max_cpm: cpms.length ? Math.max.apply(null,cpms).toFixed(4) : null,
     },
-    auction_stats: {
-      bid_requests: bidRequested.length,
-      bid_responses: bidResponses.length,
-      bid_timeouts: bidTimeout.length,
-      no_bids: noBid.length,
-      bid_won: bidWon.length,
-      bidder_errors: bidErrors.length,
-      timeout_rate_pct: bidRequested.length ? Math.round((bidTimeout.length/bidRequested.length)*100) : 0,
-      fill_rate_pct: bidRequested.length ? Math.round((bidWon.length/bidRequested.length)*100) : 0,
-      avg_cpm_usd: avgCpm,
-      max_cpm_usd: maxCpm,
-      win_cpm_usd: winCpm,
-    },
-    bidder_breakdown: bidderStats,
+
+    bid_responses_detail: bidResponses.slice(0, 30),
+    winners: winners,
+    no_bids_by_bidder: noBidsByBidder,
+    timeouts_by_bidder: timeoutsByBidder,
+    bidder_errors: bidderErrors,
+    auction_debug: auctionDebug,
+
     active_bidders: d.bidders || [],
-    bidder_errors_detail: bidErrors.slice(0,5).map(function(e){return{bidder:e.args&&e.args.bidder,error:e.args&&e.args.error&&e.args.error.message};}),
-    check_results: checkSummary,
-    ads_txt: state.fetchedData.adstxt ? (state.fetchedData.adstxt.toLowerCase().includes('luponmedia')?'luponmedia present':'luponmedia MISSING') : 'not fetched',
-    outstream_tag: state.fetchedData.html ? (state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')?'detected':'not found') : 'unknown',
+    ads_txt_status: state.fetchedData.adstxt
+      ? (state.fetchedData.adstxt.toLowerCase().includes('luponmedia') ? 'luponmedia PRESENT' : 'luponmedia MISSING')
+      : 'could not fetch',
+    ads_txt_sample: state.fetchedData.adstxt ? state.fetchedData.adstxt.substring(0,500) : null,
+    outstream: state.fetchedData.html ? (state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream') ? 'detected' : 'not found') : 'unknown',
+
+    check_results: checkResults,
   };
 }
 
 async function runAIAnalysis() {
   var apiKey = localStorage.getItem('lupon_ai_key');
   if (!apiKey) {
-    apiKey = prompt('Enter your Anthropic API key to enable Lupon AI Analysis:\n(Stored locally in browser only)');
+    apiKey = prompt('Enter Anthropic API key for Lupon AI:\n(Saved locally only)');
     if (!apiKey || !apiKey.trim()) return;
+    localStorage.setItem('lupon_ai_key', apiKey.trim());
     apiKey = apiKey.trim();
-    localStorage.setItem('lupon_ai_key', apiKey);
   }
 
   var el = document.getElementById('pbid-content');
-  el.innerHTML = '<div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Lupon Intelligence analyzing auction data...</span></div>';
+  el.innerHTML = '<div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span>Lupon Intelligence analyzing — deep dive into all auction data...</span></div>';
 
   var ctx = buildAIContext();
 
-  var systemPrompt = `You are Lupon Intelligence, an expert programmatic advertising analyst embedded in Lupon Media's ad ops platform. You have deep expertise in Prebid.js, header bidding, SSP integrations, and publisher revenue optimization specifically for Central/Eastern European and MENA markets.
+  var SYSTEM = `You are Lupon Intelligence — the senior ad ops brain of Lupon Media, a leading SSP and MCM platform in the Balkans and MENA region.
 
-Analyze the provided publisher ad setup data and give a COMPREHENSIVE, TECHNICAL, ACTIONABLE diagnosis — like an expert ad ops consultant who has spent an hour reviewing the setup.
+You have received COMPLETE, RAW auction data directly from window.pbjs running on a live publisher page via Chrome extension instrumentation. This is not a summary — it is the actual bid response objects, error messages, no-bid breakdowns, timeout counts per bidder, and full Prebid config.
 
-FORMAT YOUR RESPONSE EXACTLY LIKE THIS (use these exact section headers):
+Your job: give a BRUTAL, SPECIFIC, TECHNICAL diagnosis that a senior ad ops engineer would give after personally debugging this setup for 2 hours.
+
+RULES:
+- Use ACTUAL NUMBERS from the data. Never say "some bidders" — say "rubicon (3 bids, $0.150 CPM), adform (0 bids, TIMEOUT)".
+- If you see 0 bid responses with many no-bids, identify WHICH bidders are returning no-bid and WHY (floor too high? wrong ad unit code? missing consent? wrong size?).
+- If bidder errors exist, quote the actual error message and name the bidder.
+- Revenue impact: calculate actual estimated monthly loss based on CPM data present and typical Balkan news site traffic.
+- Be specific about config fixes: exact millisecond values, exact bidder names to add/remove, exact floor price values.
+- If data shows "0 bidders" it likely means the Pull was done before the auction completed — mention this and what was found in no-bid/error events.
+
+FORMAT EXACTLY (keep these emoji headers):
 
 SCORE: X/10
 
 OVERVIEW
-[2-3 sentences describing the overall state of the setup, mention specific technologies detected like DABPlus wrapper, specific bidder names, actual CPM numbers]
+[2-3 sentences. Name the wrapper (DABPlus/standard), version, how many ad units, what the auction outcome was with exact numbers]
 
-🔴 CRITICAL ISSUES
-[List each critical issue as: • Issue name: specific explanation with actual numbers from the data. If no critical issues, write "None detected."]
+🔴 CRITICAL
+[Bullet per issue. MUST include specific bidder names, CPM values, error messages, exact numbers. No generic statements.]
 
-⚠️ WARNINGS  
-[List each warning with specific details and actual numbers. Include revenue impact estimates where possible.]
+⚠️ WARNINGS
+[Bullets with numbers and specific details]
 
-💡 RECOMMENDATIONS (Priority Order)
-[Numbered list, most impactful first. Be SPECIFIC — include actual config values to change, specific bidder names to add/remove, exact millisecond values for timeouts, etc.]
+💡 FIXES (Priority Order)
+[Numbered, most impactful first. Include exact config values to change — e.g., "change bidderTimeout from 3000 to 1800", "add seedtag and onetag for Balkan market", "set priceFloors min: 0.08 for 300x250"]
 
-📊 BIDDER ANALYSIS
-[Analyze each active bidder's performance if bid data is available. CPM ranges, win rates, timeout rates. Identify underperformers and missing demand sources for this market.]
+📊 BIDDER BREAKDOWN
+[Table-style analysis: for each bidder in no_bids_by_bidder and bidder_errors, what happened and why. Include CPM for those who bid.]
 
-🔮 REVENUE OPPORTUNITY
-[Specific estimate of revenue uplift possible if recommendations are implemented. Base on actual CPM data present.]
-
-Be technical, specific, and direct. Use actual numbers from the data. No generic advice.`;
+🔮 REVENUE ESTIMATE
+[Based on actual data: current CPM × estimated fill rate × typical Balkan news pageviews = monthly revenue. What it could be after fixes.]`;
 
   try {
-    var response = await fetch('https://api.anthropic.com/v1/messages', {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -564,135 +500,70 @@ Be technical, specific, and direct. Use actual numbers from the data. No generic
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 2000,
-        system: systemPrompt,
+        max_tokens: 2500,
+        system: SYSTEM,
         messages: [{
           role: 'user',
-          content: 'Analyze this publisher ad setup:\n\n```json\n' + JSON.stringify(ctx, null, 2) + '\n```'
+          content: 'Here is the complete raw auction data from the publisher page. Analyze everything:\n\n```json\n' + JSON.stringify(ctx, null, 2) + '\n```'
         }]
       })
     });
 
-    if (!response.ok) {
-      var errData = await response.json().catch(function(){return{};});
-      if (response.status === 401) {
-        localStorage.removeItem('lupon_ai_key');
-        el.innerHTML = '<div style="color:#f85149;padding:12px;font-size:12px">❌ Invalid API key. Click ⚡ Lupon AI tab again to re-enter.</div>';
-        return;
-      }
-      throw new Error('API error '+response.status+': '+(errData.error&&errData.error.message||'Unknown'));
+    if (!resp.ok) {
+      var err = await resp.json().catch(function(){return{};});
+      if (resp.status === 401) { localStorage.removeItem('lupon_ai_key'); el.innerHTML='<div style="color:#f85149;padding:12px;font-size:12px">❌ Invalid API key. Click ⚡ Lupon AI again to re-enter.</div>'; return; }
+      throw new Error('API '+resp.status+': '+(err.error&&err.error.message||'unknown'));
     }
 
-    var data = await response.json();
-    var text = data.content && data.content[0] && data.content[0].text;
-    if (!text) throw new Error('No response from AI');
-
+    var data = await resp.json();
+    var text = data.content&&data.content[0]&&data.content[0].text;
+    if (!text) throw new Error('Empty response');
     state.aiResult = text;
     renderAIResult(text);
 
   } catch(e) {
-    el.innerHTML = '<div style="color:#f85149;padding:12px;font-size:12px">❌ Analysis failed: '+e.message+'</div>';
+    el.innerHTML = '<div style="color:#f85149;padding:12px;font-size:12px">❌ '+e.message+'</div>';
   }
 }
 
 function renderAIResult(text) {
   var el = document.getElementById('pbid-content');
-
-  // Parse sections
-  var html = '<div style="padding:4px 0">';
-
-  // Color-code sections
   var lines = text.split('\n');
-  var inSection = null;
-  var buffer = '';
+  var html = '<div style="padding:4px 0 8px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #111;margin-bottom:10px"><span style="font-size:11px;font-weight:700;color:#f59e0b">⚡ LUPON INTELLIGENCE</span><button onclick="state.aiResult=null;runAIAnalysis()" style="background:#1a1a2e;border:none;color:#888;padding:4px 10px;border-radius:4px;font-size:10px;cursor:pointer">↻ Re-analyze</button></div>';
+  var colorMap = {'CRITICAL':'#f85149','WARNINGS':'#e3b341','FIXES':'#3b82f6','BIDDER':'#a78bfa','REVENUE':'#56d364','OVERVIEW':'#ccc'};
+  var curColor = '#ccc';
+  var buf = '';
 
-  function flushBuffer() {
-    if (buffer.trim()) {
-      var colorMap = {
-        'CRITICAL': '#f85149', 'WARNINGS': '#e3b341', 'RECOMMENDATIONS': '#3b82f6',
-        'BIDDER': '#a78bfa', 'REVENUE': '#56d364', 'OVERVIEW': '#e0e0e0', 'SCORE': '#f59e0b'
-      };
-      var color = '#ccc';
-      for (var k in colorMap) { if (inSection && inSection.includes(k)) { color = colorMap[k]; break; } }
-      html += '<div style="color:'+color+';font-size:12px;line-height:1.7;margin-bottom:4px">'+buffer.replace(/\n/g,'<br>')+'</div>';
-      buffer = '';
-    }
+  function flush(){
+    if(!buf.trim())return;
+    html+='<div style="color:'+curColor+';font-size:12px;line-height:1.75;margin-bottom:4px">'+buf.replace(/\n/g,'<br>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')+'</div>';
+    buf='';
   }
 
-  lines.forEach(function(line) {
-    // Section headers
-    if (/^(SCORE:|OVERVIEW|🔴|⚠️|💡|📊|🔮)/.test(line)) {
-      flushBuffer();
-      inSection = line;
-      var isScore = line.startsWith('SCORE:');
-      html += '<div style="font-size:'+(isScore?'15px':'11px')+';font-weight:700;color:'+(isScore?'#f59e0b':'#888')+';text-transform:uppercase;letter-spacing:'+(isScore?'0':'1px')+';margin-top:'+(isScore?'0':'14px')+';margin-bottom:6px;padding-bottom:'+(isScore?'0':'4px')+';border-bottom:'+(isScore?'none':'1px solid #111')+'">'+line+'</div>';
+  lines.forEach(function(line){
+    if(/^SCORE:/.test(line)){
+      flush();
+      html+='<div style="font-size:20px;font-weight:800;color:#f59e0b;margin-bottom:10px">'+line+'</div>';
       return;
     }
-    buffer += (buffer?'\n':'')+line;
+    if(/^(OVERVIEW|🔴|⚠️|💡|📊|🔮)/.test(line)){
+      flush();
+      curColor='#ccc';
+      for(var k in colorMap){if(line.includes(k)){curColor=colorMap[k];break;}}
+      html+='<div style="font-size:11px;font-weight:700;color:'+curColor+';text-transform:uppercase;letter-spacing:1px;margin-top:14px;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #111">'+line+'</div>';
+      return;
+    }
+    buf+=(buf?'\n':'')+line;
   });
-  flushBuffer();
-
-  html += '</div>';
-
-  el.innerHTML = '<div style="padding:4px 0 8px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #111;margin-bottom:10px">'
-    + '<span style="font-size:11px;font-weight:700;color:#f59e0b">⚡ LUPON INTELLIGENCE ANALYSIS</span>'
-    + '<button onclick="runAIAnalysis()" style="background:#1a1a2e;border:none;color:#888;padding:4px 10px;border-radius:4px;font-size:10px;cursor:pointer">↻ Re-analyze</button>'
-    + '</div>' + html;
+  flush();
+  html+='</div>';
+  el.innerHTML=html;
 }
 
-// ── REPORT ───────────────────────────────────────────────────────
 function enableReport(){var btn=document.getElementById('report-btn');btn.classList.remove('disabled');btn.onclick=openReport;}
-function openReport(){
-  if(!state.url)return;
-  var d=state.pbData||{};var res=state.results;
-  var scoredChecks=CHECKS.filter(function(c){return c.scored;});
-  var passed=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='ok';}).length;
-  var critical=CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).length;
-  var warnCount=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='warn';}).length;
-  var total=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status!=='na';}).length||scoredChecks.length;
-  var score=total>0?Math.round((passed/total)*100):0;
-  var wins=(d.events||[]).filter(function(e){return e.eventType==='bidWon';});
-  var timeouts=(d.events||[]).filter(function(e){return e.eventType==='bidTimeout';});
-  var reqs=(d.events||[]).filter(function(e){return e.eventType==='bidRequested';});
-  var toRate=reqs.length?Math.round((timeouts.length/reqs.length)*100):0;
-  var winCpm=wins.length&&wins[0].args&&wins[0].args.cpm?wins[0].args.cpm.toFixed(3):null;
-  var payload=encodeURIComponent(JSON.stringify({
-    url:state.url,ts:new Date().toISOString(),score:score,passed:passed,critical:critical,warnings:warnCount,
-    prebidVersion:d.version,adUnits:(d.adUnits||[]).length,bidders:(d.bidders||[]),
-    timeout:d.config&&d.config.bidderTimeout,bids:(d.events||[]).filter(function(e){return e.eventType==='bidResponse';}).length,
-    wins:wins.length,timeoutRate:toRate,winCpm:winCpm,namespace:d.namespace,
-    issues:CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).map(function(c){return{name:c.name,detail:res[c.id].detail};}),
-    warnings_list:CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';}).map(function(c){return{name:c.name,detail:res[c.id].detail};})
-  }));
-  window.open('/lab/report/?data='+payload,'_blank');
-}
+function openReport(){if(!state.url)return;var d=state.pbData||{};var res=state.results;var scoredChecks=CHECKS.filter(function(c){return c.scored;});var passed=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='ok';}).length;var critical=CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).length;var warnCount=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status==='warn';}).length;var total=scoredChecks.filter(function(c){return res[c.id]&&res[c.id].status!=='na';}).length||scoredChecks.length;var score=total>0?Math.round((passed/total)*100):0;var wins=(d.events||[]).filter(function(e){return e.eventType==='bidWon';});var timeouts=(d.events||[]).filter(function(e){return e.eventType==='bidTimeout';});var reqs=(d.events||[]).filter(function(e){return e.eventType==='bidRequested';});var toRate=reqs.length?Math.round((timeouts.length/reqs.length)*100):0;var winCpm=wins.length&&wins[0].args&&wins[0].args.cpm?wins[0].args.cpm.toFixed(3):null;var payload=encodeURIComponent(JSON.stringify({url:state.url,ts:new Date().toISOString(),score:score,passed:passed,critical:critical,warnings:warnCount,prebidVersion:d.version,adUnits:(d.adUnits||[]).length,bidders:(d.bidders||[]),timeout:d.config&&d.config.bidderTimeout,bids:(d.events||[]).filter(function(e){return e.eventType==='bidResponse';}).length,wins:wins.length,timeoutRate:toRate,winCpm:winCpm,namespace:d.namespace,issues:CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).map(function(c){return{name:c.name,detail:res[c.id].detail};}),warnings_list:CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';}).map(function(c){return{name:c.name,detail:res[c.id].detail};})}));window.open('/lab/report/?data='+payload,'_blank');}
 
-async function startScan(){
-  var url=document.getElementById('url-input').value.trim();if(!url)return;
-  if(!url.startsWith('http'))url='https://'+url;
-  state.url=url;state.results={};state.fetchedData={};state.scanning=true;state.aiResult=null;
-  var btn=document.getElementById('scan-btn');btn.disabled=true;btn.textContent='Scanning...';
-  document.getElementById('empty-state').style.display='none';
-  document.getElementById('checks-area').style.display='block';
-  var badge=document.getElementById('status-badge');badge.className='status-badge scanning';badge.innerHTML='<span class="pulse"></span> Scanning...';
-  renderChecks();
-  try{var r=await fetch(url,{signal:AbortSignal.timeout(8000)});if(r.ok)state.fetchedData.html=await r.text();}catch(e){state.fetchedData.html='';}
-  for(var i=0;i<CHECKS.length;i++){
-    try{updateCheck(CHECKS[i].id,await CHECKS[i].fn());}
-    catch(e){updateCheck(CHECKS[i].id,warn('Error: '+e.message));}
-    renderChecks();
-    await new Promise(function(res){setTimeout(res,60);});
-  }
-  state.scanning=false;
-  badge.className='status-badge done';badge.innerHTML='✅ Scan complete';
-  btn.disabled=false;btn.textContent='Rescan ↺';
-  document.getElementById('s-prebid').textContent=state.results['prebid']&&state.results['prebid'].status==='ok'?'✅':'⚠️';
-  document.getElementById('s-bidders').textContent=state.results['bidders']?state.results['bidders'].detail:'—';
-  document.getElementById('s-cmp').textContent=state.results['cmp']&&state.results['cmp'].status==='ok'?'✅':'⚠️';
-  document.getElementById('s-adstxt').textContent=state.results['adstxt']&&state.results['adstxt'].status==='ok'?'✅':'⚠️';
-  generateBookmarklet(url);
-  if(state.extConnected){setTimeout(pullFromExtension,500);}else{document.getElementById('bm-banner').style.display='flex';}
-}
+async function startScan(){var url=document.getElementById('url-input').value.trim();if(!url)return;if(!url.startsWith('http'))url='https://'+url;state.url=url;state.results={};state.fetchedData={};state.scanning=true;state.aiResult=null;var btn=document.getElementById('scan-btn');btn.disabled=true;btn.textContent='Scanning...';document.getElementById('empty-state').style.display='none';document.getElementById('checks-area').style.display='block';var badge=document.getElementById('status-badge');badge.className='status-badge scanning';badge.innerHTML='<span class="pulse"></span> Scanning...';renderChecks();try{var r=await fetch(url,{signal:AbortSignal.timeout(8000)});if(r.ok)state.fetchedData.html=await r.text();}catch(e){state.fetchedData.html='';}for(var i=0;i<CHECKS.length;i++){try{updateCheck(CHECKS[i].id,await CHECKS[i].fn());}catch(e){updateCheck(CHECKS[i].id,warn('Error: '+e.message));}renderChecks();await new Promise(function(res){setTimeout(res,60);});}state.scanning=false;badge.className='status-badge done';badge.innerHTML='✅ Scan complete';btn.disabled=false;btn.textContent='Rescan ↺';document.getElementById('s-prebid').textContent=state.results['prebid']&&state.results['prebid'].status==='ok'?'✅':'⚠️';document.getElementById('s-bidders').textContent=state.results['bidders']?state.results['bidders'].detail:'—';document.getElementById('s-cmp').textContent=state.results['cmp']&&state.results['cmp'].status==='ok'?'✅':'⚠️';document.getElementById('s-adstxt').textContent=state.results['adstxt']&&state.results['adstxt'].status==='ok'?'✅':'⚠️';generateBookmarklet(url);if(state.extConnected){setTimeout(pullFromExtension,500);}else{document.getElementById('bm-banner').style.display='flex';}}
 
 var pbidOpen=true;var activeTab='adunits';
 document.getElementById('pbid-toggle-btn').addEventListener('click',function(){pbidOpen=!pbidOpen;document.getElementById('pbid-body').classList.toggle('collapsed',!pbidOpen);document.getElementById('pbid-toggle-icon').textContent=pbidOpen?'∧':'∨';});
@@ -702,36 +573,20 @@ function renderPbidContent(){
   var el=document.getElementById('pbid-content');
   var d=state.pbData;
 
-  // ── AI TAB ──
   if(activeTab==='ai'){
-    if(!d){
-      el.innerHTML='<div style="padding:16px">'
-        +'<div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">Pull live data first, then analyze</div></div></div>'
-        +'<div style="color:#333;font-size:12px;padding:16px 0;text-align:center">Connect extension and pull live data to enable AI analysis</div>'
-        +'</div>';
-      return;
-    }
+    if(!d){el.innerHTML='<div style="padding:16px"><div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">Pull live data first</div></div></div><div style="color:#333;font-size:12px;padding:16px 0;text-align:center">Connect extension and pull live data to enable AI analysis</div></div>';return;}
     if(state.aiResult){renderAIResult(state.aiResult);return;}
-    el.innerHTML='<div style="padding:16px">'
-      +'<div class="ai-header">'
-      +'<div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">Prebid '+( d.version||'?')+' · '+(d.adUnits||[]).length+' units · '+(d.bidders||[]).length+' bidders · '+(d.events||[]).length+' events</div></div>'
-      +'<button class="ai-analyze-btn" onclick="runAIAnalysis()">⚡ Analyze Now</button>'
-      +'</div>'
-      +'<div style="font-size:11px;color:#333;line-height:1.6;margin-top:8px">'
-      +'Sends all auction data — bid responses, CPMs, timeouts, bidder errors, check results — to Lupon Intelligence for deep analysis.<br>'
-      +'<span style="color:#1a1a2e">API key stored locally. Never sent to Lupon servers.</span>'
-      +'</div>'
-      +'</div>';
+    el.innerHTML='<div style="padding:16px"><div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">'+d.version+' · '+(d.adUnits||[]).length+' units · '+(d.events||[]).length+' events · '+(d.bidders||[]).length+' bidders</div></div><button class="ai-analyze-btn" onclick="runAIAnalysis()">⚡ Analyze Now</button></div><div style="font-size:11px;color:#333;margin-top:8px;line-height:1.6">Sends complete raw auction data — all bid responses, CPMs, errors, no-bids by bidder, full config — for deep analysis.</div></div>';
     return;
   }
 
   if(!d){el.innerHTML='<div style="text-align:center;padding:20px;color:#222;font-size:12px">No live data yet.</div>';return;}
-  if(activeTab==='adunits'){if(!d.adUnits||!d.adUnits.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No ad units in pbjs</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Code</th><th>Sizes</th><th>Types</th><th>Bidders</th></tr></thead><tbody>';d.adUnits.forEach(function(u){var sz=(u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes)?u.mediaTypes.banner.sizes.map(function(s){return s.join('x');}).join(', '):'—';var tp=Object.keys(u.mediaTypes||{}).join(', ')||'—';var bd=(u.bids||[]).map(function(b){return'<span class="bidder-tag">'+b.bidder+'</span>';}).join('');h+='<tr><td style="font-family:monospace;color:#a78bfa;font-size:11px">'+u.code+'</td><td style="color:#555;font-size:10px">'+sz+'</td><td style="color:#555;font-size:10px">'+tp+'</td><td>'+bd+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
-  else if(activeTab==='bids'){var bids=(d.events||[]).filter(function(e){return e.eventType==='bidResponse';});if(!bids.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bid responses</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Unit</th><th>CPM</th><th>Size</th><th>Time</th></tr></thead><tbody>';bids.forEach(function(e){var b=e.args||{};h+='<tr><td style="font-weight:600;color:#e0e0e0">'+(b.bidder||b.bidderCode||'?')+'</td><td style="font-family:monospace;font-size:10px;color:#555">'+(b.adUnitCode||'?')+'</td><td class="'+(b.cpm?'cpm-ok':'cpm-zero')+'">'+(b.cpm?'$'+b.cpm.toFixed(3):'—')+'</td><td style="color:#555;font-size:10px">'+(b.width&&b.height?b.width+'x'+b.height:'—')+'</td><td style="color:#555;font-size:10px">'+(b.timeToRespond?b.timeToRespond+'ms':'—')+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
-  else if(activeTab==='bidders'){var bd=d.bidders||[];if(!bd.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bidders — try Pull again after page auction fires</div>';return;}el.innerHTML='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>'+bd.map(function(b){return'<tr><td style="font-weight:600;color:#e0e0e0">'+b+'</td><td><span class="bidder-tag bid">active</span></td></tr>';}).join('')+'</tbody></table>';}
+  if(activeTab==='adunits'){if(!d.adUnits||!d.adUnits.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No ad units</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Code</th><th>Sizes</th><th>Types</th><th>Bidders</th></tr></thead><tbody>';d.adUnits.forEach(function(u){var sz=(u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes)?u.mediaTypes.banner.sizes.map(function(s){return s.join('x');}).join(', '):'—';var tp=Object.keys(u.mediaTypes||{}).join(', ')||'—';var bd=(u.bids||[]).map(function(b){return'<span class="bidder-tag">'+b.bidder+'</span>';}).join('');h+='<tr><td style="font-family:monospace;color:#a78bfa;font-size:11px">'+u.code+'</td><td style="color:#555;font-size:10px">'+sz+'</td><td style="color:#555;font-size:10px">'+tp+'</td><td>'+bd+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
+  else if(activeTab==='bids'){var bids=(d.events||[]).filter(function(e){return e.eventType==='bidResponse';});if(!bids.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bid responses yet</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Unit</th><th>CPM</th><th>Size</th><th>Time</th></tr></thead><tbody>';bids.forEach(function(e){var b=e.args||{};h+='<tr><td style="font-weight:600;color:#e0e0e0">'+(b.bidder||b.bidderCode||'?')+'</td><td style="font-family:monospace;font-size:10px;color:#555">'+(b.adUnitCode||'?')+'</td><td class="'+(b.cpm?'cpm-ok':'cpm-zero')+'">'+(b.cpm?'$'+b.cpm.toFixed(3):'—')+'</td><td style="color:#555;font-size:10px">'+(b.width&&b.height?b.width+'x'+b.height:'—')+'</td><td style="color:#555;font-size:10px">'+(b.timeToRespond?b.timeToRespond+'ms':'—')+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
+  else if(activeTab==='bidders'){var bd=d.bidders||[];if(!bd.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bidders yet — pull again after auction fires</div>';return;}el.innerHTML='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>'+bd.map(function(b){return'<tr><td style="font-weight:600;color:#e0e0e0">'+b+'</td><td><span class="bidder-tag bid">active</span></td></tr>';}).join('')+'</tbody></table>';}
   else if(activeTab==='events'){var ev=(d.events||[]).slice(-30).reverse();if(!ev.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No events</div>';return;}el.innerHTML=ev.map(function(e){var tc=e.eventType.includes('Win')?'win':e.eventType.includes('Timeout')?'timeout':(e.eventType.includes('bid')||e.eventType.includes('Bid'))?'bid':'auction';var det=(e.args&&e.args.bidder?e.args.bidder:'')+(e.args&&e.args.cpm?' $'+e.args.cpm.toFixed(3):'');return'<div class="event-row"><span class="event-time">'+(e.elapsedTime?e.elapsedTime+'ms':'—')+'</span><span class="event-type '+tc+'">'+e.eventType+'</span><span class="event-detail">'+det+'</span></div>';}).join('');}
   else if(activeTab==='config'){var str=JSON.stringify(d.config||{},null,2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"([^"]+)":/g,'<span class="cfg-key">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="cfg-val">"$1"</span>').replace(/: (\d+)/g,': <span class="cfg-num">$1</span>');el.innerHTML='<div class="config-block">'+str+'</div>';}
-  else if(activeTab==='errors'){var errs=d.errors||[];el.innerHTML=errs.length?errs.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+e+'</div>';}).join(''):'<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';}
+  else if(activeTab==='errors'){var errs=d.errors||[];var errEvents=(d.events||[]).filter(function(e){return e.eventType==='bidderError';});var allErrs=errs.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+e+'</div>';}).join('');allErrs+=errEvents.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+((e.args&&e.args.bidder)||'?')+': '+((e.args&&e.args.error&&(e.args.error.message||JSON.stringify(e.args.error)))||'unknown error')+'</div>';}).join('');el.innerHTML=allErrs||'<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';}
 }
 
 document.getElementById('scan-btn').addEventListener('click',startScan);
