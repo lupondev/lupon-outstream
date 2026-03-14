@@ -7,80 +7,82 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
-.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
-.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
-.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
-nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s;margin-left:4px}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.logo{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.logo-icon{width:22px;height:22px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px}
+nav a{color:#666;font-size:12px;padding:5px 10px;border-radius:6px;text-decoration:none;transition:all .15s;margin-left:2px;white-space:nowrap}
 nav a:hover{background:#1a1a2e;color:#fff}
-.page{max-width:960px;margin:0 auto;padding:40px 32px}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-bottom:48px}
-.breadcrumb{font-size:11px;color:#333;margin-bottom:12px}
+.page{max-width:960px;margin:0 auto;padding:28px 20px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;margin-bottom:40px}
+.breadcrumb{font-size:11px;color:#333;margin-bottom:10px}
 .breadcrumb a{color:#444;text-decoration:none}
-.hero-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px}
-.hero-sub{font-size:14px;color:#555;line-height:1.7;margin-bottom:20px}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
-.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px;text-align:center}
-.stat-val{font-size:20px;font-weight:800;font-family:monospace}
+.hero-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero-sub{font-size:13px;color:#555;line-height:1.7;margin-bottom:16px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px;text-align:center}
+.stat-val{font-size:18px;font-weight:800;font-family:monospace}
 .stat-val.green{color:#56d364}
 .stat-val.blue{color:#60a5fa}
-.stat-val.amber{color:#f59e0b}
-.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
-.stat-note{font-size:9px;color:#1a3a1a;margin-top:2px}
-.hero-badges{display:flex;gap:8px;flex-wrap:wrap}
-.hbadge{font-size:11px;padding:4px 10px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
+.hero-badges{display:flex;gap:6px;flex-wrap:wrap}
+.hbadge{font-size:11px;padding:3px 9px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
 .hbadge.green{background:rgba(86,211,100,.08);border-color:rgba(86,211,100,.2);color:#56d364}
 .demo-wrap{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;overflow:hidden}
-.demo-header{padding:10px 16px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
+.demo-header{padding:9px 14px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
 .demo-dots{display:flex;gap:5px}
-.demo-dot{width:10px;height:10px;border-radius:50%}
+.demo-dot{width:9px;height:9px;border-radius:50%}
 .demo-title{font-size:11px;color:#333;margin-left:4px;font-family:monospace}
-.demo-body{padding:20px;max-height:380px;overflow-y:auto}
-/* Outstream player sim */
-.outstream-slot{width:100%;margin:0 auto;position:relative;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;max-width:320px}
+.demo-body{padding:16px}
+.outstream-slot{width:100%;margin:0 auto;position:relative;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;max-width:300px}
 .outstream-player{width:100%;height:100%;background:linear-gradient(135deg,#071020,#0a1830);display:flex;align-items:center;justify-content:center;position:relative}
 .play-area{text-align:center}
-.play-circle{width:52px;height:52px;border-radius:50%;background:rgba(86,211,100,.15);border:2px solid rgba(86,211,100,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;cursor:pointer;transition:all .2s}
+.play-circle{width:48px;height:48px;border-radius:50%;background:rgba(86,211,100,.15);border:2px solid rgba(86,211,100,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;cursor:pointer;transition:all .2s}
 .play-circle:hover{background:rgba(86,211,100,.25)}
-.play-tri{width:0;height:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-left:18px solid #56d364;margin-left:3px}
+.play-tri{width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:16px solid #56d364;margin-left:3px}
 .player-label{font-size:10px;color:#56d364;letter-spacing:1px;text-transform:uppercase}
 .player-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:#111}
 .player-prog{height:100%;background:#56d364;width:0%;transition:width .1s linear}
 .close-x{position:absolute;top:6px;right:8px;font-size:11px;color:#555;cursor:pointer;background:rgba(0,0,0,.5);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .timer-lbl{position:absolute;top:6px;left:8px;font-size:10px;color:#555;font-family:monospace}
-/* Sections */
-.section{margin-bottom:40px}
-.section-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section{margin-bottom:36px}
+.section-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .section-title::after{content:'';flex:1;height:1px;background:#1a1a2e}
-.steps{display:flex;flex-direction:column;gap:12px}
-.step{display:flex;gap:14px;align-items:flex-start}
-.step-num{width:26px;height:26px;border-radius:50%;background:#0d0d1a;border:1px solid #1a1a2e;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#56d364;flex-shrink:0;margin-top:2px}
-.step-body{}
-.step-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:4px}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.step-num{width:24px;height:24px;border-radius:50%;background:#0d0d1a;border:1px solid #1a1a2e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#56d364;flex-shrink:0;margin-top:2px}
+.step-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:3px}
 .step-desc{font-size:12px;color:#555;line-height:1.6}
-.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden;margin-bottom:16px}
-.code-header{padding:8px 14px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
+.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden;margin-bottom:14px}
+.code-header{padding:7px 12px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
 .code-label{font-size:11px;color:#444;font-family:monospace}
-.copy-btn{font-size:11px;padding:4px 12px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.copy-btn{font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer}
 .copy-btn:hover{border-color:#56d364;color:#56d364}
 .copy-btn.copied{border-color:#56d364;color:#56d364}
-code{display:block;padding:16px;font-family:monospace;font-size:12px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
-code .c{color:#444}
-code .k{color:#60a5fa}
-code .s{color:#56d364}
-code .n{color:#f59e0b}
-.publishers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
-.pub-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+code{display:block;padding:14px;font-family:monospace;font-size:11px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
+code .c{color:#444}code .k{color:#60a5fa}code .s{color:#56d364}code .n{color:#f59e0b}
+.publishers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
+.pub-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:9px 10px;display:flex;align-items:center;justify-content:space-between}
 .pub-name{font-size:12px;color:#666}
 .pub-live{font-size:10px;color:#56d364;font-weight:600}
-.bottom-nav{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid #111}
-.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .15s}
+.bottom-nav{display:flex;gap:10px;margin-top:36px;padding-top:20px;border-top:1px solid #111}
+.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;text-decoration:none;transition:border-color .15s;min-width:0}
 .nav-card:hover{border-color:#2a2a3e}
-.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.nav-card-title{font-size:13px;font-weight:600;color:#e0e0e0}
+.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.nav-card-title{font-size:12px;font-weight:600;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:640px){
+  .header{padding:0 14px;height:48px}
+  nav a{font-size:11px;padding:4px 7px}
+  .page{padding:18px 14px}
+  .hero{grid-template-columns:1fr;gap:20px}
+  .hero-title{font-size:20px}
+  .stat-val{font-size:16px}
+  code{font-size:10px;padding:12px}
+  .publishers-grid{grid-template-columns:1fr 1fr}
+  .bottom-nav{flex-direction:column;gap:8px}
+  .section-title{font-size:14px}
+}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo">
     <div class="logo-icon">⚗️</div>
@@ -92,30 +94,16 @@ code .n{color:#f59e0b}
     <a href="/lab/formats">📐 Formats</a>
   </nav>
 </div>
-
 <div class="page">
-
   <div class="hero">
     <div class="hero-left">
       <div class="breadcrumb"><a href="/lab/formats">Format Gallery</a> / Outstream Video</div>
       <div class="hero-title">Outstream Video</div>
       <div class="hero-sub">Auto-play video that lives in the content feed — no video content required. Loads only when in viewport. Powered by Magnite Apex. Live on 11 Lupon publishers.</div>
       <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-val green">$1.20</div>
-          <div class="stat-lbl">Lupon avg CPM</div>
-          <div class="stat-note" style="color:#1a3a1a">real data ✓</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val green">62%</div>
-          <div class="stat-lbl">Fill rate</div>
-          <div class="stat-note" style="color:#1a3a1a">real data ✓</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val blue">11</div>
-          <div class="stat-lbl">Publishers</div>
-          <div class="stat-note" style="color:#1a1a3a">live network</div>
-        </div>
+        <div class="stat"><div class="stat-val green">$1.20</div><div style="font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Lupon CPM</div><div style="font-size:9px;color:#1a3a1a;margin-top:2px">real data ✓</div></div>
+        <div class="stat"><div class="stat-val green">62%</div><div style="font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Fill rate</div><div style="font-size:9px;color:#1a3a1a;margin-top:2px">real data ✓</div></div>
+        <div class="stat"><div class="stat-val blue">11</div><div style="font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">Publishers</div></div>
       </div>
       <div class="hero-badges">
         <span class="hbadge green">LIVE</span>
@@ -123,32 +111,21 @@ code .n{color:#f59e0b}
         <span class="hbadge">640×360</span>
         <span class="hbadge">VAST</span>
         <span class="hbadge">Viewport trigger</span>
-        <span class="hbadge">Mobile ready</span>
       </div>
     </div>
-
     <div class="demo-wrap">
       <div class="demo-header">
-        <div class="demo-dots">
-          <div class="demo-dot" style="background:#f85149"></div>
-          <div class="demo-dot" style="background:#f59e0b"></div>
-          <div class="demo-dot" style="background:#56d364"></div>
-        </div>
+        <div class="demo-dots"><div class="demo-dot" style="background:#f85149"></div><div class="demo-dot" style="background:#f59e0b"></div><div class="demo-dot" style="background:#56d364"></div></div>
         <div class="demo-title">live preview — click play</div>
       </div>
       <div class="demo-body">
-        <div style="font-size:12px;color:#333;margin-bottom:16px;line-height:1.6">
-          Outstream video appears between content blocks — inline, no sidebar.
-        </div>
-        <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-bottom:8px"></div>
-        <div style="height:5px;background:#111;border-radius:2px;margin-bottom:16px;width:80%"></div>
-
+        <div style="font-size:12px;color:#333;margin-bottom:12px;line-height:1.5">Outstream video appears between content blocks — inline, no sidebar.</div>
+        <div style="height:4px;background:#0d0d0d;border-radius:2px;margin-bottom:8px"></div>
+        <div style="height:4px;background:#111;border-radius:2px;margin-bottom:14px;width:80%"></div>
         <div class="outstream-slot">
           <div class="outstream-player" id="demo-player">
             <div class="play-area" id="play-area">
-              <div class="play-circle" id="play-btn">
-                <div class="play-tri"></div>
-              </div>
+              <div class="play-circle" id="play-btn"><div class="play-tri"></div></div>
               <div class="player-label">Outstream Ad</div>
             </div>
             <div class="timer-lbl" id="timer-lbl" style="display:none">0:30</div>
@@ -156,22 +133,16 @@ code .n{color:#f59e0b}
             <div class="player-bar"><div class="player-prog" id="prog"></div></div>
           </div>
         </div>
-
-        <div style="height:5px;background:#0d0d0d;border-radius:2px;margin-top:16px;margin-bottom:8px"></div>
-        <div style="height:5px;background:#111;border-radius:2px;width:65%"></div>
+        <div style="height:4px;background:#0d0d0d;border-radius:2px;margin-top:14px;margin-bottom:6px"></div>
+        <div style="height:4px;background:#111;border-radius:2px;width:65%"></div>
       </div>
     </div>
   </div>
 
   <div class="section" id="install">
     <div class="section-title">📋 Install tag</div>
-    <p style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6">Dodaj ovaj tag <strong style="color:#777">jednom po stranici</strong>, idealno u <code style="background:#111;padding:2px 6px;border-radius:3px;font-size:11px">&lt;body&gt;</code>. Placement se konfiguriše kroz Magnite portal (account_id, site_id, zone_id).</p>
-
     <div class="code-wrap">
-      <div class="code-header">
-        <span class="code-label">HTML — outstream tag (Magnite Apex)</span>
-        <button class="copy-btn" onclick="copyCode('tag-code',this)">Copy</button>
-      </div>
+      <div class="code-header"><span class="code-label">HTML — outstream tag (Magnite Apex)</span><button class="copy-btn" onclick="copyCode('tag-code',this)">Copy</button></div>
       <code id="tag-code"><span class="c">&lt;!-- Lupon Outstream Video --&gt;</span>
 <span class="k">&lt;script&gt;</span>
 (<span class="k">function</span>(){
@@ -179,12 +150,7 @@ code .n{color:#f59e0b}
   s.src=<span class="s">'https://video-outstream.rubiconproject.com/apex.js'</span>;
   s.onload=<span class="k">function</span>(){
     MagniteApex.renderAd({
-      magnite:{
-        account_id:<span class="n">YOUR_ACCOUNT_ID</span>,
-        site_id:<span class="n">YOUR_SITE_ID</span>,
-        zone_id:<span class="n">YOUR_ZONE_ID</span>,
-        size_id:<span class="n">203</span>
-      },
+      magnite:{ account_id:<span class="n">YOUR_ACCOUNT_ID</span>, site_id:<span class="n">YOUR_SITE_ID</span>, zone_id:<span class="n">YOUR_ZONE_ID</span>, size_id:<span class="n">203</span> },
       width:<span class="n">640</span>,height:<span class="n">360</span>,
       placement:{attachTo:<span class="s">'top'</span>,position:<span class="s">'after'</span>,align:<span class="s">'center'</span>},
       collapse:<span class="k">true</span>,closeButton:<span class="k">true</span>
@@ -194,48 +160,20 @@ code .n{color:#f59e0b}
 })();
 <span class="k">&lt;/script&gt;</span></code>
     </div>
-
     <div class="code-wrap">
-      <div class="code-header">
-        <span class="code-label">ads.txt — dodaj ovu liniju</span>
-        <button class="copy-btn" onclick="copyCode('adstxt-code',this)">Copy</button>
-      </div>
-      <code id="adstxt-code">rubiconproject.com, YOUR_ACCOUNT_ID, DIRECT, 0bfd66d529a55807 <span class="c"># Magnite Outstream</span>
-luponmedia.com, YOUR_PUB_ID, RESELLER <span class="c"># Lupon MCM</span></code>
+      <div class="code-header"><span class="code-label">ads.txt</span><button class="copy-btn" onclick="copyCode('adstxt-code',this)">Copy</button></div>
+      <code id="adstxt-code">rubiconproject.com, YOUR_ACCOUNT_ID, DIRECT, 0bfd66d529a55807
+luponmedia.com, YOUR_PUB_ID, RESELLER</code>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title">⚙️ Kako radi</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Tag se ubaci jednom na stranicu</div>
-          <div class="step-desc">Magnite Apex JS se učitava async (~12KB). Ne blokira page load.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">Apex bira placement automatski</div>
-          <div class="step-desc">attachTo: 'top' + position: 'after' — Apex ubaci video player odmah ispod prvog elementa na stranici. Bez CSS konfiguracije.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Viewport trigger — play samo kad je vidljiv</div>
-          <div class="step-desc">Video se autoplay-a muted samo kad je u viewportu. Scroll out — pauza. IAB viewability standard: 50% piksela, 2 sekunde.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">collapse: true — no-fill = slot nestaje</div>
-          <div class="step-desc">Ako Magnite ne vrati bid, player se automatski sakriva. Nema praznog prostora na stranici.</div>
-        </div>
-      </div>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Tag se ubaci jednom na stranicu</div><div class="step-desc">Magnite Apex JS se učitava async (~12KB). Ne blokira page load.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Apex bira placement automatski</div><div class="step-desc">attachTo: 'top' — ubaci player odmah ispod prvog elementa. Bez CSS konfiguracije.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Viewport trigger — play samo kad je vidljiv</div><div class="step-desc">Autoplay muted u viewportu. Scroll out — pauza. IAB standard: 50% piksela, 2 sekunde.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">collapse: true — no-fill = slot nestaje</div><div class="step-desc">Nema bida → player se automatski sakriva. Nema praznog prostora.</div></div></div>
     </div>
   </div>
 
@@ -250,78 +188,23 @@ luponmedia.com, YOUR_PUB_ID, RESELLER <span class="c"># Lupon MCM</span></code>
       <div class="pub-item"><div class="pub-name">index.hr</div><div class="pub-live">● LIVE</div></div>
       <div class="pub-item"><div class="pub-name">24sata.hr</div><div class="pub-live">● LIVE</div></div>
       <div class="pub-item"><div class="pub-name">telegraf.rs</div><div class="pub-live">● LIVE</div></div>
-      <div class="pub-item" style="opacity:.4"><div class="pub-name">+ 3 više</div><div class="pub-live" style="color:#333">active</div></div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:#333">CPM i fill rate su prosjeci za sve publishere u zadnjih 30 dana (Lupon ClickHouse, real data).</div>
   </div>
 
   <div class="bottom-nav">
-    <a href="/lab/formats" class="nav-card">
-      <div class="nav-card-label">← Nazad</div>
-      <div class="nav-card-title">Format Gallery</div>
-    </a>
-    <a href="/lab/inspector/?url=https://novi.ba" class="nav-card">
-      <div class="nav-card-label">Testiraj na sajtu</div>
-      <div class="nav-card-title">🔍 Inspect novi.ba</div>
-    </a>
-    <a href="/lab/formats/inread" class="nav-card">
-      <div class="nav-card-label">Sljedeći format</div>
-      <div class="nav-card-title">► InRead video ($3.40 CPM)</div>
-    </a>
+    <a href="/lab/formats" class="nav-card"><div class="nav-card-label">← Nazad</div><div class="nav-card-title">Format Gallery</div></a>
+    <a href="/lab/inspector/?url=https://novi.ba" class="nav-card"><div class="nav-card-label">Testiraj</div><div class="nav-card-title">🔍 Inspect novi.ba</div></a>
+    <a href="/lab/formats/inread" class="nav-card"><div class="nav-card-label">Sljedeći format</div><div class="nav-card-title">▶ InRead ($3.40 CPM)</div></a>
   </div>
-
 </div>
-
 <script>
-// Demo player
 (function(){
-  var btn=document.getElementById('play-btn');
-  var playArea=document.getElementById('play-area');
-  var timer=document.getElementById('timer-lbl');
-  var closeX=document.getElementById('close-x');
-  var prog=document.getElementById('prog');
-  var interval=null;
-  var elapsed=0;
-  var DURATION=30;
-  var playing=false;
-
-  btn.addEventListener('click',function(){
-    if(playing)return;
-    playing=true;
-    playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px;text-transform:uppercase">PLAYING</div>';
-    timer.style.display='block';
-    closeX.style.display='flex';
-    interval=setInterval(function(){
-      elapsed+=0.1;
-      prog.style.width=Math.min((elapsed/DURATION)*100,100)+'%';
-      var r=Math.max(0,Math.ceil(DURATION-elapsed));
-      timer.textContent='0:'+(r<10?'0':'')+r;
-      if(elapsed>=DURATION){
-        clearInterval(interval);
-        timer.textContent='Done';
-        playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px;text-transform:uppercase">AD COMPLETE</div>';
-      }
-    },100);
-  });
-
-  closeX.addEventListener('click',function(){
-    clearInterval(interval);
-    playing=false;
-    playArea.innerHTML='<div class="play-circle" id="play-btn" onclick="location.reload()"><div class="play-tri"></div></div><div class="player-label">Closed</div>';
-    timer.style.display='none';
-    closeX.style.display='none';
-    prog.style.width='0';
-  });
+  var btn=document.getElementById('play-btn'),playArea=document.getElementById('play-area'),timer=document.getElementById('timer-lbl'),closeX=document.getElementById('close-x'),prog=document.getElementById('prog');
+  var interval=null,elapsed=0,DURATION=30,playing=false;
+  btn.addEventListener('click',function(){if(playing)return;playing=true;playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px;text-transform:uppercase">PLAYING</div>';timer.style.display='block';closeX.style.display='flex';interval=setInterval(function(){elapsed+=0.1;prog.style.width=Math.min((elapsed/DURATION)*100,100)+'%';var r=Math.max(0,Math.ceil(DURATION-elapsed));timer.textContent='0:'+(r<10?'0':'')+r;if(elapsed>=DURATION){clearInterval(interval);timer.textContent='Done';playArea.innerHTML='<div style="font-size:10px;color:#56d364;letter-spacing:2px">AD COMPLETE</div>';}},100);});
+  closeX.addEventListener('click',function(){clearInterval(interval);playing=false;playArea.innerHTML='<div class="play-circle" onclick="location.reload()"><div class="play-tri"></div></div><div class="player-label">Closed</div>';timer.style.display='none';closeX.style.display='none';prog.style.width='0';});
 })();
-
-function copyCode(id,btn){
-  var el=document.getElementById(id);
-  navigator.clipboard.writeText(el.innerText).then(function(){
-    btn.textContent='Copied ✓';
-    btn.className='copy-btn copied';
-    setTimeout(function(){btn.textContent='Copy';btn.className='copy-btn';},2000);
-  });
-}
+function copyCode(id,btn){var el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(function(){btn.textContent='Copied ✓';btn.className='copy-btn copied';setTimeout(function(){btn.textContent='Copy';btn.className='copy-btn';},2000);});}
 </script>
 </body>
 </html>

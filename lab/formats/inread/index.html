@@ -7,107 +7,95 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh}
-.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
-.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
-.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
-nav{display:flex;gap:4px}
-nav a{color:#666;font-size:13px;padding:6px 12px;border-radius:6px;text-decoration:none;transition:all .15s}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.logo{font-size:14px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.logo-icon{width:22px;height:22px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px}
+.logo-text{display:none}
+nav a{color:#666;font-size:12px;padding:5px 10px;border-radius:6px;text-decoration:none;transition:all .15s;margin-left:2px;white-space:nowrap}
 nav a:hover{background:#1a1a2e;color:#fff}
-.page{max-width:960px;margin:0 auto;padding:40px 32px}
-/* Hero */
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-bottom:48px}
-.hero-left{}
-.breadcrumb{font-size:11px;color:#333;margin-bottom:12px}
+.page{max-width:960px;margin:0 auto;padding:28px 20px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;margin-bottom:40px}
+.breadcrumb{font-size:11px;color:#333;margin-bottom:10px}
 .breadcrumb a{color:#444;text-decoration:none}
-.hero-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.2}
-.hero-sub{font-size:14px;color:#555;line-height:1.7;margin-bottom:20px}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px}
-.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px;text-align:center}
-.stat-val{font-size:20px;font-weight:800;font-family:monospace}
+.hero-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:8px}
+.hero-sub{font-size:13px;color:#555;line-height:1.7;margin-bottom:16px}
+.hero-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.stat{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:10px;text-align:center}
+.stat-val{font-size:18px;font-weight:800;font-family:monospace}
 .stat-val.blue{color:#60a5fa}
 .stat-val.green{color:#56d364}
 .stat-val.amber{color:#f59e0b}
-.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.6px;margin-top:4px}
+.stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .stat-note{font-size:9px;color:#222;margin-top:2px}
-.hero-badges{display:flex;gap:8px;flex-wrap:wrap}
-.hbadge{font-size:11px;padding:4px 10px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
-.hbadge.blue{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.25);color:#60a5fa}
-/* Live Demo */
+.hero-badges{display:flex;gap:6px;flex-wrap:wrap}
+.hbadge{font-size:11px;padding:3px 9px;border-radius:20px;background:#111;border:1px solid #1a1a2e;color:#444}
+.hbadge.green{background:rgba(86,211,100,.08);border-color:rgba(86,211,100,.2);color:#56d364}
 .demo-wrap{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;overflow:hidden}
-.demo-header{padding:10px 16px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
+.demo-header{padding:9px 14px;border-bottom:1px solid #111;display:flex;align-items:center;gap:8px;background:#0a0a14}
 .demo-dots{display:flex;gap:5px}
-.demo-dot{width:10px;height:10px;border-radius:50%}
+.demo-dot{width:9px;height:9px;border-radius:50%}
 .demo-title{font-size:11px;color:#333;margin-left:4px;font-family:monospace}
-.demo-body{padding:20px;max-height:480px;overflow-y:auto}
-/* Simulated article */
-.article-text{font-size:13px;color:#444;line-height:1.8;margin-bottom:16px}
+.demo-body{padding:16px;max-height:420px;overflow-y:auto}
+.article-text{font-size:12px;color:#444;line-height:1.8;margin-bottom:14px}
 .article-text strong{color:#666}
-.article-heading{font-size:16px;font-weight:700;color:#666;margin-bottom:10px}
-/* InRead player container */
-.inread-slot{width:100%;margin:20px 0;position:relative;background:#050508;border-radius:8px;overflow:hidden;border:1px solid #1a1a2e;min-height:200px;display:flex;align-items:center;justify-content:center}
+.article-heading{font-size:15px;font-weight:700;color:#666;margin-bottom:10px}
+.inread-slot{width:100%;margin:16px 0;position:relative;background:#050508;border-radius:8px;overflow:hidden;border:1px solid #1a1a2e;min-height:180px;display:flex;align-items:center;justify-content:center}
 .inread-player{width:100%;aspect-ratio:16/9;background:#000;position:relative;display:none}
 .inread-player.active{display:block}
-.player-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5)}
-.play-btn{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
-.play-btn:hover{background:rgba(255,255,255,.25)}
-.play-triangle{width:0;height:0;border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:22px solid #fff;margin-left:4px}
 .player-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:#1a1a2e}
 .player-progress{height:100%;background:#3b82f6;width:0%;transition:width .1s linear}
-.player-controls{position:absolute;bottom:8px;left:10px;right:10px;display:flex;align-items:center;gap:8px;opacity:0;transition:opacity .2s}
-.inread-player:hover .player-controls{opacity:1}
-.ctrl-btn{font-size:11px;color:#fff;background:transparent;border:none;cursor:pointer;opacity:.7}
-.ctrl-btn:hover{opacity:1}
-.vol-bar{width:50px;height:3px;background:#444;border-radius:2px;cursor:pointer}
-.close-btn{position:absolute;top:8px;right:8px;width:24px;height:24px;background:rgba(0,0,0,.6);border-radius:50%;border:none;color:#fff;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.inread-placeholder{text-align:center;padding:30px 20px;color:#2a2a3a}
-.inread-placeholder-icon{font-size:24px;margin-bottom:8px}
-.inread-placeholder-text{font-size:11px;line-height:1.5}
-.scroll-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:10px;color:#333;white-space:nowrap}
-/* Sections */
-.section{margin-bottom:40px}
-.section-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.close-btn{position:absolute;top:8px;right:8px;width:22px;height:22px;background:rgba(0,0,0,.6);border-radius:50%;border:none;color:#fff;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.inread-placeholder{text-align:center;padding:24px 16px;color:#2a2a3a}
+.scroll-hint{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:10px;color:#333;white-space:nowrap}
+.section{margin-bottom:36px}
+.section-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .section-title::after{content:'';flex:1;height:1px;background:#1a1a2e}
-/* Code block */
-.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden}
-.code-header{padding:8px 14px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
+.steps{display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.step-num{width:24px;height:24px;border-radius:50%;background:#0d0d1a;border:1px solid #1a1a2e;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#60a5fa;flex-shrink:0;margin-top:2px}
+.step-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:3px}
+.step-desc{font-size:12px;color:#555;line-height:1.6}
+.code-wrap{background:#050508;border:1px solid #1a1a2e;border-radius:8px;overflow:hidden;margin-bottom:14px}
+.code-header{padding:7px 12px;background:#0a0a12;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between}
 .code-label{font-size:11px;color:#444;font-family:monospace}
-.copy-btn{font-size:11px;padding:4px 12px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
+.copy-btn{font-size:11px;padding:4px 10px;border-radius:5px;border:1px solid #1a1a2e;background:transparent;color:#555;cursor:pointer;transition:all .15s}
 .copy-btn:hover{border-color:#3b82f6;color:#60a5fa}
 .copy-btn.copied{border-color:#56d364;color:#56d364}
-code{display:block;padding:16px;font-family:monospace;font-size:12px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
-code .c{color:#444}
-code .k{color:#60a5fa}
-code .s{color:#56d364}
-code .n{color:#f59e0b}
-/* Steps */
-.steps{display:flex;flex-direction:column;gap:12px}
-.step{display:flex;gap:14px;align-items:flex-start}
-.step-num{width:26px;height:26px;border-radius:50%;background:#0d0d1a;border:1px solid #1a1a2e;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#60a5fa;flex-shrink:0;margin-top:2px}
-.step-body{}
-.step-title{font-size:13px;font-weight:700;color:#e0e0e0;margin-bottom:4px}
-.step-desc{font-size:12px;color:#555;line-height:1.6}
-/* Compat table */
-.compat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
-.compat-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:8px}
+code{display:block;padding:14px;font-family:monospace;font-size:11px;line-height:1.7;color:#a78bfa;overflow-x:auto;white-space:pre}
+code .c{color:#444}code .k{color:#60a5fa}code .s{color:#56d364}code .n{color:#f59e0b}
+.compat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}
+.compat-item{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:6px;padding:9px 10px;display:flex;align-items:center;gap:7px}
 .compat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .compat-dot.yes{background:#56d364}
 .compat-dot.partial{background:#f59e0b}
 .compat-dot.no{background:#f85149}
 .compat-name{font-size:12px;color:#666}
-/* Bottom nav */
-.bottom-nav{display:flex;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid #111}
-.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:14px 16px;text-decoration:none;transition:border-color .15s}
+.bottom-nav{display:flex;gap:10px;margin-top:36px;padding-top:20px;border-top:1px solid #111}
+.nav-card{flex:1;background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 14px;text-decoration:none;transition:border-color .15s;min-width:0}
 .nav-card:hover{border-color:#2a2a3e}
-.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.nav-card-title{font-size:13px;font-weight:600;color:#e0e0e0}
+.nav-card-label{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.nav-card-title{font-size:12px;font-weight:600;color:#e0e0e0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:640px){
+  .header{padding:0 14px;height:48px}
+  nav a{font-size:11px;padding:4px 8px}
+  .page{padding:18px 14px}
+  .hero{grid-template-columns:1fr;gap:20px}
+  .hero-title{font-size:20px}
+  .hero-sub{font-size:12px}
+  .stat-val{font-size:16px}
+  .demo-body{max-height:320px}
+  code{font-size:10px;padding:12px}
+  .compat-grid{grid-template-columns:1fr 1fr}
+  .bottom-nav{flex-direction:column;gap:8px}
+  .section-title{font-size:14px}
+}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo">
     <div class="logo-icon">⚗️</div>
-    Lupon Ad Lab
+    <span class="logo-text">Lupon Ad Lab</span>
   </div>
   <nav>
     <a href="/lab">Dashboard</a>
@@ -115,141 +103,64 @@ code .n{color:#f59e0b}
     <a href="/lab/formats">📐 Formats</a>
   </nav>
 </div>
-
 <div class="page">
-
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-left">
       <div class="breadcrumb"><a href="/lab/formats">Format Gallery</a> / InRead Video</div>
       <div class="hero-title">InRead Video</div>
       <div class="hero-sub">Video ad embedded within article body text. Triggers on scroll into viewport, pauses on scroll out. Highest eCPM format available on Lupon network.</div>
       <div class="hero-stats">
-        <div class="stat">
-          <div class="stat-val blue">$3.40</div>
-          <div class="stat-lbl">Est. CPM</div>
-          <div class="stat-note">Balkans avg*</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val amber">~45%</div>
-          <div class="stat-lbl">Est. fill</div>
-          <div class="stat-note">estimate*</div>
-        </div>
-        <div class="stat">
-          <div class="stat-val green">16:9</div>
-          <div class="stat-lbl">Aspect ratio</div>
-          <div class="stat-note">responsive</div>
-        </div>
+        <div class="stat"><div class="stat-val blue">$3.40</div><div class="stat-lbl">Est. CPM</div><div class="stat-note">Balkans avg*</div></div>
+        <div class="stat"><div class="stat-val amber">~45%</div><div class="stat-lbl">Est. fill</div><div class="stat-note">estimate*</div></div>
+        <div class="stat"><div class="stat-val green">16:9</div><div class="stat-lbl">Aspect</div><div class="stat-note">responsive</div></div>
       </div>
       <div class="hero-badges">
-        <span class="hbadge blue">VAST 2.0 / 3.0</span>
+        <span class="hbadge green">BETA</span>
+        <span class="hbadge">VAST 2.0/3.0</span>
         <span class="hbadge">Prebid.js</span>
         <span class="hbadge">GDPR TCF 2.2</span>
-        <span class="hbadge">Mobile ready</span>
         <span class="hbadge">Autoplay muted</span>
       </div>
     </div>
-
-    <!-- LIVE DEMO -->
     <div class="demo-wrap">
       <div class="demo-header">
-        <div class="demo-dots">
-          <div class="demo-dot" style="background:#f85149"></div>
-          <div class="demo-dot" style="background:#f59e0b"></div>
-          <div class="demo-dot" style="background:#56d364"></div>
-        </div>
+        <div class="demo-dots"><div class="demo-dot" style="background:#f85149"></div><div class="demo-dot" style="background:#f59e0b"></div><div class="demo-dot" style="background:#56d364"></div></div>
         <div class="demo-title">live preview — scroll to trigger</div>
       </div>
       <div class="demo-body" id="demo-body">
         <div class="article-heading">Ekonomska kriza: što čeka regiju u 2025?</div>
-        <div class="article-text">
-          Balkanski region suočava se s nizom ekonomskih izazova koji će obilježiti narednih nekoliko godina.
-          Inflacija, nezaposlenost i odliv radne snage samo su neki od problema s kojima se vlade bore.
-        </div>
-        <div class="article-text">
-          <strong>Stručnjaci upozoravaju</strong> da bez strukturnih reformi i digitalnih investicija, zemlja
-          rizikuje zaostajanje za EU prosjekom. Digitalna ekonomija postaje sve važnija komponenta BDP-a.
-        </div>
-
-        <!-- INREAD SLOT -->
+        <div class="article-text">Balkanski region suočava se s nizom ekonomskih izazova koji će obilježiti narednih nekoliko godina. Inflacija, nezaposlenost i odliv radne snage samo su neki od problema.</div>
+        <div class="article-text"><strong>Stručnjaci upozoravaju</strong> da bez strukturnih reformi i digitalnih investicija, regija rizikuje zaostajanje za EU prosjekom.</div>
         <div class="inread-slot" id="inread-slot">
           <div id="inread-player" class="inread-player">
-            <!-- Simulated video -->
             <div style="width:100%;height:100%;background:linear-gradient(135deg,#0a0f1e,#0d1526);display:flex;align-items:center;justify-content:center;position:relative">
               <div style="text-align:center">
-                <div style="font-size:11px;color:#3b82f6;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">ADVERTISEMENT</div>
-                <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px">Lupon InRead</div>
-                <div style="font-size:12px;color:#555">Demo VAST · 640×360</div>
+                <div style="font-size:10px;color:#3b82f6;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">ADVERTISEMENT</div>
+                <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px">Lupon InRead</div>
+                <div style="font-size:11px;color:#555">Demo VAST · 640×360</div>
               </div>
-              <div id="player-timer" style="position:absolute;top:10px;right:10px;font-size:11px;color:#555;font-family:monospace">0:30</div>
+              <div id="player-timer" style="position:absolute;top:8px;right:10px;font-size:11px;color:#555;font-family:monospace">0:30</div>
               <div class="player-bar"><div class="player-progress" id="player-progress"></div></div>
             </div>
-            <button class="close-btn" id="close-player" title="Close">✕</button>
+            <button class="close-btn" id="close-player">✕</button>
           </div>
           <div id="inread-placeholder" class="inread-placeholder">
-            <div class="inread-placeholder-icon">▶</div>
-            <div class="inread-placeholder-text">InRead video loads here<br>Scroll down to trigger</div>
+            <div style="font-size:20px;margin-bottom:6px">▶</div>
+            <div style="font-size:11px;color:#333">InRead video loads here<br>Scroll down to trigger</div>
           </div>
-          <div class="scroll-hint" id="scroll-hint">↓ Scroll demo to trigger</div>
+          <div class="scroll-hint" id="scroll-hint">↓ Scroll to trigger</div>
         </div>
-
-        <div class="article-text">
-          Analitičari ističu da digitalna transformacija može biti ključni faktor ekonomskog rasta.
-          Ulaganje u tehnološku infrastrukturu postaje imperativ za sve balkanske ekonomije.
-        </div>
-        <div class="article-text">
-          <strong>EU fondovi</strong> ostaju nedovoljno iskorišćeni zbog administrativnih prepreka.
-          Digitalizacija javnih usluga napreduje sporije od planiranog tempa.
-        </div>
+        <div class="article-text">Analitičari ističu da digitalna transformacija može biti ključni faktor ekonomskog rasta. Ulaganje u tehnološku infrastrukturu postaje imperativ za sve balkanske ekonomije.</div>
+        <div class="article-text"><strong>EU fondovi</strong> ostaju nedovoljno iskorišteni zbog administrativnih prepreka.</div>
       </div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
-  <div class="section">
-    <div class="section-title">⚙️ Kako radi</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <div class="step-title">Publisher dodaje jedan div u članak</div>
-          <div class="step-desc">Div se postavlja unutar tijela teksta — između 2. i 3. paragrafa idealno. Tag je lightweight (~3KB).</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <div class="step-title">IntersectionObserver detektuje viewport entry</div>
-          <div class="step-desc">Kad slot uđe 50% u viewport, player se inicijalizira. Prebid aukcija se pokreće. Nema load-a unaprijed — 0 impact na page speed dok korisnik ne scrolluje do slota.</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <div class="step-title">Prebid aukcija → VAST tag → video play</div>
-          <div class="step-desc">Standardna Prebid.js aukcija sa video mediaTypes. Pobjednički bid vraća VAST URL. Video se autoplay-a muted (GDPR + browser policy compliant).</div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <div class="step-title">Pause on scroll-out, resume on scroll-in</div>
-          <div class="step-desc">Korisnik scrolluje dalje — video pauzira. Vrati se — nastavlja. Korisnik može zatvoriti X dugmetom ili ignorisati. Nikad ne blokira sadržaj.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INSTALL TAG -->
-  <div class="section">
+  <div class="section" id="install">
     <div class="section-title">📋 Install tag</div>
-    <p style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6">Dodaj ovaj kod <strong style="color:#777">unutar tijela članka</strong> — između 2. i 3. paragrafa. Tag je self-contained, ne treba dodatni JS.</p>
-
-    <div class="code-wrap" style="margin-bottom:16px">
-      <div class="code-header">
-        <span class="code-label">HTML — ubaci u članak</span>
-        <button class="copy-btn" onclick="copyCode('tag-code',this)">Copy</button>
-      </div>
+    <p style="font-size:12px;color:#555;margin-bottom:12px;line-height:1.6">Dodaj ovaj kod <strong style="color:#777">unutar tijela članka</strong> — između 2. i 3. paragrafa.</p>
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">HTML — ubaci u članak</span><button class="copy-btn" onclick="copyCode('tag-code',this)">Copy</button></div>
       <code id="tag-code"><span class="c"><!-- Lupon InRead Video --></span>
 &lt;<span class="k">div</span> <span class="n">class</span>=<span class="s">"lupon-inread"</span>
      <span class="n">data-pub-id</span>=<span class="s">"YOUR_PUB_ID"</span>
@@ -257,47 +168,40 @@ code .n{color:#f59e0b}
      <span class="n">data-floor</span>=<span class="s">"0.10"</span>&gt;&lt;/<span class="k">div</span>&gt;
 &lt;<span class="k">script</span> <span class="n">src</span>=<span class="s">"https://cdn.luponmedia.com/inread/v1/player.js"</span> <span class="n">async</span>&gt;&lt;/<span class="k">script</span>&gt;</code>
     </div>
-
-    <div class="code-wrap" style="margin-bottom:16px">
-      <div class="code-header">
-        <span class="code-label">Prebid.js — ad unit config (dodaj u postojeći pbjs setup)</span>
-        <button class="copy-btn" onclick="copyCode('prebid-code',this)">Copy</button>
-      </div>
-      <code id="prebid-code"><span class="c">// Dodaj u postojeći pbjs.addAdUnits([])</span>
-{
+    <div class="code-wrap">
+      <div class="code-header"><span class="code-label">Prebid.js — ad unit config</span><button class="copy-btn" onclick="copyCode('prebid-code',this)">Copy</button></div>
+      <code id="prebid-code">{
   <span class="n">code</span>: <span class="s">'lupon_inread_1'</span>,
   <span class="n">mediaTypes</span>: {
     <span class="n">video</span>: {
       <span class="n">context</span>: <span class="s">'instream'</span>,
       <span class="n">playerSize</span>: [[<span class="k">640</span>, <span class="k">360</span>]],
-      <span class="n">mimes</span>: [<span class="s">'video/mp4'</span>, <span class="s">'video/webm'</span>],
-      <span class="n">protocols</span>: [<span class="k">2</span>, <span class="k">3</span>, <span class="k">5</span>, <span class="k">6</span>], <span class="c">// VAST 2, 3, DAAST 1, 2</span>
-      <span class="n">playbackmethod</span>: [<span class="k">2</span>], <span class="c">// autoplay muted</span>
-      <span class="n">placement</span>: <span class="k">3</span>, <span class="c">// in-article</span>
-      <span class="n">skip</span>: <span class="k">1</span>,
-      <span class="n">skipafter</span>: <span class="k">5</span>
+      <span class="n">mimes</span>: [<span class="s">'video/mp4'</span>],
+      <span class="n">protocols</span>: [<span class="k">2</span>, <span class="k">3</span>, <span class="k">5</span>, <span class="k">6</span>],
+      <span class="n">playbackmethod</span>: [<span class="k">2</span>],
+      <span class="n">placement</span>: <span class="k">3</span>,
+      <span class="n">skip</span>: <span class="k">1</span>, <span class="n">skipafter</span>: <span class="k">5</span>
     }
   },
-  <span class="n">bids</span>: [{
-    <span class="n">bidder</span>: <span class="s">'rubicon'</span>,
-    <span class="n">params</span>: { <span class="n">accountId</span>: <span class="s">'YOUR_ACCOUNT'</span>, <span class="n">siteId</span>: <span class="s">'YOUR_SITE'</span>, <span class="n">zoneId</span>: <span class="s">'YOUR_ZONE'</span> }
-  },{
-    <span class="n">bidder</span>: <span class="s">'criteo'</span>,
-    <span class="n">params</span>: { <span class="n">networkId</span>: <span class="s">"YOUR_NETWORK_ID"</span> }
-  }]
+  <span class="n">bids</span>: [{ <span class="n">bidder</span>: <span class="s">'rubicon'</span>, <span class="n">params</span>: { <span class="n">accountId</span>: <span class="s">'YOUR_ACCOUNT'</span>, <span class="n">siteId</span>: <span class="s">'YOUR_SITE'</span>, <span class="n">zoneId</span>: <span class="s">'YOUR_ZONE'</span> } }]
 }</code>
     </div>
-
     <div class="code-wrap">
-      <div class="code-header">
-        <span class="code-label">ads.txt — dodaj ovu liniju</span>
-        <button class="copy-btn" onclick="copyCode('adstxt-code',this)">Copy</button>
-      </div>
-      <code id="adstxt-code">luponmedia.com, YOUR_PUB_ID, DIRECT, <span class="c"># InRead video</span></code>
+      <div class="code-header"><span class="code-label">ads.txt</span><button class="copy-btn" onclick="copyCode('adstxt-code',this)">Copy</button></div>
+      <code id="adstxt-code">luponmedia.com, YOUR_PUB_ID, DIRECT</code>
     </div>
   </div>
 
-  <!-- SSP COMPAT -->
+  <div class="section">
+    <div class="section-title">⚙️ Kako radi</div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Publisher dodaje jedan div u članak</div><div class="step-desc">Tag je self-contained (~3KB). Postavlja se između 2. i 3. paragrafa.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">IntersectionObserver detektuje viewport entry</div><div class="step-desc">Kad slot uđe 50% u viewport, Prebid aukcija se pokreće. 0 impact na page speed do triggera.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Prebid aukcija → VAST → Fluid Player</div><div class="step-desc">Pobjednički bid vraća VAST URL. Fluid Player fetcha video, autoplay muted.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Pause/resume na scroll</div><div class="step-desc">Scroll out → pauza. Scroll back → nastavlja. X dugme → zatvori.</div></div></div>
+    </div>
+  </div>
+
   <div class="section">
     <div class="section-title">🤝 SSP kompatibilnost</div>
     <div class="compat-grid">
@@ -306,130 +210,37 @@ code .n{color:#f59e0b}
       <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">PubMatic</div></div>
       <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">Adform</div></div>
       <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">Index Exchange</div></div>
-      <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">Xandr</div></div>
       <div class="compat-item"><div class="compat-dot partial"></div><div class="compat-name">Teads</div></div>
       <div class="compat-item"><div class="compat-dot partial"></div><div class="compat-name">Seedtag</div></div>
       <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">Sovrn</div></div>
-      <div class="compat-item"><div class="compat-dot yes"></div><div class="compat-name">OpenX</div></div>
       <div class="compat-item"><div class="compat-dot no"></div><div class="compat-name">Taboola</div></div>
       <div class="compat-item"><div class="compat-dot partial"></div><div class="compat-name">Outbrain</div></div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:#333">
-      <span style="color:#56d364">●</span> Fully compatible &nbsp;
-      <span style="color:#f59e0b">●</span> Partial (contact AM) &nbsp;
-      <span style="color:#f85149">●</span> Not supported
-    </div>
+    <div style="margin-top:8px;font-size:11px;color:#333"><span style="color:#56d364">●</span> Compatible &nbsp;<span style="color:#f59e0b">●</span> Partial &nbsp;<span style="color:#f85149">●</span> Not supported</div>
   </div>
 
-  <!-- BENCHMARK NOTE -->
-  <div style="padding:14px 18px;background:#0a0a14;border:1px solid #111;border-radius:8px;font-size:11px;color:#444;line-height:1.7;margin-bottom:32px">
-    <strong style="color:#555">* CPM napomena</strong> — $3.40 CPM i ~45% fill su procjene temeljene na Balkans tržišnim benchmarkima, ne Lupon live podaci. Stvarni rezultati variraju po sajtu, vertikali i sezoni. Kontaktirajte account managera za realan forecast za vaš publisher.
+  <div style="padding:12px 16px;background:#0a0a14;border:1px solid #111;border-radius:8px;font-size:11px;color:#444;line-height:1.7;margin-bottom:28px">
+    <strong style="color:#555">* CPM napomena</strong> — $3.40 i ~45% su Balkans benchmark procjene, ne Lupon live podaci. Kontaktirajte account managera za forecast za vaš publisher.
   </div>
 
-  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
-    <a href="/lab/formats" class="nav-card">
-      <div class="nav-card-label">← Nazad</div>
-      <div class="nav-card-title">Format Gallery</div>
-    </a>
-    <a href="/lab/inspector" class="nav-card">
-      <div class="nav-card-label">Test na svom sajtu</div>
-      <div class="nav-card-title">🔍 URL Inspector</div>
-    </a>
-    <a href="/lab/formats/outstream" class="nav-card">
-      <div class="nav-card-label">Sljedeći format</div>
-      <div class="nav-card-title">▶ Outstream video</div>
-    </a>
+    <a href="/lab/formats" class="nav-card"><div class="nav-card-label">← Nazad</div><div class="nav-card-title">Format Gallery</div></a>
+    <a href="/lab/inspector" class="nav-card"><div class="nav-card-label">Test na sajtu</div><div class="nav-card-title">🔍 URL Inspector</div></a>
+    <a href="/lab/formats/outstream" class="nav-card"><div class="nav-card-label">Drugi format</div><div class="nav-card-title">▶ Outstream video</div></a>
   </div>
-
 </div>
-
 <script>
-// ── DEMO PLAYER ──────────────────────────────────────────────────
 (function(){
-  var demoBody = document.getElementById('demo-body');
-  var slot = document.getElementById('inread-slot');
-  var player = document.getElementById('inread-player');
-  var placeholder = document.getElementById('inread-placeholder');
-  var scrollHint = document.getElementById('scroll-hint');
-  var progress = document.getElementById('player-progress');
-  var timerEl = document.getElementById('player-timer');
-  var closeBtn = document.getElementById('close-player');
-  var playing = false;
-  var interval = null;
-  var elapsed = 0;
-  var DURATION = 30;
-  var closed = false;
-
-  // IntersectionObserver on the slot
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(closed) return;
-      if(entry.isIntersecting && entry.intersectionRatio >= 0.5){
-        // Trigger player
-        if(!playing){
-          placeholder.style.display = 'none';
-          scrollHint.style.display = 'none';
-          player.style.display = 'block';
-          playing = true;
-          startPlayback();
-        } else {
-          resumePlayback();
-        }
-      } else {
-        pausePlayback();
-      }
-    });
-  }, { threshold: 0.5, root: demoBody });
-
+  var demoBody=document.getElementById('demo-body'),slot=document.getElementById('inread-slot'),player=document.getElementById('inread-player'),placeholder=document.getElementById('inread-placeholder'),scrollHint=document.getElementById('scroll-hint'),progress=document.getElementById('player-progress'),timerEl=document.getElementById('player-timer'),closeBtn=document.getElementById('close-player');
+  var playing=false,interval=null,elapsed=0,DURATION=30,closed=false;
+  var observer=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(closed)return;if(entry.isIntersecting&&entry.intersectionRatio>=0.5){if(!playing){placeholder.style.display='none';scrollHint.style.display='none';player.style.display='block';playing=true;startPlayback();}else{resumePlayback();}}else{pausePlayback();}});},{threshold:0.5,root:demoBody});
   observer.observe(slot);
-
-  function startPlayback(){
-    elapsed = 0;
-    resumePlayback();
-  }
-
-  function resumePlayback(){
-    clearInterval(interval);
-    if(elapsed >= DURATION) return;
-    interval = setInterval(function(){
-      elapsed += 0.1;
-      var pct = Math.min((elapsed / DURATION) * 100, 100);
-      progress.style.width = pct + '%';
-      var remaining = Math.max(0, Math.ceil(DURATION - elapsed));
-      timerEl.textContent = '0:' + (remaining < 10 ? '0' : '') + remaining;
-      if(elapsed >= DURATION){
-        clearInterval(interval);
-        timerEl.textContent = 'Done';
-      }
-    }, 100);
-  }
-
-  function pausePlayback(){
-    clearInterval(interval);
-  }
-
-  closeBtn.addEventListener('click', function(){
-    closed = true;
-    pausePlayback();
-    player.style.display = 'none';
-    placeholder.style.display = 'block';
-    placeholder.querySelector('.inread-placeholder-text').textContent = 'Ad closed by user';
-    observer.disconnect();
-  });
+  function startPlayback(){elapsed=0;resumePlayback();}
+  function resumePlayback(){clearInterval(interval);if(elapsed>=DURATION)return;interval=setInterval(function(){elapsed+=0.1;var pct=Math.min((elapsed/DURATION)*100,100);progress.style.width=pct+'%';var r=Math.max(0,Math.ceil(DURATION-elapsed));timerEl.textContent='0:'+(r<10?'0':'')+r;if(elapsed>=DURATION){clearInterval(interval);timerEl.textContent='Done';}},100);}
+  function pausePlayback(){clearInterval(interval);}
+  closeBtn.addEventListener('click',function(){closed=true;pausePlayback();player.style.display='none';placeholder.style.display='block';placeholder.querySelector('div:last-child').textContent='Ad closed';observer.disconnect();});
 })();
-
-// ── COPY CODE ─────────────────────────────────────────────────────
-function copyCode(id, btn){
-  var el = document.getElementById(id);
-  var text = el.innerText;
-  navigator.clipboard.writeText(text).then(function(){
-    btn.textContent = 'Copied ✓';
-    btn.className = 'copy-btn copied';
-    setTimeout(function(){ btn.textContent = 'Copy'; btn.className = 'copy-btn'; }, 2000);
-  });
-}
+function copyCode(id,btn){var el=document.getElementById(id);navigator.clipboard.writeText(el.innerText).then(function(){btn.textContent='Copied ✓';btn.className='copy-btn copied';setTimeout(function(){btn.textContent='Copy';btn.className='copy-btn';},2000);});}
 </script>
-
 </body>
 </html>
