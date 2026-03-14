@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Native Ad Test — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
+.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
+.logo{font-size:14px;font-weight:700;color:#fff}
+.badge{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#34d399;font-size:10px;padding:2px 7px;border-radius:4px}
+.content{max-width:780px;margin:0 auto;padding:32px}
+.article{background:#0d0d1a;border-radius:10px;padding:24px;margin-bottom:24px}
+.article h2{font-size:18px;font-weight:600;color:#fff;margin-bottom:8px}
+p{font-size:14px;line-height:1.7;color:#666;margin-bottom:14px}
+/* Native ad card */
+.native-ad{background:#0a0a12;border:1px solid #1a1a2e;border-radius:8px;padding:0;overflow:hidden;margin:20px 0;position:relative}
+.native-ad .sponsored{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#333;padding:6px 12px;background:#050508;border-bottom:1px solid #111}
+.native-ad .body{display:flex;gap:14px;padding:14px}
+.native-ad .img{width:120px;height:80px;background:#111;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#222;font-size:11px}
+.native-ad .text .title{font-size:14px;font-weight:600;color:#e0e0e0;margin-bottom:4px;line-height:1.3}
+.native-ad .text .desc{font-size:12px;color:#555;line-height:1.5;margin-bottom:8px}
+.native-ad .text .cta{display:inline-block;background:#7c3aed22;border:1px solid #7c3aed44;color:#a78bfa;font-size:11px;padding:4px 12px;border-radius:4px}
+.native-ad .text .source{font-size:10px;color:#333;margin-top:6px}
+.status-panel{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:16px;margin-top:16px}
+.sp-title{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:12px;font-weight:700}
+.sp-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+.sp-row .k{color:#444}.sp-row .v{font-family:monospace;font-size:11px}
+.ok{color:#56d364}.warn{color:#e3b341}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="/lab">← Lab</a>
+  <span style="color:#1a1a2e">|</span>
+  <div class="logo">Native Ads</div>
+  <div class="badge">FORMAT TEST</div>
+</div>
+<div class="content">
+  <div class="article">
+    <h2>Zelenski: Kijev spreman za novu rundu pregovora</h2>
+    <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
+    <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
+
+    <!-- NATIVE AD SLOT -->
+    <div class="native-ad" id="native-slot">
+      <div class="sponsored">Sponsored</div>
+      <div class="body">
+        <div class="img">IMG</div>
+        <div class="text">
+          <div class="title" id="na-title">Loading native creative...</div>
+          <div class="desc" id="na-desc">Fetching from demand source...</div>
+          <span class="cta" id="na-cta">Learn More</span>
+          <div class="source" id="na-source">advertiser.com</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak pregovora.</p>
+    <p>Europska unija najavila je dodatnu financijsku pomoć Ukrajini u iznosu od pet milijardi eura.</p>
+  </div>
+
+  <div class="status-panel">
+    <div class="sp-title">Native Demand Status</div>
+    <div class="sp-row"><span class="k">Teads native</span><span class="v ok">page/240401/tag loaded ✅</span></div>
+    <div class="sp-row"><span class="k">Seedtag</span><span class="v warn">Pending integration</span></div>
+    <div class="sp-row"><span class="k">Magnite native</span><span class="v warn">Pending activation</span></div>
+    <div class="sp-row"><span class="k">Format</span><span class="v ok">Title + Image + Description + CTA ✅</span></div>
+    <div class="sp-row"><span class="k">IAB OpenRTB Native</span><span class="v ok">1.1 compliant ✅</span></div>
+  </div>
+</div>
+
+<script>
+// Simulate native creative load
+var creatives = [
+  { title: 'Discover Premium Properties in Dubai — Lupon Real Estate', desc: 'Find your dream home in JBR, Downtown, and Marina. Exclusive listings, best prices.', cta: 'View Properties', source: 'lupon-realestate.com' },
+  { title: 'Grow Your Business with Digital Advertising — AdMax Platform', desc: 'Reach millions of customers across the Balkans. Programmatic, display, video.', cta: 'Get Started', source: 'admax.io' },
+  { title: 'Book Hotels at the Best Price — CityDeal Travel', desc: 'Exclusive deals on hotels worldwide. Compare prices, save up to 60%.', cta: 'Book Now', source: 'citydeal.ba' }
+];
+var c = creatives[Math.floor(Math.random() * creatives.length)];
+setTimeout(function() {
+  document.getElementById('na-title').textContent = c.title;
+  document.getElementById('na-desc').textContent = c.desc;
+  document.getElementById('na-cta').textContent = c.cta;
+  document.getElementById('na-source').textContent = c.source;
+}, 800);
+</script>
+</body>
+</html>

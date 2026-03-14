@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publishers — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
+.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
+.logo{font-size:14px;font-weight:700;color:#fff}
+.badge{background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#34d399;font-size:10px;padding:2px 7px;border-radius:4px}
+.content{max-width:900px;margin:0 auto;padding:32px}
+h2{font-size:18px;font-weight:600;color:#fff;margin-bottom:6px}
+.subtitle{font-size:13px;color:#444;margin-bottom:28px}
+.pub-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:10px;padding:20px;margin-bottom:12px;display:flex;align-items:center;gap:20px;text-decoration:none;transition:border-color .2s}
+.pub-card:hover{border-color:#7c3aed33}
+.pub-icon{width:48px;height:48px;border-radius:10px;background:#111;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.pub-info{flex:1}
+.pub-name{font-size:15px;font-weight:600;color:#e0e0e0;margin-bottom:3px}
+.pub-meta{font-size:12px;color:#444;margin-bottom:8px}
+.pub-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 7px;border-radius:4px;background:#111;border:1px solid #1e1e2e;color:#555}
+.tag.ok{color:#56d364;border-color:rgba(86,211,100,.2)}
+.tag.err{color:#f85149;border-color:rgba(248,81,73,.2)}
+.tag.m{color:#a78bfa}.tag.a{color:#69b0f5}.tag.g{color:#56d364}.tag.t{color:#fb923c}
+.pub-status{text-align:right;flex-shrink:0}
+.chip{font-size:10px;padding:3px 10px;border-radius:4px;font-weight:600;display:inline-block;margin-bottom:6px}
+.chip.live{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
+.chip.planned{background:rgba(80,80,100,.1);color:#555;border:1px solid #1e1e2e}
+.pub-link{font-size:11px;color:#7c3aed;display:block}
+.add-btn{border:1px dashed #1e1e2e;border-radius:10px;padding:20px;text-align:center;color:#333;font-size:13px;cursor:pointer;transition:all .15s}
+.add-btn:hover{border-color:#7c3aed44;color:#a78bfa}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="/lab">← Lab</a>
+  <span style="color:#1a1a2e">|</span>
+  <div class="logo">Publishers</div>
+  <div class="badge">TEST PAGES</div>
+</div>
+<div class="content">
+  <h2>Publisher Test Pages</h2>
+  <p class="subtitle">Each publisher gets an isolated test environment. Verify all formats and demand sources before going live.</p>
+
+  <a class="pub-card" href="/publishers/novi-ba/test">
+    <div class="pub-icon">📰</div>
+    <div class="pub-info">
+      <div class="pub-name">novi.ba</div>
+      <div class="pub-meta">News · Bosnia & Herzegovina · 5,000+ daily visitors</div>
+      <div class="pub-tags">
+        <span class="tag ok">Google IMA ✅</span>
+        <span class="tag err">Magnite no fill</span>
+        <span class="tag err">Adform 204</span>
+        <span class="tag t">Teads serving</span>
+        <span class="tag m">Outstream</span>
+      </div>
+    </div>
+    <div class="pub-status">
+      <span class="chip live">LIVE</span>
+      <a class="pub-link" href="/publishers/novi-ba/test">Open test →</a>
+    </div>
+  </a>
+
+  <div class="pub-card" style="opacity:.4;pointer-events:none">
+    <div class="pub-icon">⚽</div>
+    <div class="pub-info">
+      <div class="pub-name">sport.ba</div>
+      <div class="pub-meta">Sports · Balkans · Planned</div>
+      <div class="pub-tags"><span class="tag">Coming soon</span></div>
+    </div>
+    <div class="pub-status"><span class="chip planned">PLANNED</span></div>
+  </div>
+
+  <div class="pub-card" style="opacity:.4;pointer-events:none">
+    <div class="pub-icon">🗞️</div>
+    <div class="pub-info">
+      <div class="pub-name">faktor.ba</div>
+      <div class="pub-meta">News · Bosnia · Planned</div>
+      <div class="pub-tags"><span class="tag">Coming soon</span></div>
+    </div>
+    <div class="pub-status"><span class="chip planned">PLANNED</span></div>
+  </div>
+
+  <div class="add-btn" onclick="alert('Publisher onboarding coming soon!')">+ Add publisher test page</div>
+</div>
+</body>
+</html>

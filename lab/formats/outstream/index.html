@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outstream Format Test — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
+.back{color:#555;text-decoration:none;font-size:13px}  .back:hover{color:#fff}
+.logo{font-size:14px;font-weight:700;color:#fff}
+.badge{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa;font-size:10px;padding:2px 7px;border-radius:4px}
+.layout{display:grid;grid-template-columns:1fr 320px;gap:0;height:calc(100vh - 56px)}
+.article-pane{overflow-y:auto;padding:32px;border-right:1px solid #111}
+.panel-pane{overflow-y:auto;background:#0a0a12;padding:20px}
+.article{max-width:680px;margin:0 auto}
+.article h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
+.article .meta{font-size:12px;color:#444;margin-bottom:20px}
+p{font-size:15px;line-height:1.75;color:#aaa;margin-bottom:16px}
+.slot-anchor{margin:24px 0;border-radius:8px;overflow:hidden}
+.slot-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.slot-label::before,.slot-label::after{content:'';flex:1;height:1px;background:#111}
+/* Panel */
+.panel-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#333;margin-bottom:16px;font-weight:700}
+.demand-block{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:14px;margin-bottom:10px}
+.demand-name{font-size:12px;font-weight:600;color:#e0e0e0;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:11px}
+.row .k{color:#444}
+.row .v{font-family:monospace;font-size:10px}
+.ok{color:#56d364}.err{color:#f85149}.warn{color:#e3b341}
+.sep{border-top:1px solid #111;margin:12px 0}
+.log{background:#080810;border-radius:6px;padding:10px;font-family:monospace;font-size:10px;line-height:1.6;max-height:200px;overflow-y:auto;color:#444}
+.log .t{color:#7c3aed}.log .ok{color:#56d364}.log .err{color:#f85149}.log .info{color:#3b82f6}
+.btn{width:100%;padding:8px;background:#7c3aed22;border:1px solid #7c3aed44;border-radius:6px;color:#a78bfa;font-size:12px;cursor:pointer;margin-top:8px;transition:all .15s}
+.btn:hover{background:#7c3aed44}
+/* Outstream player */
+.lpo-wrap{width:100%;max-width:640px;margin:0 auto;overflow:hidden;transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0}
+.lpo-wrap.open{max-height:400px;opacity:1}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="/lab">← Lab</a>
+  <span style="color:#1a1a2e">|</span>
+  <div class="logo">Outstream In-Article</div>
+  <div class="badge">FORMAT TEST</div>
+</div>
+<div class="layout">
+  <div class="article-pane">
+    <div class="article">
+      <h1>Zelenski: Kijev spreman za novu rundu pregovora, Amerikanci traže odgodu</h1>
+      <div class="meta">novi.ba · Test Article · Lupon Ad Lab</div>
+      <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
+      <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
+      <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
+
+      <!-- OUTSTREAM SLOT -->
+      <div class="slot-anchor">
+        <div class="slot-label">Outstream Slot · Position 3</div>
+        <div class="lpo-wrap" id="lpo-wrap">
+          <div id="lpo-slot"></div>
+        </div>
+      </div>
+
+      <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak trilateralnih pregovora.</p>
+      <p>Međunarodna zajednica pažljivo prati razvoj situacije, s posebnim naglaskom na humanitarne koridore i zaštitu civilnog stanovništva.</p>
+      <p>Europska unija najavila je dodatnu financijsku pomoć Ukrajini u iznosu od pet milijardi eura, namijenjenu obnovi kritične infrastrukture.</p>
+      <p>Zelenski je pozvao sve strane da se uzdrže od eskalacije sukoba i da prioritet daju diplomatskom rješenju krize.</p>
+      <p>Pregovori se očekuju u formatu koji uključuje predstavnike obje strane, uz prisustvo međunarodnih posmatrača i garantnih sila.</p>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel-pane">
+    <div class="panel-title">Live Status</div>
+
+    <!-- GOOGLE IMA TEST -->
+    <div class="demand-block">
+      <div class="demand-name">🟢 Google IMA Test <span id="chip-gima" class="warn" style="font-size:10px">waiting</span></div>
+      <div class="row"><span class="k">Type</span><span class="v ok">VAST 2.0 Test</span></div>
+      <div class="row"><span class="k">Fill</span><span class="v ok">Always</span></div>
+      <div class="row"><span class="k">JW state</span><span class="v" id="v-gima-state">—</span></div>
+      <div class="row"><span class="k">Result</span><span class="v" id="v-gima-result">—</span></div>
+      <button class="btn" onclick="runTest('gima')">▶ Run Test</button>
+    </div>
+
+    <!-- MAGNITE -->
+    <div class="demand-block">
+      <div class="demand-name">🟣 Magnite Apex <span id="chip-magnite" class="warn" style="font-size:10px">waiting</span></div>
+      <div class="row"><span class="k">account_id</span><span class="v">12398</span></div>
+      <div class="row"><span class="k">zone_id</span><span class="v">4059987</span></div>
+      <div class="row"><span class="k">VAST status</span><span class="v err" id="v-magnite-vast">—</span></div>
+      <div class="row"><span class="k">Result</span><span class="v" id="v-magnite-result">—</span></div>
+      <button class="btn" onclick="runTest('magnite')">▶ Run Test</button>
+    </div>
+
+    <!-- ADFORM -->
+    <div class="demand-block">
+      <div class="demand-name">🔵 Adform Outstream <span id="chip-adform" class="warn" style="font-size:10px">waiting</span></div>
+      <div class="row"><span class="k">placement_id</span><span class="v">2236422</span></div>
+      <div class="row"><span class="k">inview.js</span><span class="v" id="v-adform-script">—</span></div>
+      <div class="row"><span class="k">OpenRTB</span><span class="v" id="v-adform-rtb">—</span></div>
+    </div>
+
+    <div class="sep"></div>
+    <div class="panel-title">Event Log</div>
+    <div class="log" id="log"><span class="info">Ready. Click "Run Test" to begin.</span></div>
+  </div>
+</div>
+
+<script src="https://video-outstream.rubiconproject.com/apex.js"></script>
+<script>
+var wrap = document.getElementById('lpo-wrap');
+var logEl = document.getElementById('log');
+var _activeJW = null;
+
+function log(msg, cls) {
+  cls = cls || 'info';
+  var t = new Date().toLocaleTimeString('en', {hour12:false});
+  logEl.innerHTML += '<br><span class="t">[' + t + ']</span> <span class="' + cls + '">' + msg + '</span>';
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function collapsePlayer() {
+  wrap.classList.remove('open');
+  if (_activeJW) { try { _activeJW.remove(); } catch(e){} _activeJW = null; }
+  document.getElementById('lpo-slot').innerHTML = '';
+}
+
+function runTest(which) {
+  collapsePlayer();
+  log('Starting ' + which + ' test...', 'info');
+
+  var VAST_URLS = {
+    gima: 'https://pubads.g.doubleclick.net/gampad/ads?iu=/21775744923/external/single_ad_samples&sz=640x480&cust_params=sample_ct%3Dlinear&ciu_szs=300x250%2C728x90&gdfp_req=1&output=vast&unviewed_position_start=1&env=vp&impl=s&correlator=' + Date.now(),
+    magnite: 'https://optimized-by.rubiconproject.com/a/api/vast?account_id=12398&site_id=529542&zone_id=4059987&size_id=203&rf=' + encodeURIComponent(location.href)
+  };
+
+  if (!VAST_URLS[which]) return;
+
+  wrap.classList.add('open');
+
+  setTimeout(function() {
+    if (typeof window.jwplayer !== 'function') {
+      log('JWPlayer not ready', 'err');
+      return;
+    }
+    try {
+      var jw = window.jwplayer('lpo-slot').setup({
+        width: '100%', height: 360, mute: true, autostart: true,
+        advertising: { client: 'vast', tag: VAST_URLS[which], outstream: true }
+      });
+      _activeJW = jw;
+
+      jw.on('adRequest', function(e) {
+        log('adRequest sent', 'info');
+        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = 'requesting';
+      });
+      jw.on('adStarted', function() {
+        log('✅ Ad started playing!', 'ok');
+        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').textContent = '✅ Playing';
+        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').className = 'v ok';
+        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = '✅ playing';
+        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).className = 'ok';
+      });
+      jw.on('adComplete', function() {
+        log('Ad complete → collapsing', 'ok');
+        setTimeout(collapsePlayer, 500);
+      });
+      jw.on('adError', function(e) {
+        log('❌ adError: ' + e.message + ' (code ' + e.adErrorCode + ')', 'err');
+        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').textContent = '❌ ' + e.message;
+        document.getElementById('v-' + (which === 'gima' ? 'gima' : 'magnite') + '-result').className = 'v err';
+        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).textContent = '❌ error';
+        document.getElementById('chip-' + (which === 'gima' ? 'gima' : 'magnite')).className = 'err';
+        if (which !== 'gima') setTimeout(collapsePlayer, 300);
+      });
+      if (which === 'gima') { document.getElementById('v-gima-state').textContent = 'buffering'; document.getElementById('v-gima-state').className = 'v warn'; }
+      jw.on('buffer', function() { log('Buffering VAST...', 'info'); });
+      log('JW setup OK, requesting VAST...', 'info');
+    } catch(e) {
+      log('Setup error: ' + e.message, 'err');
+      collapsePlayer();
+    }
+  }, 300);
+}
+
+// Adform
+(function(){
+  var s = document.createElement('script');
+  s.src = 'https://s1.adform.net/banners/scripts/video/outstream/inview.js';
+  s.setAttribute('data-pmp-id', '2236422');
+  s.onload = function() {
+    document.getElementById('v-adform-script').textContent = '✅ loaded';
+    document.getElementById('v-adform-script').className = 'v ok';
+    log('Adform inview.js loaded', 'ok');
+  };
+  s.onerror = function() {
+    document.getElementById('v-adform-script').textContent = '❌ failed';
+    document.getElementById('v-adform-script').className = 'v err';
+  };
+  document.body.appendChild(s);
+  // Monitor openrtb calls
+  var origFetch = window.fetch;
+  window.fetch = function(u) {
+    var url = typeof u === 'string' ? u : (u && u.url) || '';
+    var r = origFetch.apply(this, arguments);
+    if (url.includes('adform')) {
+      r.then(function(res) {
+        var status = res.status;
+        document.getElementById('v-adform-rtb').textContent = status === 204 ? '204 No Content' : status + ' OK';
+        document.getElementById('v-adform-rtb').className = status === 204 ? 'v err' : 'v ok';
+        log('Adform OpenRTB: ' + status, status === 204 ? 'err' : 'ok');
+      }).catch(function(){});
+    }
+    return r;
+  };
+})();
+
+// Magnite VAST preflight check
+fetch('https://optimized-by.rubiconproject.com/a/api/vast?account_id=12398&site_id=529542&zone_id=4059987&size_id=203')
+  .then(function(r){ return r.text(); })
+  .then(function(xml){
+    var hasAd = xml.includes('<Ad');
+    document.getElementById('v-magnite-vast').textContent = hasAd ? '✅ Has creative' : '❌ Empty VAST';
+    document.getElementById('v-magnite-vast').className = hasAd ? 'v ok' : 'v err';
+    log('Magnite VAST preflight: ' + (hasAd ? 'has creative' : 'empty'), hasAd ? 'ok' : 'err');
+  }).catch(function(e){ log('Magnite preflight error: ' + e.message, 'err'); });
+</script>
+</body>
+</html>

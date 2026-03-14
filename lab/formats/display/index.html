@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Display Banner Test — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
+.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
+.logo{font-size:14px;font-weight:700;color:#fff}
+.badge{background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);color:#69b0f5;font-size:10px;padding:2px 7px;border-radius:4px}
+.content{max-width:1000px;margin:0 auto;padding:32px}
+h2{font-size:18px;font-weight:600;color:#fff;margin-bottom:24px}
+.size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-bottom:40px}
+.size-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:10px;padding:20px}
+.size-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#444;margin-bottom:12px;font-weight:700}
+.ad-slot{background:#050508;border:1px dashed #1a1a2e;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#222;font-size:11px;margin-bottom:12px;position:relative}
+.slot-info{display:flex;justify-content:space-between;font-size:11px;color:#444}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#1a1a2e;display:inline-block;margin-right:4px}
+.status-dot.ok{background:#56d364}.status-dot.err{background:#f85149}.status-dot.pending{background:#e3b341}
+.bidder-list{margin-top:16px}
+.bidder-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid #0d0d1a;font-size:12px}
+.bidder-row:last-child{border:none}
+.bidder-name{color:#888}
+.bidder-cpm{font-family:monospace;color:#56d364;font-size:11px}
+.note{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:16px;font-size:13px;color:#555;line-height:1.6;margin-top:32px}
+.note strong{color:#888}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="/lab">← Lab</a>
+  <span style="color:#1a1a2e">|</span>
+  <div class="logo">Display Banners</div>
+  <div class="badge">FORMAT TEST</div>
+</div>
+<div class="content">
+  <h2>IAB Standard Sizes — Header Bidding Test</h2>
+
+  <div class="size-grid">
+    <!-- 300x250 -->
+    <div class="size-card">
+      <div class="size-label">300×250 — Medium Rectangle</div>
+      <div class="ad-slot" style="width:300px;height:250px" id="slot-300x250">
+        <span id="slot-300x250-label">Awaiting bid...</span>
+      </div>
+      <div class="slot-info">
+        <span><span class="status-dot pending" id="dot-300x250"></span>Prebid auction</span>
+        <span id="cpm-300x250">—</span>
+      </div>
+      <div class="bidder-list" id="bids-300x250"></div>
+    </div>
+
+    <!-- 728x90 -->
+    <div class="size-card" style="grid-column:1/-1">
+      <div class="size-label">728×90 — Leaderboard</div>
+      <div class="ad-slot" style="width:100%;max-width:728px;height:90px" id="slot-728x90">
+        <span id="slot-728x90-label">Awaiting bid...</span>
+      </div>
+      <div class="slot-info">
+        <span><span class="status-dot pending" id="dot-728x90"></span>Prebid auction</span>
+        <span id="cpm-728x90">—</span>
+      </div>
+    </div>
+
+    <!-- 320x50 -->
+    <div class="size-card">
+      <div class="size-label">320×50 — Mobile Banner</div>
+      <div class="ad-slot" style="width:320px;height:50px" id="slot-320x50">
+        <span id="slot-320x50-label">Awaiting bid...</span>
+      </div>
+      <div class="slot-info">
+        <span><span class="status-dot pending" id="dot-320x50"></span>Prebid auction</span>
+        <span id="cpm-320x50">—</span>
+      </div>
+    </div>
+
+    <!-- 970x250 -->
+    <div class="size-card" style="grid-column:1/-1">
+      <div class="size-label">970×250 — Billboard</div>
+      <div class="ad-slot" style="width:100%;height:250px" id="slot-970x250">
+        <span id="slot-970x250-label">Awaiting bid...</span>
+      </div>
+      <div class="slot-info">
+        <span><span class="status-dot pending" id="dot-970x250"></span>Prebid auction</span>
+        <span id="cpm-970x250">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Note:</strong> Display banner test requires Prebid.js integration with your publisher account IDs configured. This page shows the slot structure and simulates the auction. To run a live auction, integrate Prebid.js with your Magnite, Criteo, PubMatic, and IX account IDs via the Lupon tag.
+  </div>
+</div>
+
+<script>
+// Simulate bid responses for demo
+var slots = ['300x250', '728x90', '320x50', '970x250'];
+var bidders = ['Magnite', 'Criteo', 'PubMatic', 'Index Exchange', 'Sovrn'];
+
+slots.forEach(function(size) {
+  setTimeout(function() {
+    var hasBid = Math.random() > 0.3;
+    var dot = document.getElementById('dot-' + size);
+    var cpm = document.getElementById('cpm-' + size);
+    var label = document.getElementById('slot-' + size + '-label');
+    var bidsEl = document.getElementById('bids-' + size);
+
+    if (hasBid) {
+      var winCpm = (Math.random() * 3 + 0.5).toFixed(2);
+      dot.className = 'status-dot ok';
+      cpm.textContent = '$' + winCpm + ' CPM';
+      cpm.style.color = '#56d364';
+      label.textContent = '✅ Bid won — $' + winCpm + ' CPM';
+      label.style.color = '#56d364';
+      if (bidsEl) {
+        var html = '';
+        bidders.slice(0, 3).forEach(function(b) {
+          var c = (Math.random() * 2 + 0.3).toFixed(2);
+          html += '<div class="bidder-row"><span class="bidder-name">' + b + '</span><span class="bidder-cpm">$' + c + '</span></div>';
+        });
+        bidsEl.innerHTML = html;
+      }
+    } else {
+      dot.className = 'status-dot err';
+      label.textContent = 'No bid — floor not met';
+      label.style.color = '#444';
+      cpm.textContent = 'No fill';
+    }
+  }, 1500 + Math.random() * 1000);
+});
+</script>
+</body>
+</html>

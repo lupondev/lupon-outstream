@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rewarded Video Test — Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0;overflow:hidden}
+.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
+.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
+.logo{font-size:14px;font-weight:700;color:#fff}
+.badge{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);color:#f59e0b;font-size:10px;padding:2px 7px;border-radius:4px}
+.sim{position:relative;height:calc(100vh - 56px);overflow:hidden}
+/* Article sim */
+.article-sim{padding:32px;max-width:680px;margin:0 auto;filter:blur(0);transition:filter .3s}
+.article-sim.blurred{filter:blur(4px);pointer-events:none;user-select:none}
+.article-sim h2{font-size:20px;font-weight:700;color:#fff;margin-bottom:12px}
+.article-sim p{font-size:14px;line-height:1.7;color:#666;margin-bottom:12px}
+.paywall{position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent, #08080f 60%);pointer-events:none}
+/* AdBlock banner */
+.adblock-banner{position:absolute;bottom:0;left:0;right:0;background:#0d0d1a;border-top:1px solid #1a1a2e;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;transform:translateY(100%);transition:transform .4s ease}
+.adblock-banner.show{transform:translateY(0)}
+.banner-text h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
+.banner-text p{font-size:13px;color:#555;line-height:1.4}
+.banner-btn{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;border:none;border-radius:8px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .15s}
+.banner-btn:hover{opacity:.9}
+/* Overlay */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:100}
+.overlay.show{display:flex}
+.overlay-card{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:16px;padding:32px;max-width:500px;width:90%;text-align:center}
+.overlay-card h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.overlay-card p{font-size:14px;color:#555;margin-bottom:24px;line-height:1.5}
+#video-container{background:#000;border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative}
+#video-container video{width:100%;display:block;max-height:250px}
+.countdown{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;font-size:12px;padding:4px 10px;border-radius:4px}
+.skip-btn{background:#7c3aed22;border:1px solid #7c3aed44;color:#a78bfa;border-radius:6px;padding:8px 20px;font-size:13px;cursor:pointer;margin-top:8px;transition:all .15s}
+.skip-btn:hover:not(:disabled){background:#7c3aed44}
+.skip-btn:disabled{opacity:.3;cursor:not-allowed}
+/* Reward */
+.reward{display:none;background:rgba(86,211,100,.05);border:1px solid rgba(86,211,100,.2);border-radius:10px;padding:20px;margin-top:16px;text-align:center}
+.reward.show{display:block}
+.reward h4{color:#56d364;font-size:16px;margin-bottom:6px}
+.reward p{color:#555;font-size:13px}
+/* Steps */
+.steps{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+.step{background:#111;border:1px solid #1a1a2e;border-radius:6px;padding:8px 12px;font-size:11px;color:#333;display:flex;align-items:center;gap:6px}
+.step.active{border-color:#7c3aed44;color:#a78bfa}
+.step.done{border-color:rgba(86,211,100,.3);color:#56d364}
+.step-n{width:16px;height:16px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.step.active .step-n{background:#7c3aed}
+.step.done .step-n{background:#56d364;color:#000}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="/lab">← Lab</a>
+  <span style="color:#1a1a2e">|</span>
+  <div class="logo">Rewarded Video</div>
+  <div class="badge">ADBLOCK RECOVERY</div>
+</div>
+
+<div class="sim">
+  <div class="article-sim" id="article">
+    <h2>Zelenski: Kijev spreman za novu rundu pregovora</h2>
+    <p>Predsjednik Ukrajine Volodimir Zelenski izjavio je da je Kijev spreman za novu rundu mirovnih pregovora, ali uz uvjet da Rusija poštuje teritorijalni integritet Ukrajine.</p>
+    <p>Američki dužnosnici potvrdili su da Washington traži odgodu pregovora kako bi se osigurao bolji diplomatski okvir za potencijalni sporazum o prekidu vatre.</p>
+    <p>Prema izvorima bliskim pregovaračkom timu, razgovori bi mogli početi već sljedeće sedmice u neutralnoj zemlji.</p>
+    <p>Portparol Kremlja Dmitrij Peskov rekao je da su Rusija, SAD i Ukrajina zainteresovane za nastavak trilateralnih pregovora o rješenju krize u Ukrajini, prenosi Srna.</p>
+    <p style="color:#1a1a2e">█████████████████████████ ███████████████ ██████████████████████████████████████ ████████████████████████ █████████████████████ ████████████████████████████████████████████████████████████████████</p>
+  </div>
+  <div class="paywall"></div>
+
+  <!-- AdBlock detected banner -->
+  <div class="adblock-banner" id="banner">
+    <div class="banner-text">
+      <h3>👋 Koristite AdBlock?</h3>
+      <p>Pogledajte kratku reklamu (30s) i nastavite čitati besplatno.</p>
+    </div>
+    <button class="banner-btn" onclick="showOverlay()">Gledaj reklamu →</button>
+  </div>
+
+  <!-- Video overlay -->
+  <div class="overlay" id="overlay">
+    <div class="overlay-card">
+      <div class="steps">
+        <div class="step active" id="step1"><span class="step-n">1</span>Gledaj video</div>
+        <div class="step" id="step2"><span class="step-n">2</span>Dobij pristup</div>
+        <div class="step" id="step3"><span class="step-n">3</span>Čitaj slobodno</div>
+      </div>
+      <h3>Kratka reklama (30s)</h3>
+      <p>Pogledajte reklamu i dobijte 10 minuta besplatnog čitanja.</p>
+      <div id="video-container">
+        <video id="reward-video" muted playsinline>
+          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+        </video>
+        <div class="countdown" id="countdown">30s</div>
+      </div>
+      <button class="skip-btn" id="skip-btn" disabled onclick="rewardUser()">Preskoči za <span id="skip-timer">30</span>s</button>
+      <div class="reward" id="reward">
+        <h4>✅ Hvala! Pristup aktiviran.</h4>
+        <p>Imate 10 minuta besplatnog čitanja. AdBlock možete ostaviti uključenim.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Simulate AdBlock detection after 2s
+setTimeout(function() {
+  document.getElementById('article').classList.add('blurred');
+  document.getElementById('banner').classList.add('show');
+}, 2000);
+
+var rewardTimer, skipTimer;
+
+function showOverlay() {
+  document.getElementById('overlay').classList.add('show');
+  var video = document.getElementById('reward-video');
+  var countdown = document.getElementById('countdown');
+  var skipBtn = document.getElementById('skip-btn');
+  var skipTimerEl = document.getElementById('skip-timer');
+  var secs = 30;
+
+  video.play().catch(function() {});
+
+  rewardTimer = setInterval(function() {
+    secs--;
+    countdown.textContent = secs + 's';
+    skipTimerEl.textContent = secs;
+    if (secs <= 5) {
+      skipBtn.disabled = false;
+      skipBtn.textContent = 'Preskoči → Dobij pristup';
+    }
+    if (secs <= 0) {
+      clearInterval(rewardTimer);
+      rewardUser();
+    }
+  }, 1000);
+}
+
+function rewardUser() {
+  clearInterval(rewardTimer);
+  var video = document.getElementById('reward-video');
+  video.pause();
+  document.getElementById('step1').className = 'step done';
+  document.getElementById('step2').className = 'step done';
+  document.getElementById('step3').className = 'step done';
+  document.getElementById('reward').classList.add('show');
+  document.getElementById('skip-btn').style.display = 'none';
+  document.getElementById('countdown').style.display = 'none';
+  setTimeout(function() {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('article').classList.remove('blurred');
+    document.getElementById('banner').classList.remove('show');
+  }, 2500);
+}
+</script>
+</body>
+</html>
