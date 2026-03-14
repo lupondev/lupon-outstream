@@ -41,7 +41,7 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .pbid-header-badge{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa}
 .pbid-header-status{margin-left:auto;font-size:11px;color:#333}
 .pbid-toggle{color:#333;font-size:12px;margin-left:4px;cursor:pointer}
-.pbid-body{display:flex;flex-direction:column;overflow:hidden}
+.pbid-body{display:flex;flex-direction:column;overflow:hidden;flex:1;min-height:0}
 .pbid-body.collapsed{display:none}
 .pbid-tabs{display:flex;gap:0;border-bottom:1px solid #111;flex-shrink:0;overflow-x:auto}
 .pbid-tab{padding:6px 14px;font-size:11px;cursor:pointer;color:#444;border-bottom:2px solid transparent;transition:all .15s;user-select:none;white-space:nowrap}
@@ -49,16 +49,16 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .pbid-tab.active{color:#a78bfa;border-bottom-color:#7c3aed}
 .pbid-tab.ai-tab{color:#f59e0b}
 .pbid-tab.ai-tab.active{color:#f59e0b;border-bottom-color:#f59e0b}
-/* AI tab layout: analysis above, chat below */
-.pbid-content{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.ai-scroll{flex:1;overflow-y:auto;padding:12px 16px}
-.ai-chat-bar{border-top:1px solid #111;padding:8px 12px;display:flex;gap:8px;flex-shrink:0;background:#080810}
-.ai-chat-input{flex:1;background:#050508;border:1px solid #1a1a2e;border-radius:6px;padding:7px 12px;font-size:12px;color:#e0e0e0;font-family:inherit;resize:none;outline:none;transition:border-color .15s;line-height:1.4}
-.ai-chat-input:focus{border-color:#f59e0b44}
+/* AI tab: scroll area fills space, chat bar is fixed 44px at bottom */
+#ai-tab-container{flex:1;display:none;flex-direction:column;overflow:hidden;min-height:0}
+.ai-scroll{flex:1;overflow-y:auto;padding:10px 14px;min-height:0}
+.ai-chat-bar{height:44px;border-top:1px solid #111;padding:6px 10px;display:flex;gap:8px;flex-shrink:0;background:#06060e;align-items:center}
+.ai-chat-input{flex:1;background:#050508;border:1px solid #1a1a2e;border-radius:5px;padding:5px 10px;font-size:12px;color:#e0e0e0;font-family:inherit;outline:none;transition:border-color .15s;height:30px;resize:none;line-height:1.3}
+.ai-chat-input:focus{border-color:#f59e0b55}
 .ai-chat-input::placeholder{color:#2a2a3a}
-.ai-chat-send{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#000;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.ai-chat-send{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#000;padding:0 14px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;height:30px}
 .ai-chat-send:disabled{opacity:.4;cursor:not-allowed}
-/* Non-AI tabs: normal scroll */
+/* Non-AI tab content */
 .pbid-content-simple{flex:1;overflow-y:auto;padding:12px 16px}
 .conn-banner{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .conn-banner.ext{border-color:rgba(124,58,237,.3);background:rgba(124,58,237,.05)}
@@ -85,25 +85,23 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 .event-detail{color:#555;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .config-block{background:#050508;border:1px solid #111;border-radius:6px;padding:10px;font-family:monospace;font-size:11px;line-height:1.7;white-space:pre-wrap;color:#555}
 .cfg-key{color:#69b0f5}.cfg-val{color:#a78bfa}.cfg-num{color:#56d364}
-.ai-header{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(124,58,237,.08));border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:10px 14px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ai-title{font-size:13px;font-weight:700;color:#f59e0b}
-.ai-subtitle{font-size:11px;color:#555;margin-top:2px}
-.ai-analyze-btn{background:linear-gradient(135deg,#f59e0b,#d97706);border:none;color:#000;padding:7px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;white-space:nowrap}
-.ai-analyze-btn:hover{opacity:.85}
-.ai-thinking{display:flex;align-items:center;gap:8px;color:#555;font-size:12px;padding:16px 0}
-.ai-dot{width:6px;height:6px;border-radius:50%;background:#f59e0b;animation:aidot 1.2s infinite}
+.ai-header{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(124,58,237,.08));border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:8px 12px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ai-title{font-size:12px;font-weight:700;color:#f59e0b}
+.ai-subtitle{font-size:10px;color:#555;margin-top:1px}
+.ai-thinking{display:flex;align-items:center;gap:6px;color:#555;font-size:12px;padding:12px 0}
+.ai-dot{width:5px;height:5px;border-radius:50%;background:#f59e0b;animation:aidot 1.2s infinite}
 .ai-dot:nth-child(2){animation-delay:.2s}
 .ai-dot:nth-child(3){animation-delay:.4s}
 @keyframes aidot{0%,80%,100%{opacity:.2}40%{opacity:1}}
-/* Chat messages */
-.chat-msg{display:flex;gap:8px;margin-bottom:10px}
+/* Chat bubbles */
+.chat-msg{display:flex;gap:7px;margin-bottom:8px}
 .chat-msg.user{flex-direction:row-reverse}
-.chat-bubble{max-width:90%;padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.6}
+.chat-bubble{max-width:92%;padding:7px 10px;border-radius:7px;font-size:12px;line-height:1.6}
 .chat-msg.ai .chat-bubble{background:#0d0d1a;border:1px solid #1a1a2e;color:#e0e0e0}
-.chat-msg.user .chat-bubble{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:#e0e0e0}
-.chat-avatar{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:2px}
+.chat-msg.user .chat-bubble{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18);color:#e0e0e0}
+.chat-avatar{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;margin-top:2px}
 .chat-avatar.ai{background:linear-gradient(135deg,#f59e0b,#7c3aed)}
-.chat-avatar.user{background:#1a1a2e;color:#888}
+.chat-avatar.user{background:#1a1a2e;color:#666}
 /* Checks */
 .group{margin-bottom:20px}
 .group-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
@@ -225,7 +223,6 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
       <span class="pbid-header-status" id="pbid-status">Checking extension...</span>
     </div>
     <div class="pbid-body" id="pbid-body">
-      <!-- connection banners shown only when NOT on AI tab -->
       <div id="conn-area" style="padding:8px 16px">
         <div class="conn-banner ext" id="ext-banner" style="display:none">
           <div class="conn-text">
@@ -257,11 +254,11 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
         <div class="pbid-tab" data-tab="errors">Errors</div>
         <div class="pbid-tab ai-tab" data-tab="ai">⚡ Lupon AI</div>
       </div>
-      <!-- AI tab: split layout with chat bar -->
-      <div id="ai-tab-container" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+      <!-- AI tab: flex column, scroll area + fixed chat bar -->
+      <div id="ai-tab-container">
         <div class="ai-scroll" id="ai-scroll"></div>
-        <div class="ai-chat-bar" id="ai-chat-bar">
-          <textarea class="ai-chat-input" id="ai-chat-input" placeholder="Ask ad ops question... (e.g. 'Why is rubicon not bidding?' / 'How to fix seedtag 400?')" rows="1"></textarea>
+        <div class="ai-chat-bar" id="ai-chat-bar" style="display:none">
+          <textarea class="ai-chat-input" id="ai-chat-input" placeholder="Ask ad ops question... e.g. 'Why is rubicon not bidding?'" rows="1"></textarea>
           <button class="ai-chat-send" id="ai-chat-send">Send</button>
         </div>
       </div>
@@ -274,10 +271,8 @@ nav a.green{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(8
 <script>
 var PROFESSOR_PREBID_EXT_ID = localStorage.getItem('lupon_ext_id') || 'kmmnbanjkdiphdabpjhnfcgechcjlgkj';
 var state = { url:'', results:{}, scanning:false, fetchedData:{}, pbData:null, extConnected:false };
-// AI chat state
 var aiChat = { messages:[], analyzing:false };
 
-// ── DRAG RESIZE ──────────────────────────────────────────────────
 (function(){
   var h=document.getElementById('resize-handle'),p=document.getElementById('pbid-panel');
   var drag=false,sy,sh,MIN=42,MAX=600;
@@ -367,25 +362,13 @@ function ingestPbData(data){state.pbData=data;var ver=data.version||'?';var unit
 function generateBookmarklet(url){var bm='javascript:(function(){var d={version:window.pbjs&&window.pbjs.version,adUnits:window.pbjs&&window.pbjs.adUnits,config:window.pbjs&&window.pbjs.getConfig&&window.pbjs.getConfig(),bidders:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents().filter(function(e){return e.eventType==="bidRequested";}).map(function(e){return e.args&&e.args.bidder;}).filter(function(b,i,a){return b&&a.indexOf(b)===i;}),events:window.pbjs&&window.pbjs.getEvents&&window.pbjs.getEvents(),errors:window.__pbjsErrors||[]};window.opener&&window.opener.postMessage({type:"LUPON_PBJS_DATA",data:d},"*");alert("Sent! Prebid v"+d.version+" | "+((d.adUnits||[]).length)+" units");})();';document.getElementById('bm-code').textContent=bm;document.getElementById('bm-copy-btn').onclick=function(){navigator.clipboard.writeText(bm).then(function(){document.getElementById('bm-copy-btn').textContent='✓';setTimeout(function(){document.getElementById('bm-copy-btn').textContent='Copy';},2000);});};}
 window.addEventListener('message',function(e){if(e.data&&e.data.type==='LUPON_PBJS_DATA')ingestPbData(e.data.data);});
 
-// ── AI CONTEXT BUILDER ────────────────────────────────────────────
-function buildAIContext(){
-  var d=state.pbData||{};var events=d.events||[];
-  var bidResponses=events.filter(function(e){return e.eventType==='bidResponse';}).map(function(e){return{bidder:(e.args&&(e.args.bidder||e.args.bidderCode))||'?',cpm:e.args&&e.args.cpm,adUnit:e.args&&e.args.adUnitCode,size:e.args&&e.args.width&&(e.args.width+'x'+e.args.height),ms:e.args&&e.args.timeToRespond};});
-  var noBidsByBidder={};events.filter(function(e){return e.eventType==='noBid';}).forEach(function(e){var b=(e.args&&e.args.bidder)||'?';noBidsByBidder[b]=(noBidsByBidder[b]||0)+1;});
-  var timeoutsByBidder={};events.filter(function(e){return e.eventType==='bidTimeout';}).forEach(function(e){var bids=Array.isArray(e.args)?e.args:[e.args];bids.forEach(function(b){var n=b&&b.bidder;if(n)timeoutsByBidder[n]=(timeoutsByBidder[n]||0)+1;});});
-  var bidderErrors=events.filter(function(e){return e.eventType==='bidderError';}).map(function(e){return{bidder:e.args&&e.args.bidder,message:e.args&&e.args.error&&(e.args.error.message||String(e.args.error)),status:e.args&&e.args.error&&e.args.error.status};});
-  var winners=events.filter(function(e){return e.eventType==='bidWon';}).map(function(e){return{bidder:e.args&&(e.args.bidder||e.args.bidderCode),cpm:e.args&&e.args.cpm,adUnit:e.args&&e.args.adUnitCode};});
-  var adUnitDetails=(d.adUnits||[]).map(function(u){return{code:u.code,sizes:u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes,bidders:(u.bids||[]).map(function(b){return b.bidder;})};});
-  var checkResults={};CHECKS.forEach(function(c){if(state.results[c.id]&&state.results[c.id].status!=='na')checkResults[c.name]={status:state.results[c.id].status,detail:state.results[c.id].detail};});
-  var reqs=events.filter(function(e){return e.eventType==='bidRequested';}).length;
-  var cpms=bidResponses.filter(function(b){return b.cpm>0;}).map(function(b){return b.cpm;});
-  return{publisher:state.url,prebid_version:d.version,wrapper:d.namespace||'standard_pbjs',dab_instances:d.dabInstances,ad_units:adUnitDetails,bidder_timeout_ms:d.config&&d.config.bidderTimeout,price_floors:d.config&&d.config.floors?'configured':'NOT CONFIGURED',consent:d.config&&d.config.consentManagement?'configured':'MISSING',full_config:d.config||{},auction_summary:{bid_requests:reqs,bid_responses:bidResponses.length,timeouts:Object.values(timeoutsByBidder).reduce(function(a,b){return a+b;},0),no_bids:Object.values(noBidsByBidder).reduce(function(a,b){return a+b;},0),wins:winners.length,fill_rate_pct:reqs>0?Math.round((winners.length/reqs)*100):0,avg_cpm:cpms.length?(cpms.reduce(function(a,b){return a+b;},0)/cpms.length).toFixed(4):null,max_cpm:cpms.length?Math.max.apply(null,cpms).toFixed(4):null},bid_responses_detail:bidResponses.slice(0,30),winners:winners,no_bids_by_bidder:noBidsByBidder,timeouts_by_bidder:timeoutsByBidder,bidder_errors:bidderErrors,active_bidders:d.bidders||[],ads_txt_status:state.fetchedData.adstxt?(state.fetchedData.adstxt.toLowerCase().includes('luponmedia')?'luponmedia PRESENT':'luponmedia MISSING'):'could not fetch',ads_txt_sample:state.fetchedData.adstxt?state.fetchedData.adstxt.substring(0,500):null,outstream:state.fetchedData.html?(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')?'detected':'not found'):'unknown',check_results:checkResults};}
+function buildAIContext(){var d=state.pbData||{};var events=d.events||[];var bidResponses=events.filter(function(e){return e.eventType==='bidResponse';}).map(function(e){return{bidder:(e.args&&(e.args.bidder||e.args.bidderCode))||'?',cpm:e.args&&e.args.cpm,adUnit:e.args&&e.args.adUnitCode,size:e.args&&e.args.width&&(e.args.width+'x'+e.args.height),ms:e.args&&e.args.timeToRespond};});var noBidsByBidder={};events.filter(function(e){return e.eventType==='noBid';}).forEach(function(e){var b=(e.args&&e.args.bidder)||'?';noBidsByBidder[b]=(noBidsByBidder[b]||0)+1;});var timeoutsByBidder={};events.filter(function(e){return e.eventType==='bidTimeout';}).forEach(function(e){var bids=Array.isArray(e.args)?e.args:[e.args];bids.forEach(function(b){var n=b&&b.bidder;if(n)timeoutsByBidder[n]=(timeoutsByBidder[n]||0)+1;});});var bidderErrors=events.filter(function(e){return e.eventType==='bidderError';}).map(function(e){return{bidder:e.args&&e.args.bidder,message:e.args&&e.args.error&&(e.args.error.message||String(e.args.error)),status:e.args&&e.args.error&&e.args.error.status};});var winners=events.filter(function(e){return e.eventType==='bidWon';}).map(function(e){return{bidder:e.args&&(e.args.bidder||e.args.bidderCode),cpm:e.args&&e.args.cpm,adUnit:e.args&&e.args.adUnitCode};});var adUnitDetails=(d.adUnits||[]).map(function(u){return{code:u.code,sizes:u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes,bidders:(u.bids||[]).map(function(b){return b.bidder;})};});var checkResults={};CHECKS.forEach(function(c){if(state.results[c.id]&&state.results[c.id].status!=='na')checkResults[c.name]={status:state.results[c.id].status,detail:state.results[c.id].detail};});var reqs=events.filter(function(e){return e.eventType==='bidRequested';}).length;var cpms=bidResponses.filter(function(b){return b.cpm>0;}).map(function(b){return b.cpm;});return{publisher:state.url,prebid_version:d.version,wrapper:d.namespace||'standard_pbjs',dab_instances:d.dabInstances,ad_units:adUnitDetails,bidder_timeout_ms:d.config&&d.config.bidderTimeout,price_floors:d.config&&d.config.floors?'configured':'NOT CONFIGURED',consent:d.config&&d.config.consentManagement?'configured':'MISSING',full_config:d.config||{},auction_summary:{bid_requests:reqs,bid_responses:bidResponses.length,timeouts:Object.values(timeoutsByBidder).reduce(function(a,b){return a+b;},0),no_bids:Object.values(noBidsByBidder).reduce(function(a,b){return a+b;},0),wins:winners.length,fill_rate_pct:reqs>0?Math.round((winners.length/reqs)*100):0,avg_cpm:cpms.length?(cpms.reduce(function(a,b){return a+b;},0)/cpms.length).toFixed(4):null,max_cpm:cpms.length?Math.max.apply(null,cpms).toFixed(4):null},bid_responses_detail:bidResponses.slice(0,30),winners:winners,no_bids_by_bidder:noBidsByBidder,timeouts_by_bidder:timeoutsByBidder,bidder_errors:bidderErrors,active_bidders:d.bidders||[],ads_txt_status:state.fetchedData.adstxt?(state.fetchedData.adstxt.toLowerCase().includes('luponmedia')?'luponmedia PRESENT':'luponmedia MISSING'):'could not fetch',ads_txt_sample:state.fetchedData.adstxt?state.fetchedData.adstxt.substring(0,500):null,outstream:state.fetchedData.html?(state.fetchedData.html.includes('apex.js')||state.fetchedData.html.includes('outstream')?'detected':'not found'):'unknown',check_results:checkResults};}
 
 var AI_SYSTEM=`You are Lupon Intelligence — senior ad ops brain of Lupon Media, a leading SSP/MCM platform serving Balkans and MENA publishers.
 
 You have direct access to raw Prebid.js auction data from a live publisher page via Chrome extension — actual bid response objects, error messages, no-bid counts per bidder, timeout data, and full config.
 
-RULES — always follow these:
+RULES:
 - Use ACTUAL numbers and names. Say "rubicon: 4 no-bids, seedtag: HTTP 400 error" not "some bidders failed".
 - Quote actual error messages when present. Name the exact bidder.
 - Revenue calculations: use real CPM × realistic fill rate × Balkan news site traffic (100K-500K monthly pageviews typical).
@@ -395,101 +378,50 @@ RULES — always follow these:
 For the INITIAL audit, format exactly:
 SCORE: X/10
 OVERVIEW
-[2-3 sentences with wrapper name, version, ad unit count, auction outcome with exact numbers]
+[2-3 sentences with wrapper, version, ad unit count, auction outcome]
 🔴 CRITICAL
-[bullet per issue, must name specific bidders and exact error messages]
+[bullet per issue, specific bidder names and error messages]
 ⚠️ WARNINGS
-[bullets with specific details and numbers]
+[bullets with specific details]
 💡 FIXES (Priority Order)
-[numbered, most impactful first, with exact config values]
+[numbered, with exact config values]
 📊 BIDDER BREAKDOWN
-[per-bidder: what happened, CPM if available, why failing]
+[per-bidder analysis]
 🔮 REVENUE ESTIMATE
-[current vs potential, based on actual data]
+[current vs potential]
 
-For FOLLOW-UP questions (anything after the initial audit), answer directly and concisely. No need to repeat the full format — just answer the specific question using the auction data context.`;
+For FOLLOW-UP questions, answer directly and concisely using the auction data.`;
 
-// ── AI CHAT ENGINE ────────────────────────────────────────────────
-function getApiKey(){
-  var k=localStorage.getItem('lupon_ai_key');
-  if(!k){k=prompt('Enter Anthropic API key for Lupon AI:\n(Saved locally only)');if(!k||!k.trim())return null;localStorage.setItem('lupon_ai_key',k.trim());}
-  return k.trim();
-}
+function getApiKey(){var k=localStorage.getItem('lupon_ai_key');if(!k){k=prompt('Enter Anthropic API key for Lupon AI:\n(Saved locally only)');if(!k||!k.trim())return null;localStorage.setItem('lupon_ai_key',k.trim());}return k.trim();}
 
-async function sendAIMessage(userMsg, isInitial){
+async function sendAIMessage(userMsg,isInitial){
   var apiKey=getApiKey();if(!apiKey)return;
   aiChat.analyzing=true;
-  var sendBtn=document.getElementById('ai-chat-send');
-  if(sendBtn)sendBtn.disabled=true;
-
-  // Add user message to chat (skip for initial auto-analysis)
-  if(!isInitial){
-    aiChat.messages.push({role:'user',content:userMsg});
-    appendChatMsg('user',userMsg);
-  }
-
-  // Thinking indicator
+  var sendBtn=document.getElementById('ai-chat-send');if(sendBtn)sendBtn.disabled=true;
+  if(!isInitial){aiChat.messages.push({role:'user',content:userMsg});appendChatMsg('user',userMsg);}
   var thinkId='think-'+Date.now();
   appendChatMsg('ai','<span id="'+thinkId+'"><span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span></span>',true);
-
-  // Build messages array
   var msgs=[];
-  if(isInitial){
-    // First message: full context + audit request
-    var ctx=buildAIContext();
-    msgs=[{role:'user',content:'Perform a complete ad ops audit on this publisher setup:\n\n```json\n'+JSON.stringify(ctx,null,2)+'\n```'}];
-  } else {
-    // Follow-up: include conversation history + fresh context summary
-    var ctx=buildAIContext();
-    var ctxSummary='[Current publisher: '+ctx.publisher+' | Prebid '+ctx.prebid_version+' | '+ctx.auction_summary.bid_responses+' bid responses | '+ctx.auction_summary.bid_requests+' requests | '+JSON.stringify(ctx.no_bids_by_bidder)+' no-bids | errors: '+JSON.stringify(ctx.bidder_errors)+']';
-    // Build full history
-    for(var i=0;i<aiChat.messages.length;i++){msgs.push(aiChat.messages[i]);}
-    // Append context to last user message
-    msgs[msgs.length-1]={role:'user',content:msgs[msgs.length-1].content+'\n\nContext: '+ctxSummary};
-  }
-
+  if(isInitial){var ctx=buildAIContext();msgs=[{role:'user',content:'Perform a complete ad ops audit:\n\n```json\n'+JSON.stringify(ctx,null,2)+'\n```'}];}
+  else{var ctx=buildAIContext();var cs='['+ctx.publisher+' | Prebid '+ctx.prebid_version+' | '+ctx.auction_summary.bid_responses+' responses | no-bids:'+JSON.stringify(ctx.no_bids_by_bidder)+' | errors:'+JSON.stringify(ctx.bidder_errors)+']';for(var i=0;i<aiChat.messages.length;i++)msgs.push(aiChat.messages[i]);msgs[msgs.length-1]={role:'user',content:msgs[msgs.length-1].content+'\n\nContext: '+cs};}
   try{
-    var resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,system:AI_SYSTEM,messages:msgs})
-    });
-    if(!resp.ok){
-      var err=await resp.json().catch(function(){return{};});
-      if(resp.status===401){localStorage.removeItem('lupon_ai_key');replaceThinking(thinkId,'❌ Invalid API key. Click Send again to re-enter.');return;}
-      throw new Error('API '+resp.status+': '+(err.error&&err.error.message||'unknown'));
-    }
-    var data=await resp.json();
-    var text=data.content&&data.content[0]&&data.content[0].text;
-    if(!text)throw new Error('Empty response');
-    // Save to history
-    aiChat.messages.push({role:'user',content:msgs[msgs.length-1].content});
-    aiChat.messages.push({role:'assistant',content:text});
-    // Keep history trimmed to last 10 exchanges
+    var resp=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,system:AI_SYSTEM,messages:msgs})});
+    if(!resp.ok){var err=await resp.json().catch(function(){return{};});if(resp.status===401){localStorage.removeItem('lupon_ai_key');replaceThinking(thinkId,'❌ Invalid API key.');return;}throw new Error('API '+resp.status+': '+(err.error&&err.error.message||'unknown'));}
+    var data=await resp.json();var text=data.content&&data.content[0]&&data.content[0].text;if(!text)throw new Error('Empty response');
+    aiChat.messages.push({role:'user',content:msgs[msgs.length-1].content});aiChat.messages.push({role:'assistant',content:text});
     if(aiChat.messages.length>20)aiChat.messages=aiChat.messages.slice(aiChat.messages.length-20);
     replaceThinking(thinkId,formatAIText(text));
-  }catch(e){
-    replaceThinking(thinkId,'❌ '+e.message);
-  }finally{
-    aiChat.analyzing=false;
-    if(sendBtn)sendBtn.disabled=false;
-    scrollAI();
-  }
+  }catch(e){replaceThinking(thinkId,'❌ '+e.message);}
+  finally{aiChat.analyzing=false;if(sendBtn)sendBtn.disabled=false;scrollAI();}
 }
 
 function formatAIText(text){
-  var lines=text.split('\n');
-  var html='';var colorMap={'CRITICAL':'#f85149','WARNINGS':'#e3b341','FIXES':'#3b82f6','BIDDER':'#a78bfa','REVENUE':'#56d364','OVERVIEW':'#bbb'};var curColor='#ccc';var buf='';
+  var lines=text.split('\n');var html='';var colorMap={'CRITICAL':'#f85149','WARNINGS':'#e3b341','FIXES':'#3b82f6','BIDDER':'#a78bfa','REVENUE':'#56d364','OVERVIEW':'#bbb'};var curColor='#ccc';var buf='';
   function flush(){if(!buf.trim())return;html+='<div style="color:'+curColor+';font-size:12px;line-height:1.75;margin-bottom:2px">'+buf.replace(/\n/g,'<br>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>')+'</div>';buf='';}
-  lines.forEach(function(line){
-    if(/^SCORE:/.test(line)){flush();html+='<div style="font-size:18px;font-weight:800;color:#f59e0b;margin:4px 0 8px">'+line+'</div>';return;}
-    if(/^(OVERVIEW|🔴|⚠️|💡|📊|🔮)/.test(line)){flush();curColor='#ccc';for(var k in colorMap){if(line.includes(k)){curColor=colorMap[k];break;}}html+='<div style="font-size:10px;font-weight:700;color:'+curColor+';text-transform:uppercase;letter-spacing:1px;margin-top:12px;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid #111">'+line+'</div>';return;}
-    buf+=(buf?'\n':'')+line;
-  });flush();
-  return html;
+  lines.forEach(function(line){if(/^SCORE:/.test(line)){flush();html+='<div style="font-size:18px;font-weight:800;color:#f59e0b;margin:4px 0 8px">'+line+'</div>';return;}if(/^(OVERVIEW|🔴|⚠️|💡|📊|🔮)/.test(line)){flush();curColor='#ccc';for(var k in colorMap){if(line.includes(k)){curColor=colorMap[k];break;}}html+='<div style="font-size:10px;font-weight:700;color:'+curColor+';text-transform:uppercase;letter-spacing:1px;margin-top:12px;margin-bottom:4px;padding-bottom:3px;border-bottom:1px solid #111">'+line+'</div>';return;}buf+=(buf?'\n':'')+line;});flush();return html;
 }
 
-function appendChatMsg(role, htmlContent, isRaw){
+function appendChatMsg(role,htmlContent,isRaw){
   var scroll=document.getElementById('ai-scroll');if(!scroll)return;
   var wrap=document.createElement('div');wrap.className='chat-msg '+role;
   var av=document.createElement('div');av.className='chat-avatar '+role;av.textContent=role==='ai'?'⚡':'';
@@ -500,12 +432,7 @@ function appendChatMsg(role, htmlContent, isRaw){
   if(role==='ai'){wrap.appendChild(av);wrap.appendChild(bub);}else{wrap.appendChild(bub);wrap.appendChild(av);}
   scroll.appendChild(wrap);scrollAI();
 }
-
-function replaceThinking(id,html){
-  var el=document.getElementById(id);
-  if(el){var bub=el.closest('.chat-bubble');if(bub)bub.innerHTML=html;}
-}
-
+function replaceThinking(id,html){var el=document.getElementById(id);if(el){var bub=el.closest('.chat-bubble');if(bub)bub.innerHTML=html;}}
 function scrollAI(){var s=document.getElementById('ai-scroll');if(s)setTimeout(function(){s.scrollTop=s.scrollHeight;},50);}
 
 function initAITab(){
@@ -513,17 +440,15 @@ function initAITab(){
   if(scroll)scroll.innerHTML='';
   aiChat.messages=[];
   if(!state.pbData){
-    if(scroll)scroll.innerHTML='<div style="padding:16px"><div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">Pull live data first to enable AI audit</div></div></div><div style="color:#333;font-size:12px;padding:16px 0;text-align:center">Connect extension → Pull Live Data → come back here</div></div>';
+    if(scroll)scroll.innerHTML='<div style="padding:12px"><div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">Pull live data first to enable AI audit</div></div></div><div style="color:#333;font-size:12px;padding:12px 0;text-align:center">Connect extension → Pull Live Data → come back here</div></div>';
+    document.getElementById('ai-chat-bar').style.display='none';
     return;
   }
-  // Show header + auto-start analysis
-  if(scroll){
-    scroll.innerHTML='<div class="ai-header" style="margin-bottom:0"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">'+state.pbData.version+' · '+(state.pbData.adUnits||[]).length+' units · '+(state.pbData.events||[]).length+' events</div></div></div>';
-  }
-  sendAIMessage('', true);
+  document.getElementById('ai-chat-bar').style.display='flex';
+  if(scroll)scroll.innerHTML='<div class="ai-header"><div><div class="ai-title">⚡ Lupon Intelligence</div><div class="ai-subtitle">'+state.pbData.version+' · '+(state.pbData.adUnits||[]).length+' units · '+(state.pbData.events||[]).length+' events</div></div></div>';
+  sendAIMessage('',true);
 }
 
-// ── REPORT ────────────────────────────────────────────────────────
 function enableReport(){var btn=document.getElementById('report-btn');btn.classList.remove('disabled');btn.onclick=openReport;}
 function openReport(){if(!state.url)return;var d=state.pbData||{};var res=state.results;var sc=CHECKS.filter(function(c){return c.scored;});var passed=sc.filter(function(c){return res[c.id]&&res[c.id].status==='ok';}).length;var critical=CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).length;var wc=sc.filter(function(c){return res[c.id]&&res[c.id].status==='warn';}).length;var total=sc.filter(function(c){return res[c.id]&&res[c.id].status!=='na';}).length||sc.length;var score=total>0?Math.round((passed/total)*100):0;var wins=(d.events||[]).filter(function(e){return e.eventType==='bidWon';});var tos=(d.events||[]).filter(function(e){return e.eventType==='bidTimeout';});var reqs=(d.events||[]).filter(function(e){return e.eventType==='bidRequested';});var toRate=reqs.length?Math.round((tos.length/reqs.length)*100):0;var winCpm=wins.length&&wins[0].args&&wins[0].args.cpm?wins[0].args.cpm.toFixed(3):null;var payload=encodeURIComponent(JSON.stringify({url:state.url,ts:new Date().toISOString(),score:score,passed:passed,critical:critical,warnings:wc,prebidVersion:d.version,adUnits:(d.adUnits||[]).length,bidders:(d.bidders||[]),timeout:d.config&&d.config.bidderTimeout,bids:(d.events||[]).filter(function(e){return e.eventType==='bidResponse';}).length,wins:wins.length,timeoutRate:toRate,winCpm:winCpm,namespace:d.namespace,issues:CHECKS.filter(function(c){return res[c.id]&&res[c.id].status==='fail';}).map(function(c){return{name:c.name,detail:res[c.id].detail};}),warnings_list:CHECKS.filter(function(c){return c.scored&&res[c.id]&&res[c.id].status==='warn';}).map(function(c){return{name:c.name,detail:res[c.id].detail};})}));window.open('/lab/report/?data='+payload,'_blank');}
 
@@ -534,51 +459,26 @@ document.getElementById('pbid-toggle-btn').addEventListener('click',function(){p
 document.querySelectorAll('.pbid-tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.pbid-tab').forEach(function(t){t.classList.remove('active');});tab.classList.add('active');activeTab=tab.dataset.tab;renderPbidContent();});});
 
 function renderPbidContent(){
-  var aiContainer=document.getElementById('ai-tab-container');
-  var simpleContent=document.getElementById('pbid-content');
+  var aiCont=document.getElementById('ai-tab-container');
+  var simple=document.getElementById('pbid-content');
   var connArea=document.getElementById('conn-area');
-  var chatBar=document.getElementById('ai-chat-bar');
-
   if(activeTab==='ai'){
-    aiContainer.style.display='flex';
-    simpleContent.style.display='none';
-    connArea.style.display='none';
-    chatBar.style.display=state.pbData?'flex':'none';
-    initAITab();
-    return;
+    aiCont.style.display='flex';simple.style.display='none';connArea.style.display='none';
+    initAITab();return;
   }
-
-  // Non-AI tabs
-  aiContainer.style.display='none';
-  simpleContent.style.display='block';
-  connArea.style.display='block';
-
-  var d=state.pbData;
-  var el=simpleContent;
+  aiCont.style.display='none';simple.style.display='block';connArea.style.display='block';
+  var d=state.pbData;var el=simple;
   if(!d){el.innerHTML='<div style="text-align:center;padding:20px;color:#222;font-size:12px">No live data yet.</div>';return;}
   if(activeTab==='adunits'){if(!d.adUnits||!d.adUnits.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No ad units</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Code</th><th>Sizes</th><th>Types</th><th>Bidders</th></tr></thead><tbody>';d.adUnits.forEach(function(u){var sz=(u.mediaTypes&&u.mediaTypes.banner&&u.mediaTypes.banner.sizes)?u.mediaTypes.banner.sizes.map(function(s){return s.join('x');}).join(', '):'—';var tp=Object.keys(u.mediaTypes||{}).join(', ')||'—';var bd=(u.bids||[]).map(function(b){return'<span class="bidder-tag">'+b.bidder+'</span>';}).join('');h+='<tr><td style="font-family:monospace;color:#a78bfa;font-size:11px">'+u.code+'</td><td style="color:#555;font-size:10px">'+sz+'</td><td style="color:#555;font-size:10px">'+tp+'</td><td>'+bd+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
   else if(activeTab==='bids'){var bids=(d.events||[]).filter(function(e){return e.eventType==='bidResponse';});if(!bids.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bid responses yet</div>';return;}var h='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Unit</th><th>CPM</th><th>Size</th><th>Time</th></tr></thead><tbody>';bids.forEach(function(e){var b=e.args||{};h+='<tr><td style="font-weight:600;color:#e0e0e0">'+(b.bidder||b.bidderCode||'?')+'</td><td style="font-family:monospace;font-size:10px;color:#555">'+(b.adUnitCode||'?')+'</td><td class="'+(b.cpm?'cpm-ok':'cpm-zero')+'">'+(b.cpm?'$'+b.cpm.toFixed(3):'—')+'</td><td style="color:#555;font-size:10px">'+(b.width&&b.height?b.width+'x'+b.height:'—')+'</td><td style="color:#555;font-size:10px">'+(b.timeToRespond?b.timeToRespond+'ms':'—')+'</td></tr>';});el.innerHTML=h+'</tbody></table>';}
-  else if(activeTab==='bidders'){var bd=d.bidders||[];if(!bd.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bidders yet — pull again after auction fires</div>';return;}el.innerHTML='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>'+bd.map(function(b){return'<tr><td style="font-weight:600;color:#e0e0e0">'+b+'</td><td><span class="bidder-tag bid">active</span></td></tr>';}).join('')+'</tbody></table>';}
+  else if(activeTab==='bidders'){var bd=d.bidders||[];if(!bd.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No bidders yet</div>';return;}el.innerHTML='<table class="pbid-table"><thead><tr><th>Bidder</th><th>Status</th></tr></thead><tbody>'+bd.map(function(b){return'<tr><td style="font-weight:600;color:#e0e0e0">'+b+'</td><td><span class="bidder-tag bid">active</span></td></tr>';}).join('')+'</tbody></table>';}
   else if(activeTab==='events'){var ev=(d.events||[]).slice(-30).reverse();if(!ev.length){el.innerHTML='<div style="color:#333;padding:8px;font-size:12px">No events</div>';return;}el.innerHTML=ev.map(function(e){var tc=e.eventType.includes('Win')?'win':e.eventType.includes('Timeout')?'timeout':(e.eventType.includes('bid')||e.eventType.includes('Bid'))?'bid':'auction';var det=(e.args&&e.args.bidder?e.args.bidder:'')+(e.args&&e.args.cpm?' $'+e.args.cpm.toFixed(3):'');return'<div class="event-row"><span class="event-time">'+(e.elapsedTime?e.elapsedTime+'ms':'—')+'</span><span class="event-type '+tc+'">'+e.eventType+'</span><span class="event-detail">'+det+'</span></div>';}).join('');}
   else if(activeTab==='config'){var str=JSON.stringify(d.config||{},null,2).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"([^"]+)":/g,'<span class="cfg-key">"$1"</span>:').replace(/: "([^"]*)"/g,': <span class="cfg-val">"$1"</span>').replace(/: (\d+)/g,': <span class="cfg-num">$1</span>');el.innerHTML='<div class="config-block">'+str+'</div>';}
-  else if(activeTab==='errors'){var errs=d.errors||[];var errEvents=(d.events||[]).filter(function(e){return e.eventType==='bidderError';});var all=errs.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+e+'</div>';}).join('');all+=errEvents.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+((e.args&&e.args.bidder)||'?')+': '+((e.args&&e.args.error&&(e.args.error.message||JSON.stringify(e.args.error)))||'unknown')+'</div>';}).join('');el.innerHTML=all||'<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';}
+  else if(activeTab==='errors'){var errs=d.errors||[];var errEv=(d.events||[]).filter(function(e){return e.eventType==='bidderError';});var all=errs.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+e+'</div>';}).join('');all+=errEv.map(function(e){return'<div style="color:#f85149;font-size:11px;padding:5px 0;border-bottom:1px solid #111">❌ '+((e.args&&e.args.bidder)||'?')+': '+((e.args&&e.args.error&&(e.args.error.message||JSON.stringify(e.args.error)))||'unknown')+'</div>';}).join('');el.innerHTML=all||'<div style="color:#56d364;padding:8px;font-size:12px">✅ No errors</div>';}
 }
 
-// Chat send button + Enter key
-document.getElementById('ai-chat-send').addEventListener('click',function(){
-  var inp=document.getElementById('ai-chat-input');
-  var msg=inp.value.trim();
-  if(!msg||aiChat.analyzing)return;
-  inp.value='';
-  inp.style.height='auto';
-  sendAIMessage(msg,false);
-});
-document.getElementById('ai-chat-input').addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('ai-chat-send').click();}
-  // Auto-resize
-  this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px';
-});
-
+document.getElementById('ai-chat-send').addEventListener('click',function(){var inp=document.getElementById('ai-chat-input');var msg=inp.value.trim();if(!msg||aiChat.analyzing)return;inp.value='';sendAIMessage(msg,false);});
+document.getElementById('ai-chat-input').addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();document.getElementById('ai-chat-send').click();}});
 document.getElementById('scan-btn').addEventListener('click',startScan);
 document.getElementById('url-input').addEventListener('keydown',function(e){if(e.key==='Enter')startScan();});
 document.getElementById('ext-pull-btn').addEventListener('click',pullFromExtension);
