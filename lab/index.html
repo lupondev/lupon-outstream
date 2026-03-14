@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lupon Ad Lab</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0f;color:#e0e0e0;min-height:100vh}
+
+/* Header */
+.header{background:#0f0f1a;border-bottom:1px solid #1e1e2e;padding:16px 32px;display:flex;align-items:center;gap:12px}
+.logo{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.logo span{color:#7c3aed}
+.badge{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa;font-size:11px;padding:2px 8px;border-radius:4px}
+
+/* Hero */
+.hero{padding:64px 32px 48px;max-width:900px;margin:0 auto;text-align:center}
+.hero h1{font-size:36px;font-weight:700;color:#fff;margin-bottom:12px;letter-spacing:-.5px}
+.hero h1 span{background:linear-gradient(135deg,#7c3aed,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:16px;color:#666;max-width:560px;margin:0 auto 40px;line-height:1.6}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;padding:0 32px 64px;max-width:1200px;margin:0 auto}
+
+/* Card */
+.card{background:#0f0f1a;border:1px solid #1e1e2e;border-radius:12px;padding:20px;transition:border-color .2s,transform .2s;cursor:pointer;text-decoration:none;display:block}
+.card:hover{border-color:#7c3aed;transform:translateY(-2px)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-icon{font-size:20px}
+.card-status{font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500}
+.card-status.live{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
+.card-status.dev{background:rgba(227,179,65,.1);color:#e3b341;border:1px solid rgba(227,179,65,.2)}
+.card-status.planned{background:rgba(100,100,120,.1);color:#888;border:1px solid rgba(100,100,120,.2)}
+.card h3{font-size:15px;font-weight:600;color:#fff;margin-bottom:4px}
+.card p{font-size:12px;color:#666;line-height:1.5;margin-bottom:14px}
+.card-meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:#1a1a2a;border:1px solid #2a2a3a;border-radius:4px;padding:2px 8px;font-size:11px;color:#888}
+.tag.magnite{color:#a78bfa}
+.tag.adform{color:#69b0f5}
+.tag.google{color:#56d364}
+.tag.teads{color:#f0883e}
+
+/* Section title */
+.section-title{padding:0 32px 16px;max-width:1200px;margin:0 auto;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#444;font-weight:600}
+
+/* Stats */
+.stats{display:flex;gap:32px;justify-content:center;margin-bottom:48px}
+.stat{text-align:center}
+.stat .num{font-size:28px;font-weight:700;color:#fff}
+.stat .lbl{font-size:12px;color:#555;margin-top:2px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Lupon <span>Ad Lab</span></div>
+  <div class="badge">Enterprise Testing</div>
+</div>
+
+<div class="hero">
+  <h1>Test before you <span>go live</span></h1>
+  <p>Isolated ad testing environment. Every format, every publisher, every demand source — verified before touching production.</p>
+  <div class="stats">
+    <div class="stat"><div class="num" id="s-publishers">1</div><div class="lbl">Publishers</div></div>
+    <div class="stat"><div class="num" id="s-formats">2</div><div class="lbl">Formats tested</div></div>
+    <div class="stat"><div class="num" id="s-demand">3</div><div class="lbl">Demand sources</div></div>
+  </div>
+</div>
+
+<div class="section-title">Publishers</div>
+<div class="grid">
+
+  <a class="card" href="/publishers/novi-ba/test">
+    <div class="card-header">
+      <span class="card-icon">📰</span>
+      <span class="card-status live">Live</span>
+    </div>
+    <h3>novi.ba</h3>
+    <p>News publisher — Bosnia & Herzegovina. Outstream in-article video test with Magnite Apex + Adform + Google IMA.</p>
+    <div class="card-meta">
+      <span class="tag magnite">Magnite</span>
+      <span class="tag adform">Adform</span>
+      <span class="tag google">Google IMA</span>
+    </div>
+  </a>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">⚽</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>sport.ba</h3>
+    <p>Sports publisher — Balkans. Outstream + native video formats.</p>
+    <div class="card-meta">
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">🗞️</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>faktor.ba</h3>
+    <p>News publisher — Bosnia. Outstream video test.</p>
+    <div class="card-meta">
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">Format Tests</div>
+<div class="grid">
+
+  <a class="card" href="/publishers/novi-ba/test">
+    <div class="card-header">
+      <span class="card-icon">▶️</span>
+      <span class="card-status live">Live</span>
+    </div>
+    <h3>Outstream In-Article</h3>
+    <p>Video player appears between article paragraphs. Auto-play on scroll, auto-collapse when complete or no fill.</p>
+    <div class="card-meta">
+      <span class="tag magnite">Magnite Apex</span>
+      <span class="tag adform">Adform inview</span>
+    </div>
+  </a>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">📌</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>Sticky Video</h3>
+    <p>Video player sticks to corner while user scrolls. Dismissible.</p>
+    <div class="card-meta">
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">🎬</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>Instream Pre-roll</h3>
+    <p>Pre-roll video ad before publisher video content.</p>
+    <div class="card-meta">
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">🎁</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>Rewarded Video</h3>
+    <p>AdBlock recovery — watch 30s video, get 10min free reading.</p>
+    <div class="card-meta">
+      <span class="tag">Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-title">Demand Sources</div>
+<div class="grid">
+
+  <a class="card" href="/publishers/novi-ba/test">
+    <div class="card-header">
+      <span class="card-icon">🟣</span>
+      <span class="card-status live">Tested</span>
+    </div>
+    <h3>Magnite Apex</h3>
+    <p>account_id: 12398 · zone_id: 4059987. Currently returning empty VAST — pending demand activation from Magnite.</p>
+    <div class="card-meta">
+      <span class="tag magnite">adError 10303</span>
+      <span class="tag">No fill</span>
+    </div>
+  </a>
+
+  <a class="card" href="/publishers/novi-ba/test">
+    <div class="card-header">
+      <span class="card-icon">🔵</span>
+      <span class="card-status live">Tested</span>
+    </div>
+    <h3>Adform Outstream</h3>
+    <p>publisher_id: 83364 · placement_id: 2236422. inview.js loads correctly — returning 204 No Content.</p>
+    <div class="card-meta">
+      <span class="tag adform">204 No Content</span>
+      <span class="tag">No fill</span>
+    </div>
+  </a>
+
+  <a class="card" href="/publishers/novi-ba/test">
+    <div class="card-header">
+      <span class="card-icon">🟢</span>
+      <span class="card-status live">✅ Working</span>
+    </div>
+    <h3>Google IMA Test</h3>
+    <p>Standard Google IMA VAST test creative. Always returns a video ad. Used to verify player pipeline is working correctly.</p>
+    <div class="card-meta">
+      <span class="tag google">VAST 2.0</span>
+      <span class="tag google">Player ✅</span>
+    </div>
+  </a>
+
+  <div class="card" style="opacity:.5;cursor:not-allowed">
+    <div class="card-header">
+      <span class="card-icon">🟠</span>
+      <span class="card-status planned">Planned</span>
+    </div>
+    <h3>Teads</h3>
+    <p>Native outstream via Teads tag — already serving on novi.ba. To be added to Lab.</p>
+    <div class="card-meta">
+      <span class="tag teads">Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
