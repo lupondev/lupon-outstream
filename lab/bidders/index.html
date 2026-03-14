@@ -6,152 +6,25 @@
 <title>Bidders — Lupon Ad Lab</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,sans-serif;background:#08080f;color:#e0e0e0}
-.header{background:#0d0d1a;border-bottom:1px solid #1a1a2e;padding:0 32px;display:flex;align-items:center;gap:16px;height:56px}
-.back{color:#555;text-decoration:none;font-size:13px}.back:hover{color:#fff}
-.logo{font-size:14px;font-weight:700;color:#fff}
-.badge{background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:#a78bfa;font-size:10px;padding:2px 7px;border-radius:4px}
-.content{max-width:1000px;margin:0 auto;padding:32px}
-h2{font-size:18px;font-weight:600;color:#fff;margin-bottom:6px}
-.subtitle{font-size:13px;color:#444;margin-bottom:28px}
-table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#333;padding:8px 12px;border-bottom:1px solid #111;font-weight:700}
-td{padding:12px;border-bottom:1px solid #0d0d1a;font-size:13px;vertical-align:middle}
-tr:hover td{background:#0a0a12}
-.bidder-name{font-weight:600;color:#e0e0e0;display:flex;align-items:center;gap:8px}
-.bidder-icon{font-size:18px}
-.chip{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}
-.chip.ok{background:rgba(86,211,100,.1);color:#56d364;border:1px solid rgba(86,211,100,.2)}
-.chip.fail{background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.2)}
-.chip.planned{background:rgba(80,80,100,.1);color:#555;border:1px solid #1e1e2e}
-.formats{display:flex;gap:4px;flex-wrap:wrap}
-.fmt{font-size:10px;padding:1px 6px;border-radius:3px;background:#111;border:1px solid #1e1e2e;color:#555}
-.fmt.v{color:#a78bfa}.fmt.d{color:#69b0f5}.fmt.n{color:#34d399}.fmt.ctv{color:#f87171}
-.test-link{color:#7c3aed;text-decoration:none;font-size:11px}
-.test-link:hover{color:#a78bfa}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#08080f;color:#e0e0e0;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.logo{font-size:15px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;margin-bottom:24px}
+.logo-icon{width:24px;height:24px;background:linear-gradient(135deg,#7c3aed,#3b82f6);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px}
+.box{background:#0d0d1a;border:1px solid #1a1a2e;border-radius:12px;padding:32px;max-width:400px;width:100%;text-align:center}
+.title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+.sub{font-size:13px;color:#555;line-height:1.6;margin-bottom:24px}
+.btn{display:inline-block;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;transition:opacity .15s}
+.btn-primary{background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;margin-right:8px}
+.btn-secondary{background:#111;border:1px solid #1a1a2e;color:#666}
+.btn:hover{opacity:.85}
 </style>
 </head>
 <body>
-<div class="header">
-  <a class="back" href="/lab">← Lab</a>
-  <span style="color:#1a1a2e">|</span>
-  <div class="logo">All Bidders</div>
-  <div class="badge">12 DEMAND SOURCES</div>
-</div>
-<div class="content">
-  <h2>Demand Sources & Bidders</h2>
-  <p class="subtitle">All configured and planned bidders across video, display, native, and CTV formats.</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Bidder</th>
-        <th>Status</th>
-        <th>Formats</th>
-        <th>Last Test</th>
-        <th>Result</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><div class="bidder-name"><span class="bidder-icon">🟣</span>Magnite / Rubicon</div></td>
-        <td><span class="chip fail">No Fill</span></td>
-        <td><div class="formats"><span class="fmt v">Video</span><span class="fmt d">Display</span></div></td>
-        <td style="color:#444;font-size:12px">Today</td>
-        <td style="color:#f85149;font-size:12px">adError 10303 — Empty VAST</td>
-        <td><a class="test-link" href="/lab/formats/outstream">→ Test</a></td>
-      </tr>
-      <tr>
-        <td><div class="bidder-name"><span class="bidder-icon">🔵</span>Adform</div></td>
-        <td><span class="chip fail">No Fill</span></td>
-        <td><div class="formats"><span class="fmt v">Video</span><span class="fmt d">Display</span></div></td>
-        <td style="color:#444;font-size:12px">Today</td>
-        <td style="color:#f85149;font-size:12px">204 No Content — OpenRTB</td>
-        <td><a class="test-link" href="/lab/formats/outstream">→ Test</a></td>
-      </tr>
-      <tr>
-        <td><div class="bidder-name"><span class="bidder-icon">🟢</span>Google IMA</div></td>
-        <td><span class="chip ok">Working</span></td>
-        <td><div class="formats"><span class="fmt v">Video</span></div></td>
-        <td style="color:#444;font-size:12px">Today</td>
-        <td style="color:#56d364;font-size:12px">✅ Ad plays, player confirmed</td>
-        <td><a class="test-link" href="/lab/formats/outstream">→ Test</a></td>
-      </tr>
-      <tr>
-        <td><div class="bidder-name"><span class="bidder-icon">🟠</span>Teads</div></td>
-        <td><span class="chip ok">Working</span></td>
-        <td><div class="formats"><span class="fmt v">Video</span><span class="fmt n">Native</span></div></td>
-        <td style="color:#444;font-size:12px">Today</td>
-        <td style="color:#56d364;font-size:12px">✅ Serving on novi.ba</td>
-        <td><a class="test-link" href="/lab/formats/outstream">→ Test</a></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🟡</span>Criteo</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span><span class="fmt n">Native</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🔷</span>PubMatic</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🔮</span>Index Exchange</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🌱</span>Seedtag</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt n">Native</span><span class="fmt v">Video</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">⬛</span>Xandr / AppNexus</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span><span class="fmt ctv">CTV</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🔶</span>Sovrn</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">🏷️</span>OneTag</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt d">Display</span><span class="fmt v">Video</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-      <tr style="opacity:.5">
-        <td><div class="bidder-name"><span class="bidder-icon">3️⃣</span>33Across</div></td>
-        <td><span class="chip planned">Planned</span></td>
-        <td><div class="formats"><span class="fmt v">Video</span><span class="fmt v">Outstream</span></div></td>
-        <td style="color:#333;font-size:12px">—</td>
-        <td style="color:#333;font-size:12px">Not integrated</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+<div class="logo"><div class="logo-icon">⚗️</div>Lupon Ad Lab</div>
+<div class="box">
+  <div class="title">Bidder Reference</div>
+  <div class="sub">Bidder configuration and management has moved to <strong style="color:#a78bfa">Bidder Admin</strong>. Configure params, test live, copy Prebid config.</div>
+  <a href="/lab/admin" class="btn btn-primary">Go to Bidder Admin →</a>
+  <a href="/lab" class="btn btn-secondary">Dashboard</a>
 </div>
 </body>
 </html>
